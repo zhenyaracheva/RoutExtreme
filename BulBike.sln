@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulBike.Data", "BulBike.Data\BulBike.Data.csproj", "{8BB9A591-ED68-4578-B4A3-EA341C70BC9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulBike.Models", "BulBike.Models\BulBike.Models.csproj", "{9F8BCB2E-90CD-48D5-B81B-211351D72EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulBike.Common", "BulBike.Common\BulBike.Common.csproj", "{4E70B676-D00E-4F26-8F71-F0D0B4E667BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulBike.Web", "BulBike.Web\BulBike.Web.csproj", "{99074E2A-00FA-4591-8552-8AD1EA91060A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulBike.Web.Tests", "BulBike.Web.Tests\BulBike.Web.Tests.csproj", "{0C3B8C5C-1E42-4400-86DA-321FC4C77108}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulBike.Services", "BulBike.Services\BulBike.Services.csproj", "{53230ECD-70CB-40B6-9656-E44387796850}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BB9A591-ED68-4578-B4A3-EA341C70BC9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB9A591-ED68-4578-B4A3-EA341C70BC9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB9A591-ED68-4578-B4A3-EA341C70BC9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB9A591-ED68-4578-B4A3-EA341C70BC9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F8BCB2E-90CD-48D5-B81B-211351D72EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F8BCB2E-90CD-48D5-B81B-211351D72EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F8BCB2E-90CD-48D5-B81B-211351D72EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F8BCB2E-90CD-48D5-B81B-211351D72EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E70B676-D00E-4F26-8F71-F0D0B4E667BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E70B676-D00E-4F26-8F71-F0D0B4E667BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E70B676-D00E-4F26-8F71-F0D0B4E667BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E70B676-D00E-4F26-8F71-F0D0B4E667BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99074E2A-00FA-4591-8552-8AD1EA91060A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99074E2A-00FA-4591-8552-8AD1EA91060A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99074E2A-00FA-4591-8552-8AD1EA91060A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99074E2A-00FA-4591-8552-8AD1EA91060A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C3B8C5C-1E42-4400-86DA-321FC4C77108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C3B8C5C-1E42-4400-86DA-321FC4C77108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C3B8C5C-1E42-4400-86DA-321FC4C77108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C3B8C5C-1E42-4400-86DA-321FC4C77108}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53230ECD-70CB-40B6-9656-E44387796850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53230ECD-70CB-40B6-9656-E44387796850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53230ECD-70CB-40B6-9656-E44387796850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53230ECD-70CB-40B6-9656-E44387796850}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

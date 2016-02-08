@@ -1,0 +1,34 @@
+﻿@*@model BulBike.Models.User*@
+@using Microsoft.AspNet.Identity
+@using BulBike.Web.Controllers
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        var test = ((HomeController)this.ViewContext.Controller).GetUserPictureId(this.User.Identity.GetUserId());
+
+        <li>
+            @Html.ActionLink(string.Format("Hello, {0}!", User.Identity.GetUserName()), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li>
+            @if (test > 0)
+            {
+                <img src="@Url.Action("GetImage", "Image", new { id = test })" alt="@this.User.Identity.GetUserName()" class="centered-profile-image" />
+            }
+            else
+            {
+                <img src="https://lh4.googleusercontent.com/-mgfTo5JzHi4/U-RT9DzzD9I/AAAAAAAAAWE/cHmSDDtjCvE/default_profile_image.png" class="centered-profile-image"/>
+            }
+        </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+            </li>
+    }
+}
+else
+{
+    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}

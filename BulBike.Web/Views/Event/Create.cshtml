@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Event", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+
+        <div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+        $("#btn").click(function () {
+            var geocoder = new google.maps.Geocoder();
+            var city = $("#city");
+            console.log(city);
+            geocoder.geocode({ 'address': city.val() + ', bg' }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    alert("location : " + results[0].geometry.location.lat() + " " + results[0].geometry.location.lng());
+                    city.attr("lat", results[0].geometry.location.lat());
+                    city.attr(lng, results[0].geometry.location.lng());
+                } else {
+                    alert("Something got wrong " + status);
+                }
+            });
+        });
+    </script>
+}
