@@ -1,86 +1,16 @@
-﻿namespace BulBike.Web.Hubs
-{
-    using BulBike.Models;
-    using Microsoft.AspNet.SignalR;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Microsoft.AspNet.SignalR;
 
+namespace BulBike.Web.Hubs
+{
     public class ChatHub : Hub
     {
-        static List<User> ConnectedUsers = new List<User>();
-        static List<ChatMessage> CurrentMessage = new List<ChatMessage>();
-
-        public void Connect(string userName)
+        public void Send(string name, string message)
         {
-            var id = Context.ConnectionId;
-
-
-            if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
-            {
-                ConnectedUsers.Add(new User { ConnectionId = id, UserName = userName });
-
-                // send to caller
-                Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);
-
-                // send to all except caller client
-                Clients.AllExcept(id).onNewUserConnected(id, userName);
-
-            }
-
-        }
-
-        public void SendMessageToAll(User author, string message)
-        {
-            // store last 100 messages in cache
-            AddMessageinCache(author, message);
-
-            // Broad cast message
-            Clients.All.messageReceived(author, message);
-        }
-
-        public void SendPrivateMessage(string toUserId, string message)
-        {
-
-            string fromUserId = Context.ConnectionId;
-
-            var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
-            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
-
-            if (toUser != null && fromUser != null)
-            {
-                // send to 
-                Clients.Client(toUserId).sendPrivateMessage(fromUserId, fromUser.UserName, message);
-
-                // send to caller user
-                Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message);
-            }
-
-        }
-        
-
-        public  override System.Threading.Tasks.Task OnDisconnected(bool isStopped)
-        {
-            var item = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
-            if (item != null)
-            {
-                ConnectedUsers.Remove(item);
-
-                var id = Context.ConnectionId;
-                Clients.All.onUserDisconnected(id, item.UserName);
-
-            }
-
-            return  base.OnDisconnected(isStopped);
-        }
-
-
-
-        private void AddMessageinCache(User author, string message)
-        {
-            CurrentMessage.Add(new ChatMessage { Author = author, Message = message });
-
-            if (CurrentMessage.Count > 100)
-                CurrentMessage.RemoveAt(0);
+            Clients.All.addNewMessageToPage(name, message);
         }
     }
 }
