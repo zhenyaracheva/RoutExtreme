@@ -12,7 +12,6 @@
     using BulBike.Web.Models.AccountViewModels;
     using BulBike.Models;
     using System.IO;
-    using Services.Contracts;
 
     [Authorize]
     public class AccountController : Controller

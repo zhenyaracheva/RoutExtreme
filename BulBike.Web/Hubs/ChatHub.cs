@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNet.SignalR;
-
-namespace BulBike.Web.Hubs
+﻿namespace BulBike.Web.Hubs
 {
+    using Microsoft.AspNet.SignalR;
+
     public class ChatHub : Hub
     {
-        public void Send(string name, string message)
+        public void Send(string message)
         {
-            Clients.All.addNewMessageToPage(name, message);
+            var username = Context.User.Identity.Name;
+            Clients.All.addNewMessageToPage(username, message);
         }
     }
 }

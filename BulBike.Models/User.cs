@@ -5,14 +5,28 @@
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-
+    using System.Collections.Generic;
     public class User : IdentityUser
     {
+        private ICollection<ChatRoom> chatRooms;
+
+        public User()
+        {
+            this.chatRooms = new HashSet<ChatRoom>();
+        }
+
         public int? ProfilePicId { get; set; }
 
         public virtual Image ProfilePic { get; set; }
 
         public string ConnectionId { get; set; }
+
+        public ICollection<ChatRoom> ChatRooms
+        {
+            get { return this.chatRooms; }
+            set { this.chatRooms = value; }
+        }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

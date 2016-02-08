@@ -1,5 +1,7 @@
 ﻿namespace BulBike.Models
 {
+    using System;
+
     public class ChatMessage
     {
         public int Id { get; set; }
@@ -9,5 +11,7 @@
         public virtual User Author { get; set; }
 
         public string Message { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatRoom.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="ChatMessage.cs" />
