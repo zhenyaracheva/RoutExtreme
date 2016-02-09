@@ -16,6 +16,8 @@
         [Key]
         public int Id { get; set; }
 
+        public string ConnectionId { get; set; }
+
         public virtual ICollection<ChatMessage> Messages
         {
             get { return this.messages; }
