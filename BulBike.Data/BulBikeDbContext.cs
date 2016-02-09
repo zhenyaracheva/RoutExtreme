@@ -4,7 +4,9 @@
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
-    using System;
+    using Microsoft.AspNet.Identity;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class BulBikeDbContext : IdentityDbContext<User>, IBulBikeDbContext
     {
@@ -12,6 +14,8 @@
             : base("BulBike", throwIfV1Schema: false)
         {
         }
+
+        public override IDbSet<User> Users { get; set; }
 
         public virtual IDbSet<Location> Locations { get; set; }
 
@@ -31,5 +35,18 @@
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
+
+        //public ClaimsIdentity GenerateUserIdentity(UserManager<User> manager)
+        //{
+        //    // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+        //    var userIdentity = manager.CreateIdentity(this, DefaultAuthenticationTypes.ApplicationCookie);
+        //    // Add custom user claims here
+        //    return userIdentity;
+        //}
+
+        //public Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
+        //{
+        //    return Task.FromResult(GenerateUserIdentity(manager));
+        //}
     }
 }

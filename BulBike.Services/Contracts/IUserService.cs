@@ -9,5 +9,7 @@
         IQueryable<User> GetAll();
 
         User GetById(String id);
+
+        User GetByUsername(string username);
     }
 }

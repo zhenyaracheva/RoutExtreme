@@ -36,5 +36,12 @@ namespace BulBike.Services
                               .Where(x => x.Id == id)
                               .FirstOrDefault();
         }
+
+        public ChatRoom GetByConnectionId(string id)
+        {
+            return this.rooms.All()
+                              .Where(x => x.ConnectionId == id)
+                              .FirstOrDefault();
+        }
     }
 }

@@ -10,5 +10,7 @@
         ChatRoom GetById(int id);
 
         void Create(ChatRoom room);
+
+        ChatRoom GetByConnectionId(string id);
     }
 }

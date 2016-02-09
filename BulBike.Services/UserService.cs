@@ -26,5 +26,12 @@
         {
             return this.users.GetById(id);
         }
+
+        //public User GetByUsername(string username)
+        //{
+        //    //return this.users.All()
+        //    //    .Where(x=>x.UserName == username)
+        //    //    .
+        //}
     }
 }

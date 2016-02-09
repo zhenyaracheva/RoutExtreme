@@ -6,11 +6,12 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Collections.Generic;
+
     public class User : IdentityUser
     {
         private ICollection<ChatRoom> chatRooms;
 
-        public User()
+        public User() : base()
         {
             this.chatRooms = new HashSet<ChatRoom>();
         }
@@ -19,7 +20,7 @@
 
         public virtual Image ProfilePic { get; set; }
 
-        public string ConnectionId { get; set; }
+        //public string ConnectionId { get; set; }
 
         public ICollection<ChatRoom> ChatRooms
         {

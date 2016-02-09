@@ -9,26 +9,35 @@
 
     public class ChatHub : Hub
     {
-        //public void Send(string message)
-        //{
-        //    var test = Context;
-        //    Clients.All.addNewMessageToPage(message);
-        //}
+        private IChatRoomService chat;
+        private IUserService users;
 
+        public ChatHub(IChatRoomService chat, IUserService users)
+        {
+            this.chat = chat;
+            this.users = users;
+        }
 
-
-        static List<User> ConnectedUsers = new List<User>();
-        static List<ChatMessage> CurrentMessage = new List<ChatMessage>();
+        //static List<User> ConnectedUsers = new List<User>();
+        //static List<ChatMessage> CurrentMessage = new List<ChatMessage>();
 
 
         public void Connect(string userName)
         {
             var id = Context.ConnectionId;
 
+            var chatRoom = this.chat.GetByConnectionId(id);
+            var chatUsers = chatRoom.Users;
 
-            if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
+            if (chatUsers.Count(x => x.UserName == userName) == 0)
             {
-                ConnectedUsers.Add(new User { ConnectionId = id, UserName = userName });
+                var newRoom = new ChatRoom
+                {
+                    ConnectionId = id
+                };
+
+                chat.Create(newRoom);
+
 
                 // send to caller
                 Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);
