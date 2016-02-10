@@ -8,18 +8,20 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using BulBike.Web.Models;
-
+    using Services;
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
+        public ManageController(IUserService userService)
+            :base(userService)
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService)
+            :this(userService)
         {
             UserManager = userManager;
             SignInManager = signInManager;

@@ -1,5 +1,4 @@
-﻿@*@model BulBike.Models.User*@
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 @using BulBike.Web.Controllers
 
 @if (Request.IsAuthenticated)
@@ -7,7 +6,7 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        var test = ((HomeController)this.ViewContext.Controller).GetUserPictureId(this.User.Identity.GetUserId());
+        var test = ((BaseController)this.ViewContext.Controller).GetUserPictureId(this.User.Identity.GetUserId());
 
         <li>
             @Html.ActionLink(string.Format("Hello, {0}!", User.Identity.GetUserName()), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })

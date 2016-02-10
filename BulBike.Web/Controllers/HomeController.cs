@@ -1,18 +1,13 @@
-﻿using BulBike.Services;
-using System;
-using System.Collections.Generic;
-namespace BulBike.Web.Controllers
+﻿namespace BulBike.Web.Controllers
 {
+    using BulBike.Services;
     using System.Web.Mvc;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private IUserService userService;
-
         public HomeController(IUserService userService)
-            : base()
+            : base(userService)
         {
-            this.userService = userService;
         }
 
         public ActionResult Index()
@@ -39,11 +34,11 @@ namespace BulBike.Web.Controllers
             return View();
         }
 
-        public int? GetUserPictureId(string id)
-        {
-            var user = this.userService.GetById(id).ProfilePicId;
+        //public int? GetUserPictureId(string id)
+        //{
+        //    var user = this.userService.GetById(id).ProfilePicId;
 
-            return user;
-        }
+        //    return user;
+        //}
     }
 }
