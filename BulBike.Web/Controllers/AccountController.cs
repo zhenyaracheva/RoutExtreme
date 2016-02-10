@@ -170,8 +170,9 @@
                     }
                 }
 
-                var user = new User { UserName = model.Username, Email = model.Email, ProfilePic = image };
+                var user = new User { UserName = model.Username, Email = model.Email, ProfilePic = image, FirstName = model.FirstName, LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

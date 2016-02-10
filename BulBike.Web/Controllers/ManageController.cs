@@ -9,6 +9,7 @@
     using Microsoft.Owin.Security;
     using BulBike.Web.Models;
     using Services;
+
     [Authorize]
     public class ManageController : BaseController
     {
