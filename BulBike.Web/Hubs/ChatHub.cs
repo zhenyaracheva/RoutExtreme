@@ -18,8 +18,8 @@
             this.users = users;
         }
 
-        //static List<User> ConnectedUsers = new List<User>();
-        //static List<ChatMessage> CurrentMessage = new List<ChatMessage>();
+        static List<User> ConnectedUsers = new List<User>();
+        static List<ChatMessage> CurrentMessage = new List<ChatMessage>();
 
 
         public void Connect(string userName)

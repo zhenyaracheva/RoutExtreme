@@ -20,7 +20,7 @@
 
         public virtual Image ProfilePic { get; set; }
 
-        //public string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
 
         public ICollection<ChatRoom> ChatRooms
         {
