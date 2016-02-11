@@ -22,7 +22,9 @@
 
         public int? GetUserPictureId(string id)
         {
-            var user = this.userService.GetById(id).ProfilePicId;
+            var user = this.userService.GetById(id)
+                           .FirstOrDefault()
+                           .ProfilePicId;
 
             return user;
         }

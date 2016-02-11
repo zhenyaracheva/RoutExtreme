@@ -1,0 +1,61 @@
+﻿@model BulBike.Web.Models.AccountViewModels.EditProfileViewModel
+
+<h2>Edit Profile</h2>
+
+@using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-group">
+        <div class="col-md-7 center">
+            @Html.ValidationSummary(true, "", new { @class = "red-text" })
+        </div>
+    </div>
+   
+    <div class="form-group">
+        @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "red-text" })
+        <br />
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "red-text" })
+        <br />
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "red-text" })
+        <br />
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="file-field input-field">
+        <input type="file" name="ProfilePic" id="fileTag" onchange="myFunction()">
+        <div class="file-path-wrapper">
+            <input type="text" placeholder="Upload Picture" name="ProfilePic" id="changeText">
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-5 col-md-offset-2">
+            <input type="submit" class="btn btn-default" />
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function myFunction() {
+            var image = (document.getElementById("fileTag").value).split("\\")[2];
+            document.getElementById("changeText").value = image;
+        }
+    </script>
+}

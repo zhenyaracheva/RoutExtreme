@@ -16,12 +16,10 @@
         {
             this.chatRooms = new HashSet<ChatRoom>();
         }
-
-        [Required]
+        
         [StringLength(50, MinimumLength = 2)]
         public string FirstName { get; set; }
-
-        [Required]
+        
         [StringLength(50, MinimumLength = 2)]
         public string LastName { get; set; }
 

@@ -12,19 +12,27 @@
     using BulBike.Web.Models.AccountViewModels;
     using BulBike.Models;
     using System.IO;
+    using Services;
+    using Services.Contracts;
+    using AutoMapper.QueryableExtensions;
 
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        //private IUserService images;
+        private IUserService userService;
+        private IChatRoomService chatRooms;
 
-        public AccountController()
+        public AccountController(IUserService userService, IChatRoomService chatRooms) :
+            base(userService, chatRooms)
         {
+            this.userService = userService;
+            this.chatRooms = chatRooms;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, IChatRoomService chatRooms)
+            : this(userService, chatRooms)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -52,6 +60,23 @@
             {
                 _userManager = value;
             }
+        }
+
+        public ActionResult UserDetails()
+        {
+            var username = this.User.Identity.GetUserName();
+            var userToSee = this.userService.GetByUsername(username).FirstOrDefault();
+            //if (userToSee.UserName == "admin")
+            //{
+            //    return this.View();
+            //}
+
+            var result = this.userService
+                .GetByUsername(username)
+                .ProjectTo<UserDetailsViewModel>()
+                .FirstOrDefault();
+
+            return this.View(result);
         }
 
         //

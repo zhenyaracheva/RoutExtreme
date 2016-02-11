@@ -10,19 +10,26 @@
     using BulBike.Web.Models;
     using Services;
     using Services.Contracts;
+    using Models.AccountViewModels;
+    using System.IO;
+    using BulBike.Models;
     [Authorize]
     public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserService userService;
+        private IChatRoomService chatRoomService;
 
         public ManageController(IUserService userService, IChatRoomService chatRoom)
-            :base(userService, chatRoom)
+            : base(userService, chatRoom)
         {
+            this.userService = userService;
+            this.chatRoomService = chatRoom;
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, IChatRoomService chatRoom)
-            :this(userService,chatRoom)
+            : this(userService, chatRoom)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +41,9 @@
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -52,6 +59,53 @@
             }
         }
 
+
+        public ActionResult EditProfile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(EditProfileViewModel model)
+        {
+            var user = this.userService.GetById(this.User.Identity.GetUserId())
+                                              .FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(model.FirstName))
+            {
+                user.FirstName = model.FirstName;
+            }
+
+            if (!string.IsNullOrEmpty(model.LastName))
+            {
+                user.LastName = model.LastName;
+            }
+
+            if (!string.IsNullOrEmpty(model.Email))
+            {
+                user.Email = model.Email;
+            }
+
+            if (model.ProfilePic != null)
+            {
+                using (var memory = new MemoryStream())
+                {
+                    model.ProfilePic.InputStream.CopyTo(memory);
+                    var content = memory.GetBuffer();
+
+                    var image = new Image
+                    {
+                        Content = content,
+                        FileExtension = model.ProfilePic.FileName.Split(new[] { '.' }).Last()
+                    };
+
+                    user.ProfilePic = image;
+                }
+            }
+
+            this.userService.UpdateUser(user);
+            return this.RedirectToAction("UserDetails","Account");
+        }
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -238,7 +292,7 @@
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return this.RedirectToAction("UserDetails", "Account");
             }
             AddErrors(result);
             return View(model);
@@ -333,7 +387,7 @@
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +438,6 @@
             Error
         }
 
-#endregion
+        #endregion
     }
 }

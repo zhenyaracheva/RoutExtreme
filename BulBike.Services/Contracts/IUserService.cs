@@ -1,4 +1,4 @@
-﻿namespace BulBike.Services
+﻿namespace BulBike.Services.Contracts
 {
     using Models;
     using System;
@@ -8,8 +8,10 @@
     {
         IQueryable<User> GetAll();
 
-        User GetById(String id);
+        IQueryable<User> GetById(String id);
 
-        User GetByUsername(string username);
+        IQueryable<User> GetByUsername(string username);
+
+        void UpdateUser(User updatedUser);
     }
 }

@@ -7,7 +7,7 @@
     using Data.Repositories;
     using System;
     using System.Collections.Generic;
-
+    using System.IO;
     public class UserService : IUserService
     {
         private IRepository<User> users;
@@ -22,17 +22,24 @@
             return this.users.All();
         }
 
-        public User GetById(String id)
+        public IQueryable<User> GetById(String id)
         {
-            return this.users.GetById(id);
+            return this.users
+                        .All()
+                        .Where(u => u.Id == id);
         }
 
-        public User GetByUsername(string username)
+        public IQueryable<User> GetByUsername(string username)
         {
             return this.users.All()
-                .Where(x => x.UserName == username)
-                .FirstOrDefault();
-                
+                .Where(x => x.UserName == username);
+
+        }
+
+        public void UpdateUser(User user)
+        {
+            this.users.Update(user);
+            this.users.SaveChanges();
         }
     }
 }

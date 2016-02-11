@@ -9,7 +9,7 @@
         var test = ((BaseController)this.ViewContext.Controller).GetUserPictureId(this.User.Identity.GetUserId());
 
         <li>
-            @Html.ActionLink(string.Format("Hello, {0}!", User.Identity.GetUserName()), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink(string.Format("Hello, {0}!", User.Identity.GetUserName()), "UserDetails", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li>
             @if (test > 0)
