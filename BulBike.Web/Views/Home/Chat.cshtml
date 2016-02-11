@@ -1,21 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "Chat";
+    ViewBag.Title = "_Chat";
     ViewBag.User = this.User.Identity.Name;
 }
-<h2>Chat</h2>
-<div id="header">
-    SignalR Chat Room
-</div>
-<br />
-<br />
-<br />
 
 <div id="divContainer">
-    @*<div style="display:none">
-        <input id="txtNickName" type="text" class="textBox"  />
-    </div>*@
-
     <div id="divChat" class="chatRoom">
         <div class="title">
             Welcome to Chat Room [<span id='spanUser'></span>]
@@ -33,19 +22,21 @@
         </div>
     </div>
 
-    <input id="hdId" type="hidden" value="@this.User.Identity.GetUserId()"/>
-    <input id="hdUserName" type="hidden" value="@this.User.Identity.Name"/>
+    <input id="hdId" type="hidden" value="@this.User.Identity.GetUserId()" />
+    <input id="hdUserName" type="hidden" value="@this.User.Identity.Name" />
 </div>
 
 @section scripts {
     <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script type="text/javascript">
+
+    @*<script type="text/javascript">
+       
 
         $(function () {
             // Declare a proxy to reference the hub.
             var chatHub = $.connection.chatHub;
-
+            //debugger
             registerClientMethods(chatHub);
 
             // Start Hub
@@ -170,12 +161,12 @@
 
             if (userId == id) {
 
-                code = $('<div class="loginUser">' + name + "</div>");
+                //code = $('<div class="loginUser">' + name + "</div>");
 
             }
             else {
 
-                code = $('<a id="' + id + '" class="user" >' + name + '<a>');
+                code = $('<a id="' + id + '" class="user" >' + name + '<a><br/>');
 
                 $(code).dblclick(function () {
 
@@ -188,6 +179,7 @@
             }
 
             $("#divusers").append(code);
+            $("#divusers2").append(code);
 
         }
 
@@ -276,5 +268,5 @@
 
         }
 
-    </script>
+    </script>*@
 }

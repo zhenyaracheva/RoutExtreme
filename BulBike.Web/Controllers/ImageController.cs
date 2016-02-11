@@ -8,8 +8,8 @@
     {
         private IImageService images;
 
-        public ImageController(IImageService images, IUserService users)
-            : base(users)
+        public ImageController(IImageService images, IUserService users, IChatRoomService chatRoom)
+            : base(users, chatRoom)
         {
             this.images = images;
         }

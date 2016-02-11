@@ -12,5 +12,7 @@
         void Create(ChatRoom room);
 
         ChatRoom GetByConnectionId(string id);
+
+        IQueryable<ChatRoom> RoomsByUser(string userId);
     }
 }

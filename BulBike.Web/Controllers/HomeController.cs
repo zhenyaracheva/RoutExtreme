@@ -1,12 +1,13 @@
 ﻿namespace BulBike.Web.Controllers
 {
     using BulBike.Services;
+    using Services.Contracts;
     using System.Web.Mvc;
 
     public class HomeController : BaseController
     {
-        public HomeController(IUserService userService)
-            : base(userService)
+        public HomeController(IUserService userService, IChatRoomService chatRoom)
+            : base(userService, chatRoom)
         {
         }
 

@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNet.Identity
+
+<div id="divContainer">
+    <div id="divChat" class="container body-content">
+        <div style="background-color: aliceblue"><h3>Chat</h3></div>
+        <div id="divusers2" class="col s5">
+        </div>
+    </div>
+
+    <input id="hdId" type="hidden" value="@this.User.Identity.GetUserId()" />
+    <input id="hdUserName" type="hidden" value="@this.User.Identity.Name" />
+</div>

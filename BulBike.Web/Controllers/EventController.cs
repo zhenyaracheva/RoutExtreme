@@ -2,12 +2,13 @@
 {
     using Models;
     using Services;
+    using Services.Contracts;
     using System.Web.Mvc;
 
     public class EventController : BaseController
     {
-        public EventController(IUserService users)
-            : base(users)
+        public EventController(IUserService users, IChatRoomService chatRoom)
+            : base(users, chatRoom)
         {
         }
         

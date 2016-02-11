@@ -1,6 +1,8 @@
 ﻿namespace BulBike.Web.Hubs
 {
     using BulBike.Models;
+    using Data;
+    using Data.Repositories;
     using Microsoft.AspNet.SignalR;
     using Services;
     using Services.Contracts;
@@ -9,35 +11,38 @@
 
     public class ChatHub : Hub
     {
-        private IChatRoomService chat;
-        private IUserService users;
+        //private IChatRoomService chatRoomsService;
+        //private IUserService usersService;
 
-        public ChatHub(IChatRoomService chat, IUserService users)
-        {
-            this.chat = chat;
-            this.users = users;
-        }
+        //public ChatHub(IChatRoomService chat, IUserService users)
+        //{
+        //    this.chatRoomsService = chat;
+        //    this.usersService = users;
+        //}
+        //private static BulBikeDbContext db = new BulBikeDbContext();
+        //private static IUserService users = new UserService(new Repository<User>(db));
 
-        static List<User> ConnectedUsers = new List<User>();
+
+        static List<User> ConnectedUsers = new List<User>(); //users.GetAll().ToList();
         static List<ChatMessage> CurrentMessage = new List<ChatMessage>();
-
 
         public void Connect(string userName)
         {
+
             var id = Context.ConnectionId;
 
-            var chatRoom = this.chat.GetByConnectionId(id);
-            var chatUsers = chatRoom.Users;
+            //var chatRoom = this.chatRoomsService.GetByConnectionId(id);
+            //var chatUsers = chatRoom.Users;
 
-            if (chatUsers.Count(x => x.UserName == userName) == 0)
+            if (ConnectedUsers.Count(x => x.UserName == userName) == 0)
             {
-                var newRoom = new ChatRoom
-                {
-                    ConnectionId = id
-                };
+                ConnectedUsers.Add(new User { ConnectionId = id, UserName = userName });
+                //var newRoom = new ChatRoom
+                //{
+                //    ConnectionId = id
+                //};
 
-                chat.Create(newRoom);
-
+                //this.chatRoomsService.Create(newRoom);
 
                 // send to caller
                 Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);

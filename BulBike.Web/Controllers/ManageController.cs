@@ -9,20 +9,20 @@
     using Microsoft.Owin.Security;
     using BulBike.Web.Models;
     using Services;
-
+    using Services.Contracts;
     [Authorize]
     public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController(IUserService userService)
-            :base(userService)
+        public ManageController(IUserService userService, IChatRoomService chatRoom)
+            :base(userService, chatRoom)
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService)
-            :this(userService)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, IChatRoomService chatRoom)
+            :this(userService,chatRoom)
         {
             UserManager = userManager;
             SignInManager = signInManager;

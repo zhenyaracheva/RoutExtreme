@@ -29,7 +29,8 @@ namespace BulBike.Web
                     "~/Scripts/ui/jquery.ui.mouse.js",
                     "~/Scripts/ui/jquery.ui.draggable.js",
                     "~/Scripts/ui/jquery.ui.resizable.js",
-                    "~/Scripts/jquery.signalR-2.2.0.js"));
+                    "~/Scripts/jquery.signalR-2.2.0.js",
+                    "~/signalr/hubs"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/materialize/css/materialize.css",

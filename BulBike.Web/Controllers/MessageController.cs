@@ -1,17 +1,14 @@
-﻿using BulBike.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace BulBike.Web.Controllers
+﻿namespace BulBike.Web.Controllers
 {
+    using BulBike.Services;
+    using BulBike.Services.Contracts;
+    using System.Web.Mvc;
+
     public class MessageController : BaseController
     {
 
-        public MessageController(IUserService users)
-            : base(users)
+        public MessageController(IUserService users, IChatRoomService chatRoom)
+            : base(users, chatRoom)
         {
         }
 

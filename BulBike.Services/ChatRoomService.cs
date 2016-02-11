@@ -1,15 +1,12 @@
-﻿using BulBike.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BulBike.Models;
-using BulBike.Data.Repositories;
-
-namespace BulBike.Services
+﻿namespace BulBike.Services
 {
-    class ChatRoomService : IChatRoomService
+    using BulBike.Services.Contracts;
+    using System.Linq;
+    using BulBike.Models;
+    using BulBike.Data.Repositories;
+    using System;
+
+    public class ChatRoomService : IChatRoomService
     {
         private IRepository<ChatRoom> rooms;
 
@@ -42,6 +39,13 @@ namespace BulBike.Services
             return this.rooms.All()
                               .Where(x => x.ConnectionId == id)
                               .FirstOrDefault();
+        }
+
+        public IQueryable<ChatRoom> RoomsByUser(string userId)
+        {
+            return this.rooms.All()
+                             .Where(x => x.Users.Any(u => u.Id == userId));
+
         }
     }
 }
