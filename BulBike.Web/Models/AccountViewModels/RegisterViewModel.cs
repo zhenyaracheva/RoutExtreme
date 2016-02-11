@@ -1,20 +1,23 @@
 ﻿namespace BulBike.Web.Models.AccountViewModels
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Web;
 
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be atleast {2} characters long.", MinimumLength = 5)]
+        [Index(IsUnique = true)]
         [Display(Name = "Username")]
         public string Username { get; set; }
-
-        [StringLength(50, MinimumLength = 2)]
-        [Display(Name = "First Name")]
+        
+        [StringLength(50, ErrorMessage = "The {0} must be atleast {2} characters long.", MinimumLength = 2)]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
-
-        [StringLength(50, MinimumLength = 2)]
-        [Display(Name = "Last Name")]
+        
+        [StringLength(50, ErrorMessage = "The {0} must be atleast {2} characters long.", MinimumLength = 2)]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required]

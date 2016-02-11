@@ -6,6 +6,7 @@
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.ComponentModel.DataAnnotations;
 
     public class User : IdentityUser
     {
@@ -16,8 +17,12 @@
             this.chatRooms = new HashSet<ChatRoom>();
         }
 
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string FirstName { get; set; }
 
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string LastName { get; set; }
 
         public int? ProfilePicId { get; set; }
