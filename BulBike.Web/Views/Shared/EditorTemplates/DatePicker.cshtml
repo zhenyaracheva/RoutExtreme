@@ -1,0 +1,10 @@
+﻿@model object
+
+<div class="form-group">
+    @Html.ValidationMessageFor(m => m, null, new { @class = "red-text" })
+    <br />
+    @Html.LabelFor(m => m, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(m => m, new { @class = "form-control datepicker", type = "date" })
+    </div>
+</div>

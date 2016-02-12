@@ -10,28 +10,11 @@
     <div class="map-container">
         <div id="map"></div>
     </div>
-
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.Description, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.StartDate, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepicker", type = "date" })
-        </div>
-    </div>
+    @Html.EditorFor(m=>m.Description) 
+    @Html.EditorFor(m=>m.StartDate)  
     <div class="col-md-10">
         @Html.HiddenFor(m => m.Route, new { @class = "form-control", id = "routePoints" })
     </div>
-
-    @*<input id="routePoints" type="text" hidden="hidden" />*@
     <div class="row">
         <div class="col-md-5 col-md-offset-2">
             <input type="submit" class="btn btn-default" />
