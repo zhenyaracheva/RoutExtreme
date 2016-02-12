@@ -483,6 +483,9 @@
     <Content Include="Views\Shared\EditorTemplates\UploadImage.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MultiLineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DatePicker.cshtml" />
+    <Content Include="Views\Trip\Details.cshtml" />
+    <Content Include="Views\Trip\All.cshtml" />
+    <Content Include="Views\Trip\UpcommingTrips.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

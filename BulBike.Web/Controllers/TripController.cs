@@ -42,7 +42,7 @@
                     Latitude = double.Parse(startPos[0]),
                     Longitude = double.Parse(startPos[1])
                 };
-                
+
                 var currentTrip = new Trip
                 {
                     CreatorId = this.User.Identity.GetUserId(),
@@ -74,12 +74,17 @@
             return View();
         }
 
+        public ActionResult Details()
+        {
+            return View();
+        }
+
         public ActionResult All()
         {
             return View();
         }
 
-        public ActionResult Upcomming()
+        public ActionResult UpcommingTrips()
         {
             return View();
         }
