@@ -5,25 +5,11 @@
 
     public class Location
     {
-        private ICollection<Trip> trips;
-
-        public Location()
-        {
-            this.trips = new HashSet<Trip>();
-        }
-
+        [Key]
         public int Id { get; set; }
+        
+        public double Latitude { get; set; }
 
-        public string Name { get; set; }
-
-        public decimal Latitude { get; set; }
-
-        public decimal Longitude { get; set; }
-
-        public virtual ICollection<Trip> Trips
-        {
-            get { return this.trips; }
-            set { this.trips = value; }
-        }
+        public double Longitude { get; set; }
     }
 }

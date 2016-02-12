@@ -14,10 +14,30 @@
             <a href="#!">
                 @Html.ActionLink("BulBike", "Index", "Home", new { area = "" }, new { @class = "brand-logo" })
             </a>
+            <ul id="eventsMenu" class="dropdown-content">
+                <li>@Html.ActionLink("Upcomming", "Upcomming", "Trip")</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("All Trips", "All", "Trip")</li>
+                <li class="divider"></li>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                <li> @Html.ActionLink("Create Trip", "Create", "Trip")</li>
+                }
+            </ul>
+            <ul id="eventsMenuMobile" class="dropdown-content">
+                <li>@Html.ActionLink("Upcomming", "Upcomming", "Trip")</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("All Trips", "All", "Trip")</li>
+                <li class="divider"></li>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <li> @Html.ActionLink("Create Trip", "Create", "Trip")</li>
+                }
+            </ul>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="hide-on-med-and-down move">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li><a class="dropdown-button" href="#!" data-activates="eventsMenu">Trips<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
             <ul class="hide-on-med-and-down right">
@@ -25,7 +45,7 @@
             </ul>
             <ul class="side-nav right" id="mobile-demo">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li><a class="dropdown-button" href="#!" data-activates="eventsMenuMobile">Trips<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 @Html.Partial("_LoginPartial")
             </ul>

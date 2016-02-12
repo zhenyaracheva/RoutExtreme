@@ -6,51 +6,50 @@
 
     public class Trip
     {
-        private ICollection<Location> points;
-        private ICollection<User> joinedUsers;
+        private ICollection<Location> route;
         private ICollection<Image> images;
+        private ICollection<User> participants;
 
         public Trip()
         {
-            this.points = new HashSet<Location>();
-            this.joinedUsers = new HashSet<User>();
+            this.route = new HashSet<Location>();
             this.images = new HashSet<Image>();
+            this.participants = new HashSet<User>();
+            this.CreatedOn = DateTime.UtcNow;
         }
-        
+
         public int Id { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public string Description { get; set; }
 
         public int StartPointId { get; set; }
 
         public virtual Location StartPoint { get; set; }
-
-        public int EndPointId { get; set; }
-
-        public virtual Location EndPoint { get; set; }
-
+        
         public string CreatorId { get; set; }
 
         public virtual User Creator { get; set; }
 
-        public virtual ICollection<Location> Points
+        public virtual ICollection<Location> Route
         {
-            get { return this.points; }
-            set { this.points = value; }
-        }
-
-        public virtual ICollection<User> JoinedUsers
-        {
-            get { return this.joinedUsers; }
-            set { this.joinedUsers = value; }
+            get { return this.route; }
+            set { this.route = value; }
         }
 
         public virtual ICollection<Image> Images
         {
             get { return this.images; }
             set { this.images = value; }
+        }
+
+        public virtual ICollection<User> Participants
+        {
+            get { return this.participants; }
+            set { this.participants = value; }
         }
     }
 }
