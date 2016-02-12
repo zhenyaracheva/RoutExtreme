@@ -1,0 +1,51 @@
+﻿@model BulBike.Web.Models.TripViewModels.TripRequestModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Trip", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div class="form-group">
+        @Html.ValidationMessageFor(m => m.Description, null, new { @class = "red-text" })
+        <br />
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.ValidationMessageFor(m => m.StartDate, null, new { @class = "red-text" })
+        <br />
+        @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepicker", type = "date" })
+        </div>
+    </div>
+    <div class="col-md-10">
+        @Html.HiddenFor(m => m.Route, new { @class = "form-control", id = "routePoints" })
+    </div>
+
+    @*<input id="routePoints" type="text" hidden="hidden" />*@
+    <div class="row">
+        <div class="col-md-5 col-md-offset-2">
+            <input type="submit" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/Scripts/Maps/map.js");
+    @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+    </script>
+}

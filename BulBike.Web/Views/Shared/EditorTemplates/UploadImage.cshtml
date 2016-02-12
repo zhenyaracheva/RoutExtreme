@@ -1,0 +1,9 @@
+﻿@model object
+
+<div class="file-field input-field">
+    @Html.TextBoxFor(m => m, new { type = "file", id = "fileTag", onchange = "myFunction()" })
+    <div class="file-path-wrapper">
+        @Html.TextBoxFor(m => m, new { type = "text", placeholder = "Upload Picture", id = "changeText" })
+    </div>
+</div>
+<br />

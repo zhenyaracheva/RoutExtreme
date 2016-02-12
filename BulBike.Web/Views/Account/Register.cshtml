@@ -14,62 +14,14 @@
             @Html.ValidationSummary(true, "", new { @class = "red-text" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.Username, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.Password, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "red-text" })
-        <br />
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="file-field input-field">
-        <input type="file" name="ProfilePic" id="fileTag" onchange="myFunction()">
-        <div class="file-path-wrapper">
-            <input type="text" placeholder="Upload Picture" name="ProfilePic" id="changeText">
-        </div>
-    </div>
-    <br />
+    @Html.EditorFor(m => m.Username)  
+    @Html.EditorFor(m => m.FirstName)  
+    @Html.EditorFor(m => m.LastName)   
+    @Html.EditorFor(m => m.Email)  
+    @Html.EditorFor(m => m.Password)  
+    @Html.EditorFor(m => m.ConfirmPassword)
+    @Html.EditorFor(m=>m.ProfilePic)
+   
     <div class="row">
         <div class="col-md-5 col-md-offset-2">
             <input type="submit" class="btn btn-default" />
