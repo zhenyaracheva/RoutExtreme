@@ -20,6 +20,19 @@
             this.chatRoomsService = chatRoomService;
         }
 
+
+        public IUserService UserService
+        {
+            get
+            {
+                return this.userService;
+            }
+            private set
+            {
+                this.userService = value;
+            }
+        }
+
         public int? GetUserPictureId(string id)
         {
             var user = this.userService.GetById(id)

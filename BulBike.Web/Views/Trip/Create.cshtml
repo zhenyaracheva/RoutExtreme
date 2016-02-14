@@ -10,8 +10,9 @@
     <div class="map-container">
         <div id="map"></div>
     </div>
-    @Html.EditorFor(m=>m.Description) 
-    @Html.EditorFor(m=>m.StartDate)  
+    @Html.EditorFor(m => m.Description)
+    @Html.EditorFor(m => m.StartDate)
+    @*<input type="text" id="datetimepicker"/>*@
     <div class="col-md-10">
         @Html.HiddenFor(m => m.Route, new { @class = "form-control", id = "routePoints" })
     </div>
@@ -26,9 +27,14 @@
     @Scripts.Render("~/Scripts/Maps/map.js");
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
     <script>
-        $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
+        $('#datetimepicker').datetimepicker({
+            formatTime: 'H:i',
+            formatDate: 'd.m.Y',
+            //defaultDate:'8.12.1986', // it's my birthday
+            defaultDate: '+03.01.1970', // it's my birthday
+            defaultTime: '10:00',
+            step: 30,
+            timepickerScrollbar: false
         });
     </script>
 }

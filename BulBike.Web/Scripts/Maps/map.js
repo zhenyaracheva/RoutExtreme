@@ -1,8 +1,6 @@
-﻿//(function () {
-var map;
+﻿var map;
 
 function initMap() {
-
     var styledMap,
         mapOptions,
         marker,
@@ -120,7 +118,7 @@ function initMap() {
     "stylers": [{ "visibility": "on" }]
 }]
 
-    styledMap = new google.maps.StyledMapType(styles, { name: "Styled Map" });
+    styledMap = new google.maps.StyledMapType(styles, { name: "RoutExtreme" });
 
     mapOptions = {
         zoom: 7,
@@ -136,28 +134,61 @@ function initMap() {
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
 
-    marker = new google.maps.Marker({
-        position: { lat: 42.6252706, lng: 25.3785853 },
-        map: map,
-        title: 'Hello World!'
-    });
+    //marker = new google.maps.Marker({
+    //    position: { lat: 42.6252706, lng: 25.3785853 },
+    //    map: map,
+    //    title: 'Hello World!'
+    //});
 
     google.maps.event.addListener(map, 'click', function (e) {
         placeMarker(e.latLng, map);
     });
 
+
     function placeMarker(position, map) {
         var marker = new google.maps.Marker({
             position: position,
-            map: map
+            map: map,
+            draggable: false,
+            animation: google.maps.Animation.DROP
         });
 
-        route
-        //console.log(marker);
+        //google.maps.event.addListener(marker, 'dragend', function () {
+        //    geocodePosition(marker.getPosition());
+        //});
+
         route.push(marker.position);
         console.log(route);
         $('#routePoints').val(route.toString());
         map.panTo(position);
+
+        marker.addListener("dblclick", function () {
+
+            var index = route.indexOf(marker);
+            //console.log(route[index].position.lat() + " " + route[index].position.lng());
+            route.splice(index, 1);
+
+            marker.setMap(null);
+        });
+
+        console.log(marker.position.lat() + " " + marker.position.lng());
+    }
+
+    function geocodePosition(pos) {
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode
+         ({
+             latLng: pos
+         },
+             function (results, status) {
+                 if (status == google.maps.GeocoderStatus.OK) {
+                     $("#mapSearchInput").val(results[0].formatted_address);
+                     $("#mapErrorMsg").hide(100);
+                 }
+                 else {
+                     $("#mapErrorMsg").html('Cannot determine address at this location.' + status).show(100);
+                 }
+             }
+         );
     }
 }
-//}())

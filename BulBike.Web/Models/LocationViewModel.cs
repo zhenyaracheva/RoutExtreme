@@ -1,12 +1,22 @@
 ﻿namespace BulBike.Web.Models
 {
+    using System;
+    using AutoMapper;
     using BulBike.Models;
     using Infrastructure.Mapping;
 
-    public class LocationViewModel : IMapFrom<Location>
+    public class LocationViewModel : IMapFrom<Location>, IHaveCustomMappings
     {
-        public decimal Latitude { get; set; }
+        public double lat { get; set; }
 
-        public decimal Longitude { get; set; }
+        public double lng { get; set; }
+
+        public void CreateMappings(IConfiguration configuration)
+        {
+            configuration.CreateMap<Location, LocationViewModel>("LocationDisplay")
+                .ForMember(m => m.lat, opt => opt.MapFrom(t => t.Latitude))
+                .ForMember(m => m.lng, opt => opt.MapFrom(t => t.Longitude))
+                .ReverseMap();
+        }
     }
 }

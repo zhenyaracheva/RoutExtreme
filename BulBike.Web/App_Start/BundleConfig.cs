@@ -9,7 +9,8 @@ namespace BulBike.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/ui/jquery.datetimepicker.full.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,6 +23,15 @@ namespace BulBike.Web
             bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
                       "~/Scripts/materialize/materialize.js",
                       "~/Scripts/respond.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
+            //         "~/Scripts/materialize/materialize.js",
+            //         "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/galleryScripts").Include(
+                      "~/Scripts/Gallery/jquery.demo.js",
+                      "~/Scripts/Gallery/jquery.elastislide.js",
+                      "~/Scripts/Gallery/jquerypp.custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/chat").Include(
                     "~/Scripts/ui/jquery.ui.core.js",
@@ -37,7 +47,10 @@ namespace BulBike.Web
                        "~/Content/materialize/font/material-design-icons/Material-Design-Icons.svg",
                       "~/Content/site.css",
                       "~/Content/JQueryUI/themes/base/jquery.ui.all.css",
-                      "~/Content/ChatStyle.css"));
+                      "~/Content/ChatStyle.css",
+                      "~/Content/JQueryUI/jquery.datetimepicker.css",
+                      "~/Content/Gallery/custom.css",
+                      "~/Content/Gallery/elastislide.css"));
         }
     }
 }

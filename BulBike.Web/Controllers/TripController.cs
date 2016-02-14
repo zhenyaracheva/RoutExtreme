@@ -1,12 +1,14 @@
 ﻿namespace BulBike.Web.Controllers
 {
     using System;
+    using System.Linq;
     using Models.TripViewModels;
     using Services.Contracts;
     using System.Web.Mvc;
     using System.Collections.Generic;
     using BulBike.Models;
     using Microsoft.AspNet.Identity;
+    using AutoMapper.QueryableExtensions;
 
     public class TripController : BaseController
     {
@@ -30,6 +32,8 @@
         [Authorize]
         public ActionResult Create(TripRequestModel trip)
         {
+            Trip currentTrip = null;
+
             if (trip != null && ModelState.IsValid)
             {
                 var test = trip.Route.Substring(1, trip.Route.Length - 2);
@@ -43,7 +47,7 @@
                     Longitude = double.Parse(startPos[1])
                 };
 
-                var currentTrip = new Trip
+                currentTrip = new Trip
                 {
                     CreatorId = this.User.Identity.GetUserId(),
                     Description = trip.Description,
@@ -71,12 +75,71 @@
                 this.trips.Update(currentTrip);
             };
 
-            return View();
+            return this.RedirectToAction("Details", new { id = currentTrip.Id });
         }
 
-        public ActionResult Details()
+        [HttpPost]
+        [Authorize]
+        public ActionResult JoinUser(int id)
         {
-            return View();
+            var trip = this.trips.GetById(id)
+                .FirstOrDefault();
+
+            if (trip != null)
+            {
+                var user = this.UserService.GetById(this.User.Identity.GetUserId())
+                               .FirstOrDefault();
+
+                trip.Participants.Add(user);
+                this.trips.Update(trip);
+
+                return this.RedirectToAction("Details", new { id = trip.Id });
+            }
+            else
+            {
+                throw new Exception("Not Found Trip!");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult RemoveUserFromTrip(int id)
+        {
+            var trip = this.trips.GetById(id)
+                .FirstOrDefault();
+
+            if (trip != null)
+            {
+                var user = this.UserService.GetById(this.User.Identity.GetUserId())
+                               .FirstOrDefault();
+
+                trip.Participants.Remove(user);
+                this.trips.Update(trip);
+
+                return this.RedirectToAction("Details", new { id = trip.Id });
+            }
+            else
+            {
+                throw new Exception("Not Found Trip!");
+            }
+        }
+        public ActionResult Details(int id)
+        {
+            var trip = this.trips.GetById(id)
+                                 .ProjectTo<TripResponseModel>()
+                                 .FirstOrDefault();
+
+            //trip.Test = Json(trip.Route, JsonRequestBehavior.AllowGet);
+            return View(trip);
+        }
+
+        public ActionResult GetTripRoute(int id)
+        {
+            var trip = this.trips.GetById(id)
+                                 .ProjectTo<TripResponseModel>()
+                                 .FirstOrDefault();
+
+            return Json(trip.Route, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult All()
