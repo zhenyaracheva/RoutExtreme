@@ -11,15 +11,17 @@
     public class User : IdentityUser
     {
         private ICollection<ChatRoom> chatRooms;
+        private ICollection<Trip> trips;
 
         public User() : base()
         {
             this.chatRooms = new HashSet<ChatRoom>();
+            this.trips = new HashSet<Trip>();
         }
-        
+
         [StringLength(50, MinimumLength = 2)]
         public string FirstName { get; set; }
-        
+
         [StringLength(50, MinimumLength = 2)]
         public string LastName { get; set; }
 
@@ -34,7 +36,13 @@
             get { return this.chatRooms; }
             set { this.chatRooms = value; }
         }
-        
+
+        public ICollection<Trip> Trips
+        {
+            get { return this.trips; }
+            set { this.trips = value; }
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

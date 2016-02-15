@@ -9,13 +9,13 @@
     {
         if (Model.Participants.Any(x => x.Username == this.User.Identity.Name))
         {
-            <div class="col m2 center ver">
+            <div id="joinOut" class="col m2 center ver">
                 <button class="btn" onclick="removeUser()">Join Out</button>
             </div>
         }
         else
         {
-            <div class="col m2 center ver">
+            <div id="join" class="col m2 center ver">
                 <button class="btn" onclick="joinUser()">Join</button>
             </div>
         }
@@ -298,7 +298,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     console.log("Joined User");
-
+                    document.location = document.location;
+                   
                 },
                 error: function (res) { console.log(res); }
             });
@@ -311,6 +312,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     console.log("Removed User from trip");
+                    document.location = document.location;
                 },
                 error: function (res) { console.log(res); }
             });
