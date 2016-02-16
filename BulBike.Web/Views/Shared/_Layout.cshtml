@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BulBike</title>
+    @Styles.Render("~/Content/kendo-css")
     @Styles.Render("http://fonts.googleapis.com/icon?family=Material+Icons")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+  
 </head>
 <body>
     <nav>
@@ -78,9 +81,12 @@
             <p>&copy; @DateTime.Now.Year - BulBike</p>
         </div>
     </footer>
-    @Scripts.Render("~/bundles/jquery")
+   
     @Scripts.Render("~/bundles/materialize")
     @Scripts.Render("~/bundles/chat")
+
+    
+ 
     <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
 

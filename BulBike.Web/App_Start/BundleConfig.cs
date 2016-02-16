@@ -24,9 +24,10 @@ namespace BulBike.Web
                       "~/Scripts/materialize/materialize.js",
                       "~/Scripts/respond.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
-            //         "~/Scripts/materialize/materialize.js",
-            //         "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/kendojs").Include(
+                     "~/Scripts/Kendo/kendo.all.min.js",
+                     "~/Scripts/Kendo/kendo.aspnetmvc.min.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/galleryScripts").Include(
                       "~/Scripts/Gallery/jquery.demo.js",
@@ -42,15 +43,23 @@ namespace BulBike.Web
                     "~/Scripts/jquery.signalR-2.2.0.js",
                     "~/signalr/hubs"));
 
+
+            bundles.Add(new StyleBundle("~/Content/kendo-css").Include(
+                     "~/Content/Kendo/kendo.common.min.css",
+                     "~/Content/Kendo/kendo.metro.min.css"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/materialize/css/materialize.css",
-                       "~/Content/materialize/font/material-design-icons/Material-Design-Icons.svg",
+                      "~/Content/materialize/font/material-design-icons/Material-Design-Icons.svg",
                       "~/Content/site.css",
                       "~/Content/JQueryUI/themes/base/jquery.ui.all.css",
                       "~/Content/ChatStyle.css",
                       "~/Content/JQueryUI/jquery.datetimepicker.css",
                       "~/Content/Gallery/custom.css",
-                      "~/Content/Gallery/elastislide.css"));
+                      "~/Content/Gallery/elastislide.css",
+                      "~/Scripts/Kendo/kendo.common.min.css",
+                      "~/Scripts/Kendo/kendo.aspnetmvc.min.css",
+                      "~/Scripts/Kendo/kendo.metroblack.min.css"));
         }
     }
 }

@@ -72,6 +72,14 @@
     </div>
 </div>
 
+
+<div class="file-field input-field row center">
+    <div class="btn col m12">
+        <span>Upload Images</span>
+        <input type="file" multiple class="btn col m12">
+    </div>
+</div>
+
 @if (Model.Images.Count > 0)
 {
     <div class="gallery">
@@ -299,7 +307,7 @@
                 success: function (res) {
                     console.log("Joined User");
                     document.location = document.location;
-                   
+
                 },
                 error: function (res) { console.log(res); }
             });

@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿
+<div class="container">
     <div>
         <div class="row">
             <div>
@@ -18,13 +19,22 @@
         </div>
     </div>
     <br />
-    <div>
-        <div class="row">
-            <div class="col m3 center"><strong>Creator</strong></div>
-            <div class="col m3 center"><strong>Created On</strong></div>
-            <div class="col m3 center"><strong>Participants</strong></div>
-            <div class="col m3 center"><strong>Route</strong></div>
-        </div>
-
-    </div>
 </div>
+
+@(Html
+    .Kendo()
+    .Grid<BulBike.Web.Models.TripViewModels.TripResponseModel>()
+    .Name("sfkjagohsh")
+    .Columns(columns =>
+    {
+        columns.Bound(col => col.Creator);
+        columns.Bound(col => col.CreatedOn);
+        columns.Bound(col => col.Participants);
+        columns.Bound(col => col.Route);
+    }
+
+))
+
+@section scripts{
+    @Scripts.Render("~/bundles/kendojs")
+}
