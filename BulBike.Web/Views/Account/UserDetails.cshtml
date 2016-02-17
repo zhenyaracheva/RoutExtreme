@@ -1,4 +1,12 @@
-﻿@model BulBike.Web.Models.AccountViewModels.UserDetailsViewModel
+﻿@using BulBike.Web.Controllers;
+@using Microsoft.AspNet.Identity;
+
+@model BulBike.Web.Models.AccountViewModels.UserDetailsViewModel
+
+@{
+    var pic = ((BaseController)this.ViewContext.Controller).GetUserPictureId(this.User.Identity.GetUserId());
+}
+
 <div class="container">
     <div class="row center">
         <br />
@@ -7,7 +15,14 @@
             <div class="myBox container">
                 <div class="col-md-3 col-md-offset-1">
                     <div class="myBox">
-                        <img src="@Url.Action("GetImage", "Image", new { id = Model.ProfilePicId })" alt="@Model.UserName" class="profilePicture img-responsive" />
+                        @if (pic > 0)
+                        {
+                            <img src="@Url.Action("GetImage", "Image", new { id = Model.ProfilePicId })" alt="@Model.UserName" class="profilePicture img-responsive" />
+                        }
+                        else
+                        {
+                            <img src="https://lh4.googleusercontent.com/-mgfTo5JzHi4/U-RT9DzzD9I/AAAAAAAAAWE/cHmSDDtjCvE/default_profile_image.png" class="centered-profile-image" />
+                        }
                     </div>
                 </div>
                 <div class="col-md-3 text-left col-md-offset-1">

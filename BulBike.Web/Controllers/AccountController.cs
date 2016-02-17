@@ -17,29 +17,28 @@
     using AutoMapper.QueryableExtensions;
 
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IUserService userService;
         private IChatRoomService chatRooms;
 
-        //public AccountController(IUserService userService, IChatRoomService chatRooms) :
-        //    base(userService, chatRooms)
-        //{
-        //    this.userService = userService;
-        //    this.chatRooms = chatRooms;
-        //}
-        public AccountController()
+        public AccountController(IUserService userService, IChatRoomService chatRooms) :
+            base(userService, chatRooms)
         {
+            this.userService = userService;
+            this.chatRooms = chatRooms;
         }
+        //public AccountController()
+        //{
+        //}
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, IChatRoomService chatRooms)
+            :this(userService, chatRooms)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            this.userService = userService;
-            this.chatRooms = chatRooms;
         }
         
         //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -72,17 +71,17 @@
             }
         }
 
-        public ActionResult UserDetails()
+        public ActionResult UserDetails(string id)
         {
-            var username = this.User.Identity.GetUserName();
-            var userToSee = this.userService.GetByUsername(username).FirstOrDefault();
+            //var username = this.User.Identity.GetUserName();
+            //var userToSee = this.userService.GetByUsername(username).FirstOrDefault();
             //if (userToSee.UserName == "admin")
             //{
             //    return this.View();
             //}
 
             var result = this.userService
-                .GetByUsername(username)
+                .GetById(id)
                 .ProjectTo<UserDetailsViewModel>()
                 .FirstOrDefault();
 

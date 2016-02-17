@@ -1,6 +1,7 @@
 ﻿@using BulBike.Web.Models.TripViewModels
 @model TripResponseModel
 
+
 <div class="row">
     <div class="col m10">
         <h1 class="center">Trip Details</h1>
@@ -27,9 +28,7 @@
         }
     }
 </div>
-
 <hr />
-
 <div class="row">
     <div class="col m6">
         <div class="row">
@@ -64,22 +63,14 @@
                 @Model.StartPoint
             </div>
         </div>
-        <div class="row">
-            <div class="col m6">
-                <strong>Participiants: </strong>
-            </div>
-            <div class="col m6" id="users">
-                @string.Join(", ", Model.Participants)
-            </div>
-        </div>
-        <div class="row">
-            <div class="col m6">
-                <strong>Description: </strong>
-            </div>
-            <div class="col m6">
-                @Model.Description
-            </div>
-        </div>
+        @*<div class="row">
+                <div class="col m6">
+                    <strong>Participiants: </strong>
+                </div>
+                <div class="col m6" id="users">
+                    @string.Join(", ", Model.Participants)
+                </div>
+            </div>*@
     </div>
     <div class="col m6">
         <div id="map"></div>
@@ -92,22 +83,58 @@
     @Html.ActionLink("Add Picrutes", "AddImages", "Trip", new { id = Model.Id }, new { @class = "btn col m12" })
 </div>
 
-@if (Model.Images.Count > 0)
-{
-    <div class="gallery">
-        <!-- Elastislide Carousel -->
-        <ul id="carousel" class="elastislide-list">
-            @foreach (var pic in Model.Images)
+<ul class="collapsible" data-collapsible="accordion">
+    <li>
+        <div class="collapsible-header "><i class="material-icons">perm_media</i>Pictures</div>
+        @if (Model.Images.Count > 0)
+        {
+            <div class="gallery collapsible-body">
+                <!-- Elastislide Carousel -->
+                <ul id="carousel" class="elastislide-list">
+                    @foreach (var pic in Model.Images)
+                {
+                    var src = Url.Action("GetImage", "Image", new { id = @pic.Id });
+                        <li data-preview=@src><a href="#"><img src=@src alt="image04" /></a></li>
+                    }
+                </ul>
+                <div class="image-preview">
+                    <img id="preview" src="" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="collapsible-body"><p>No Photos yet</p></div>
+        }
+    </li>
+    <li>
+        <div class="collapsible-header "><i class="material-icons">subject</i>Description</div>
+        <div class="collapsible-body"><p>@Model.Description</p></div>
+    </li>
+    <li>
+        <div class="collapsible-header "><i class="material-icons">person_pin</i>Participiants</div>
+        <div class="collapsible-body" id="users">
+            @if (Model.Participants.Count > 0)
             {
-                var src = Url.Action("GetImage", "Image", new { id = @pic.Id });
-                <li data-preview=@src><a href="#"><img src=@src alt="image04" /></a></li>
+                <ul>
+                    @foreach (var user in Model.Participants)
+                    {
+                        <li class="center">
+                            <a href="'@Url.Action("UserDetails", "Account")' + '/' + @user.Id">@user.Username</a>
+                        </li>
+                    }
+                </ul>
             }
-        </ul>
-        <div class="image-preview">
-            <img id="preview" src="" />
+            else
+            {
+                <p>
+                    No Participants!
+                </p>
+            }
         </div>
-    </div>
-}
+    </li>
+</ul>
+
 @section scripts{
     <script>
         function initMap() {
@@ -310,7 +337,16 @@
                 success: function (res) {
                     console.log(res);
                     console.log("Joined User");
-                    $('#users').text(res.join(', '));
+
+                    var test = "";
+                    for (var i = 0, len = res.length; i < len; i++) {
+                        var url = '@Url.Action("UserDetails", "Account")' + '/' + res[i].id;
+                        test += '<li  class="center"><a href="' + url + '">' + res[i].username + '</a></li>'
+                    }
+
+                    $('#users').empty();
+                    $('#users').append(test);
+
                     $('#join').hide();
                     $('#joinOut').show();
 
@@ -326,7 +362,16 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     console.log("Removed User from trip");
-                    $('#users').text(res.join(', '));
+
+                    var test = "";
+                    for (var i = 0, len = res.length; i < len; i++) {
+                        var url = '@Url.Action("UserDetails", "Account")' + '/' + res[i].id;
+                        test += '<li class="center"><a href="' + url + '">' + res[i].username + '</a></li>'
+                    }
+
+                    $('#users').empty();
+                    $('#users').append(test);
+
                     $('#joinOut').hide();
                     $('#join').show();
                 },

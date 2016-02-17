@@ -1,18 +1,18 @@
 ﻿namespace BulBike.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Web.Mvc;
+
+    using AutoMapper.QueryableExtensions;
+    using BulBike.Models;
+    using Kendo.Mvc.Extensions;
+    using Microsoft.AspNet.Identity;
     using Models.TripViewModels;
     using Services.Contracts;
-    using System.Web.Mvc;
-    using System.Collections.Generic;
-    using BulBike.Models;
-    using Microsoft.AspNet.Identity;
-    using AutoMapper.QueryableExtensions;
-    using Kendo.Mvc.UI;
-    using Kendo.Mvc.Extensions;
-    using System.Web;
-    using System.IO;
+   
     public class TripController : BaseController
     {
         private ITripService trips;
@@ -90,7 +90,11 @@
                 this.trips.Update(trip);
 
                 var users = trip.Participants
-                                    .Select(x => x.UserName)
+                                    .Select(x => new
+                                    {
+                                        username= x.UserName,
+                                        id = x.Id
+                                    })
                                     .ToList();
 
                 return this.Json(users, JsonRequestBehavior.AllowGet);
@@ -117,7 +121,11 @@
                 this.trips.Update(trip);
 
                 var users = trip.Participants
-                                    .Select(x => x.UserName)
+                                   .Select(x => new
+                                   {
+                                       username = x.UserName,
+                                       id = x.Id
+                                   })
                                     .ToList();
 
                 return this.Json(users, JsonRequestBehavior.AllowGet);
@@ -146,8 +154,7 @@
 
             return Json(trip.Route, JsonRequestBehavior.AllowGet);
         }
-
-
+        
         public ActionResult All()
         {
             var trips = this.trips.GetAll()

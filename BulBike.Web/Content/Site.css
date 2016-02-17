@@ -129,28 +129,34 @@ html, body {
 }
 
 /*Upload images*/
- #uploads {
-      display:block;
-      position:relative;
-  } 
+#uploads {
+    display: block;
+    position: relative;
+}
 
-  #uploads li {
-      list-style:none;
-  }
+    #uploads li {
+        list-style: none;
+    }
 
-  #drop {
-      width: 90%;
-      height: 100px;
-      padding: 0.5em;
-      float: left;
-      margin: 10px;
-      border: 8px dotted grey;
-  }
+#drop {
+    width: 90%;
+    height: 100px;
+    padding: 0.5em;
+    float: left;
+    margin: 10px;
+    border: 8px dotted grey;
+}
 
-  #drop.hover {
-      border: 8px dotted green;
-  }
+    #drop.hover {
+        border: 8px dotted green;
+    }
 
-  #drop.err {
-      border: 8px dotted orangered;
-  }
+    #drop.err {
+        border: 8px dotted orangered;
+    }
+
+.allMapsList {
+    border: 1px solid black; 
+    width: 100%;
+    height: 130px;
+}

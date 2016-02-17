@@ -41,17 +41,33 @@
             var test = trip.Participants.Select(x => x.Username).ToList();
             var mapId = "map" + i;
 
-            <tr>
-                <td>@trip.Creator</td>
-                <td>@trip.CreatedOn</td>
-                <td>@trip.StartPoint</td>
-                <td>
-                    <div id=@mapId></div>
-                </td>
-            </tr>
+        <tr>
+            <td width="20%">@trip.Creator</td>
+            <td width="25%">@trip.CreatedOn</td>
+            <td width="25%">@trip.StartPoint</td>
+            <td width="30%">
+                <div id=@mapId class="allMapsList"></div>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+
+<div class="container">
+    <div class="row">
+        <div class="col m12 offset-m3">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script>
@@ -177,38 +193,35 @@
             var id = url.substring(url.lastIndexOf('/') + 1);
             var trips;
 
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetAllTripRoute", "Trip")' + '/' + id,
-                contentType: "application/json; charset=utf-8",
-                success: function (res) {
-                    trips = res;
+            var test = @Html.Raw(Json.Encode(Model));
+            console.log(test)
 
-                    console.log(trips)
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 10,
-                        center: { lat: res[0].lat, lng: res[0].lng },
-                        mapTypeControlOptions: {
-                            mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
-                        }
-                    });
+            for (var i = 0,len = test.length; i < len; i++) {
+
+                var trips = test[i].Route;
+
+                var id = 'map' + (i);
+                console.log(id);
+                var map = new google.maps.Map(document.getElementById(id), {
+                    zoom: 10,
+                    center: { lat: trips[0].lat, lng: trips[0].lng },
+                    mapTypeControlOptions: {
+                        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+                    }
+                });
 
 
-                    var flightPath = new google.maps.Polyline({
-                        path: trips,
-                        geodesic: true,
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 1.0,
-                        strokeWeight: 2
-                    });
+                var flightPath = new google.maps.Polyline({
+                    path: trips,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
 
-                    map.mapTypes.set('map_style', styledMap);
-                    flightPath.setMap(map);
-
-                },
-                error: function (res) { console.log(res); }
-            });
-
+                map.mapTypes.set('map_style', styledMap);
+                flightPath.setMap(map);
+            }
         }
     </script>
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
