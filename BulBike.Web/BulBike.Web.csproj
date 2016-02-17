@@ -259,6 +259,7 @@
     <Compile Include="Models\AccountViewModels\UserResponseModel.cs" />
     <Compile Include="Models\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
+    <Compile Include="Models\TripViewModels\TripAddImageViewModel.cs" />
     <Compile Include="Models\TripViewModels\TripRequestModel.cs" />
     <Compile Include="Models\LocationViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -527,12 +528,15 @@
     <Content Include="Views\Trip\Details.cshtml" />
     <Content Include="Views\Trip\All.cshtml" />
     <Content Include="Views\Trip\UpcommingTrips.cshtml" />
+    <Content Include="Views\Trip\AddImages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Aries\" />
     <Folder Include="Content\Grid\" />
     <Folder Include="Scripts\Grid\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Kendo\" />
     <Folder Include="Views\Message\" />
   </ItemGroup>
   <ItemGroup>

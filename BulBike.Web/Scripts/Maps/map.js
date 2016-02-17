@@ -5,6 +5,7 @@ function initMap() {
         mapOptions,
         marker,
         styles,
+        isStartPosition = true,
         route = [];
 
     styles = [
@@ -134,15 +135,46 @@ function initMap() {
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
 
-    //marker = new google.maps.Marker({
-    //    position: { lat: 42.6252706, lng: 25.3785853 },
-    //    map: map,
-    //    title: 'Hello World!'
-    //});
-
     google.maps.event.addListener(map, 'click', function (e) {
+
+        console.log(e);
+        //var res = e.split(" ");
+        //var lat = res[0];
+        //console.log(lat)
+        //var longT = res[1];
+        //console.log(longT)
+
+
+        if (isStartPosition) {
+           displayLocation(e.latLng.lat(), e.latLng.lng());
+           
+            isStartPosition = false;
+        }
+
         placeMarker(e.latLng, map);
     });
+
+    function displayLocation(latitude, longitude) {
+        var request = new XMLHttpRequest();
+
+        var method = 'GET';
+        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+        var async = true;
+        request.open(method, url, async);
+        request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200) {
+                var data = JSON.parse(request.responseText);
+                //var address = data.results[0];
+                console.log(data)
+                var city = data.results[0].address_components[2].long_name;
+                console.log(city)
+                $('#StartPoint').val(city)
+            }
+        };
+        request.send();
+    };
+
+
 
 
     function placeMarker(position, map) {

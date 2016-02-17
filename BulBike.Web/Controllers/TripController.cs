@@ -9,7 +9,10 @@
     using BulBike.Models;
     using Microsoft.AspNet.Identity;
     using AutoMapper.QueryableExtensions;
-
+    using Kendo.Mvc.UI;
+    using Kendo.Mvc.Extensions;
+    using System.Web;
+    using System.IO;
     public class TripController : BaseController
     {
         private ITripService trips;
@@ -39,28 +42,21 @@
                 var test = trip.Route.Substring(1, trip.Route.Length - 2);
                 var route = test.Split(new string[] { "),(" }, StringSplitOptions.RemoveEmptyEntries);
                 var locations = new List<Location>();
-
                 var startPos = route[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                var startLocation = new Location
-                {
-                    Latitude = double.Parse(startPos[0]),
-                    Longitude = double.Parse(startPos[1])
-                };
 
                 currentTrip = new Trip
                 {
                     CreatorId = this.User.Identity.GetUserId(),
                     Description = trip.Description,
                     StartDate = trip.StartDate,
-                    StartPoint = startLocation,
+                    StartPoint = trip.StartPoint,
 
                 };
 
                 this.trips.Add(currentTrip);
                 currentTrip.Route = locations;
-                currentTrip.Route.Add(startLocation);
 
-                for (int i = 1; i < route.Length; i++)
+                for (int i = 0; i < route.Length; i++)
                 {
                     var current = route[i].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     var location = new Location
@@ -93,7 +89,11 @@
                 trip.Participants.Add(user);
                 this.trips.Update(trip);
 
-                return this.RedirectToAction("Details", new { id = trip.Id });
+                var users = trip.Participants
+                                    .Select(x => x.UserName)
+                                    .ToList();
+
+                return this.Json(users, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -116,13 +116,18 @@
                 trip.Participants.Remove(user);
                 this.trips.Update(trip);
 
-                return this.RedirectToAction("Details", new { id = trip.Id });
+                var users = trip.Participants
+                                    .Select(x => x.UserName)
+                                    .ToList();
+
+                return this.Json(users, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 throw new Exception("Not Found Trip!");
             }
         }
+
         public ActionResult Details(int id)
         {
             var trip = this.trips.GetById(id)
@@ -142,9 +147,60 @@
             return Json(trip.Route, JsonRequestBehavior.AllowGet);
         }
 
+
         public ActionResult All()
         {
-            return View();
+            var trips = this.trips.GetAll()
+                                  .ProjectTo<TripResponseModel>()
+                                  .ToList();
+            return View(trips);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult AddImages(int id)
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public ActionResult AddImages(TripAddImageViewModel tripImages)
+        {
+            var test = Request.Files.Count;
+            var test12 = Request.Files;
+
+            if (tripImages.Images.Count() > 0)
+            {
+
+                var trip = this.trips.GetById(tripImages.TripID)
+                                     .FirstOrDefault();
+
+                foreach (var uploadedFile in tripImages.Images)
+                {
+                    if (uploadedFile != null && uploadedFile.ContentLength > 0)
+                    {
+                        Image image = null;
+                        using (var memory = new MemoryStream())
+                        {
+                            uploadedFile.InputStream.CopyTo(memory);
+                            var content = memory.GetBuffer();
+
+                            image = new Image
+                            {
+                                Content = content,
+                                FileExtension = uploadedFile.FileName.Split(new[] { '.' }).Last()
+                            };
+
+                            trip.Images.Add(image);
+                        }
+                    }
+                }
+
+                this.trips.Update(trip);
+                return this.RedirectToAction("Details", new { id = trip.Id});
+            }
+
+            return null;
         }
 
         public ActionResult UpcommingTrips()

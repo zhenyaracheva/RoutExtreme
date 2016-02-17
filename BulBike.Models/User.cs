@@ -30,14 +30,14 @@
         public virtual Image ProfilePic { get; set; }
 
         public string ConnectionId { get; set; }
-
-        public ICollection<ChatRoom> ChatRooms
+        
+        public virtual ICollection<ChatRoom> ChatRooms
         {
             get { return this.chatRooms; }
             set { this.chatRooms = value; }
         }
 
-        public ICollection<Trip> Trips
+        public virtual ICollection<Trip> Trips
         {
             get { return this.trips; }
             set { this.trips = value; }

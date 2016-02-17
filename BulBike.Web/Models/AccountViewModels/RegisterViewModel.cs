@@ -42,7 +42,7 @@
         [UIHint("Password")]
         public string ConfirmPassword { get; set; }
 
-        [UIHint("UploadImage")]
+        //[UIHint("UploadImage")]
         public HttpPostedFileBase ProfilePic { get; set; }
     }
 }

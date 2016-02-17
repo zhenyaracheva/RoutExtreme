@@ -17,26 +17,36 @@
     using AutoMapper.QueryableExtensions;
 
     [Authorize]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IUserService userService;
         private IChatRoomService chatRooms;
 
-        public AccountController(IUserService userService, IChatRoomService chatRooms) :
-            base(userService, chatRooms)
+        //public AccountController(IUserService userService, IChatRoomService chatRooms) :
+        //    base(userService, chatRooms)
+        //{
+        //    this.userService = userService;
+        //    this.chatRooms = chatRooms;
+        //}
+        public AccountController()
         {
-            this.userService = userService;
-            this.chatRooms = chatRooms;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, IChatRoomService chatRooms)
-            : this(userService, chatRooms)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            this.userService = userService;
+            this.chatRooms = chatRooms;
         }
+        
+        //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        //{
+        //    UserManager = userManager;
+        //    SignInManager = signInManager;
+        //}
 
         public ApplicationSignInManager SignInManager
         {
@@ -164,6 +174,7 @@
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Register()
         {
             return View();

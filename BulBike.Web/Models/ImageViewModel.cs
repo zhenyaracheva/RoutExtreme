@@ -5,6 +5,8 @@
 
     public class ImageViewModel : IMapFrom<Image>
     {
+        public int Id { get; set; }
+
         public byte[] Content { get; set; }
 
         public string FileExtension { get; set; }

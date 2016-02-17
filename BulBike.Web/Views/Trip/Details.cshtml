@@ -12,9 +12,15 @@
             <div id="joinOut" class="col m2 center ver">
                 <button class="btn" onclick="removeUser()">Join Out</button>
             </div>
+            <div id="join" class="col m2 center ver" style="display:none">
+                <button class="btn" onclick="joinUser()">Join</button>
+            </div>
         }
         else
         {
+            <div id="joinOut" class="col m2 center ver" style="display:none">
+                <button class="btn" onclick="removeUser()">Join Out</button>
+            </div>
             <div id="join" class="col m2 center ver">
                 <button class="btn" onclick="joinUser()">Join</button>
             </div>
@@ -52,9 +58,17 @@
         </div>
         <div class="row">
             <div class="col m6">
-                <strong>Participiants: </strong>
+                <strong>Start Point: </strong>
             </div>
             <div class="col m6">
+                @Model.StartPoint
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m6">
+                <strong>Participiants: </strong>
+            </div>
+            <div class="col m6" id="users">
                 @string.Join(", ", Model.Participants)
             </div>
         </div>
@@ -73,11 +87,9 @@
 </div>
 
 
-<div class="file-field input-field row center">
-    <div class="btn col m12">
-        <span>Upload Images</span>
-        <input type="file" multiple class="btn col m12">
-    </div>
+
+<div class="row">
+    @Html.ActionLink("Add Picrutes", "AddImages", "Trip", new { id = Model.Id }, new { @class = "btn col m12" })
 </div>
 
 @if (Model.Images.Count > 0)
@@ -85,21 +97,12 @@
     <div class="gallery">
         <!-- Elastislide Carousel -->
         <ul id="carousel" class="elastislide-list">
-            <li data-preview="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l"><a href="#"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l" alt="image04" /></a></li>
-            <li data-preview="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg"><a href="#"><img src="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg" alt="image05" /></a></li>
-            <li data-preview="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff"><a href="#"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff" alt="image06" /></a></li>
-            <li data-preview="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l"><a href="#"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l" alt="image04" /></a></li>
-            <li data-preview="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg"><a href="#"><img src="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg" alt="image05" /></a></li>
-            <li data-preview="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff"><a href="#"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff" alt="image06" /></a></li>
-            <li data-preview="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l"><a href="#"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l" alt="image04" /></a></li>
-            <li data-preview="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg"><a href="#"><img src="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg" alt="image05" /></a></li>
-            <li data-preview="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff"><a href="#"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff" alt="image06" /></a></li>
-            <li data-preview="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l"><a href="#"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyJPu_QE-sCgxsCmBnbR81fH6mW2_dpLGDniFATikA9hoSB5ZEOVvic5_l" alt="image04" /></a></li>
-            <li data-preview="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg"><a href="#"><img src="https://www.ucl.ac.uk/news/news-articles/1213/muscle-fibres-heart.jpg" alt="image05" /></a></li>
-            <li data-preview="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff"><a href="#"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQB9mXMGMFU-U5KpSRONJeG2khf_bZ8jICC4fiwxu6ZeWqTLfff" alt="image06" /></a></li>
+            @foreach (var pic in Model.Images)
+            {
+                var src = Url.Action("GetImage", "Image", new { id = @pic.Id });
+                <li data-preview=@src><a href="#"><img src=@src alt="image04" /></a></li>
+            }
         </ul>
-        <!-- End Elastislide Carousel -->
-
         <div class="image-preview">
             <img id="preview" src="" />
         </div>
@@ -245,7 +248,6 @@
                         }
                     });
 
-
                     var flightPath = new google.maps.Polyline({
                         path: trips,
                         geodesic: true,
@@ -263,6 +265,7 @@
 
         }
     </script>
+
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
     @Scripts.Render("~/bundles/galleryScripts")
     <script type="text/javascript">
@@ -305,8 +308,11 @@
                 url: '@Url.Action("JoinUser", "Trip")' + '/' + id,
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
+                    console.log(res);
                     console.log("Joined User");
-                    document.location = document.location;
+                    $('#users').text(res.join(', '));
+                    $('#join').hide();
+                    $('#joinOut').show();
 
                 },
                 error: function (res) { console.log(res); }
@@ -320,7 +326,9 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     console.log("Removed User from trip");
-                    document.location = document.location;
+                    $('#users').text(res.join(', '));
+                    $('#joinOut').hide();
+                    $('#join').show();
                 },
                 error: function (res) { console.log(res); }
             });

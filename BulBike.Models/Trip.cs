@@ -26,9 +26,7 @@
 
         public string Description { get; set; }
 
-        public int StartPointId { get; set; }
-
-        public virtual Location StartPoint { get; set; }
+        public string StartPoint { get; set; }
         
         public string CreatorId { get; set; }
 
