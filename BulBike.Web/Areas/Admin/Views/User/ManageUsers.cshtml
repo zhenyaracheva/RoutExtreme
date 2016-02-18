@@ -4,17 +4,7 @@
       {
           columns.Bound(c => c.FirstName);
           columns.Bound(c => c.LastName);
-          columns.Bound(c => c.ConnectionId);
           columns.Bound(c => c.Email);
-          columns.Bound(c => c.EmailConfirmed);
-          columns.Bound(c => c.PasswordHash);
-          columns.Bound(c => c.SecurityStamp);
-          columns.Bound(c => c.PhoneNumber);
-          columns.Bound(c => c.PhoneNumberConfirmed);
-          columns.Bound(c => c.TwoFactorEnabled);
-          columns.Bound(c => c.LockoutEndDateUtc);
-          columns.Bound(c => c.LockoutEnabled);
-          columns.Bound(c => c.AccessFailedCount);
           columns.Bound(c => c.UserName);
           columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
       })

@@ -9,7 +9,8 @@
     using BulBike.Data;
     using Services.Contracts;
     using Web.Controllers;
-
+    using Models;
+    using AutoMapper.QueryableExtensions;
     public class UserController : BaseController
     {
         private BulBikeDbContext db = new BulBikeDbContext();
@@ -27,24 +28,9 @@
 
         public ActionResult Users_Read([DataSourceRequest]DataSourceRequest request)
         {
-            IQueryable<User> users = db.Users;
-            DataSourceResult result = users.ToDataSourceResult(request, user => new {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                ConnectionId = user.ConnectionId,
-                Email = user.Email,
-                EmailConfirmed = user.EmailConfirmed,
-                PasswordHash = user.PasswordHash,
-                SecurityStamp = user.SecurityStamp,
-                PhoneNumber = user.PhoneNumber,
-                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                TwoFactorEnabled = user.TwoFactorEnabled,
-                LockoutEndDateUtc = user.LockoutEndDateUtc,
-                LockoutEnabled = user.LockoutEnabled,
-                AccessFailedCount = user.AccessFailedCount,
-                UserName = user.UserName
-            });
+            DataSourceResult result = this.UserService.GetAll()
+                                                     .ProjectTo<ResponseUserViewModel>()
+                                                     .ToDataSourceResult(request);
 
             return Json(result);
         }
