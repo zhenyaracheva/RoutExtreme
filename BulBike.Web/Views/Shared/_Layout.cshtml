@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BulBike</title>
-    @Styles.Render("~/Content/kendo-css")
+    <title>BulBike</title>   
     @Styles.Render("http://fonts.googleapis.com/icon?family=Material+Icons")
-    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css", "~/Content/kendo-css")  
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/kendojs");
+   
   
 </head>
 <body>

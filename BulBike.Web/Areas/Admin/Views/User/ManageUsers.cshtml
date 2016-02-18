@@ -1,5 +1,4 @@
-﻿
-@(Html.Kendo().Grid<BulBike.Models.User>()
+﻿@(Html.Kendo().Grid<BulBike.Models.User>()
       .Name("grid")
       .Columns(columns =>
       {
@@ -36,6 +35,7 @@
           .Model(model => model.Id(p => p.Id))
           .Read(read => read.Action("Users_Read", "User"))
           .Create(create => create.Action("Users_Create", "User"))
+          .Update(update=> update.Action("Users_Update", "User"))
           .Destroy(destroy => destroy.Action("Users_Destroy", "User"))
       )
 )

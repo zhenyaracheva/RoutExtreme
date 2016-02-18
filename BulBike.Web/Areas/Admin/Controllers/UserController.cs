@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-namespace BulBike.Web.Areas.Admin.Controllers
+﻿namespace BulBike.Web.Areas.Admin.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using BulBike.Models;
     using BulBike.Data;
+    using Services.Contracts;
+    using Web.Controllers;
 
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private BulBikeDbContext db = new BulBikeDbContext();
+        
+        public UserController(IUserService userService, IChatRoomService chatRoomService)
+            : base(userService, chatRoomService)
+        {
+        }
+
 
         public ActionResult ManageUsers()
         {
@@ -47,6 +52,38 @@ namespace BulBike.Web.Areas.Admin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Users_Create([DataSourceRequest]DataSourceRequest request, User user)
         {
+            if (ModelState.IsValid)
+            {
+                var entity = new User
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    ConnectionId = user.ConnectionId,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
+                    PasswordHash = user.PasswordHash,
+                    SecurityStamp = user.SecurityStamp,
+                    PhoneNumber = user.PhoneNumber,
+                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                    TwoFactorEnabled = user.TwoFactorEnabled,
+                    LockoutEndDateUtc = user.LockoutEndDateUtc,
+                    LockoutEnabled = user.LockoutEnabled,
+                    AccessFailedCount = user.AccessFailedCount,
+                    UserName = user.UserName
+                };
+
+                db.Users.Add(entity);
+                db.SaveChanges();
+                user.Id = entity.Id;
+            }
+
+            return Json(new[] { user }.ToDataSourceResult(request, ModelState));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Users_Update([DataSourceRequest]DataSourceRequest request, User user)
+        {
+            // suppose not to work copy/paste from create!
             if (ModelState.IsValid)
             {
                 var entity = new User

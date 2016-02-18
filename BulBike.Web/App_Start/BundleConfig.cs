@@ -56,10 +56,7 @@ namespace BulBike.Web
                       "~/Content/ChatStyle.css",
                       "~/Content/JQueryUI/jquery.datetimepicker.css",
                       "~/Content/Gallery/custom.css",
-                      "~/Content/Gallery/elastislide.css",
-                      "~/Scripts/Kendo/kendo.common.min.css",
-                      "~/Scripts/Kendo/kendo.aspnetmvc.min.css",
-                      "~/Scripts/Kendo/kendo.metroblack.min.css"));
+                      "~/Content/Gallery/elastislide.css"));
         }
     }
 }
