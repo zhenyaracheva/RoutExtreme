@@ -12,7 +12,7 @@
     using Microsoft.AspNet.Identity;
     using Models.TripViewModels;
     using Services.Contracts;
-   
+
     public class TripController : BaseController
     {
         private ITripService trips;
@@ -92,7 +92,7 @@
                 var users = trip.Participants
                                     .Select(x => new
                                     {
-                                        username= x.UserName,
+                                        username = x.UserName,
                                         id = x.Id
                                     })
                                     .ToList();
@@ -154,13 +154,40 @@
 
             return Json(trip.Route, JsonRequestBehavior.AllowGet);
         }
-        
-        public ActionResult All()
+
+        public ActionResult All(int id = 1, int tripsPerPage = 5)
         {
+            var page = id;
+            var allTrips = this.trips.GetAll().Count();
+
+
+            var totalPages = (int)Math.Ceiling(allTrips / ((decimal)tripsPerPage));
+            if (page - 1 < 0)
+            {
+                page = 1;
+            }
+            else if (page - 1 >= totalPages)
+            {
+                page = totalPages;
+            }
+            
+            var itemsToSkip = (page - 1) * tripsPerPage;
+
             var trips = this.trips.GetAll()
+                                  .OrderBy(x => x.CreatedOn)
+                                  .Skip(itemsToSkip)
+                                  .Take(tripsPerPage)
                                   .ProjectTo<TripResponseModel>()
                                   .ToList();
-            return View(trips);
+            var tripModel = new TripPagableModel
+            {
+                CurrentPage = page,
+                TotalPages = totalPages,
+                AllTrips = trips
+            };
+
+
+            return View(tripModel);
         }
 
         [HttpGet]
@@ -204,7 +231,7 @@
                 }
 
                 this.trips.Update(trip);
-                return this.RedirectToAction("Details", new { id = trip.Id});
+                return this.RedirectToAction("Details", new { id = trip.Id });
             }
 
             return null;

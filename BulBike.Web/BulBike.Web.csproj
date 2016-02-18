@@ -235,6 +235,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Models\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\TripViewModels\TripAddImageViewModel.cs" />
+    <Compile Include="Models\TripViewModels\TripPagableModel.cs" />
     <Compile Include="Models\TripViewModels\TripRequestModel.cs" />
     <Compile Include="Models\LocationViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -451,6 +453,8 @@
     <Content Include="Content\Kendo\kendo.common.min.css.map" />
     <Content Include="Content\Kendo\kendo.metro.min.css.map" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ManageUsers.cshtml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\Chat\chat.js" />
     <Content Include="Scripts\Gallery\jquery.elastislide.js" />
@@ -534,14 +538,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Admin\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\Grid\" />
     <Folder Include="Scripts\Grid\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Kendo\" />
     <Folder Include="Views\Message\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

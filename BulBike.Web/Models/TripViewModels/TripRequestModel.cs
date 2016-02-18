@@ -12,6 +12,7 @@
         [UIHint("MultiLineText")]
         public string Description { get; set; }
 
+        [Required]
         [UIHint("DatePicker")]
         public DateTime StartDate { get; set; }
 

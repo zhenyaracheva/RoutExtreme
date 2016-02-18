@@ -26,9 +26,7 @@
         public ICollection<ImageViewModel> Images { get; set; }
 
         public ICollection<UserResponseModel> Participants { get; set; }
-
-        public object Test { get; set; }
-
+        
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Trip, TripResponseModel>("TripDisplay")
