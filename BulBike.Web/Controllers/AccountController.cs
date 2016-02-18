@@ -206,8 +206,9 @@
                 }
 
                 var user = new User { UserName = model.Username, Email = model.Email, ProfilePic = image, FirstName = model.FirstName, LastName = model.LastName };
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
-
+               
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -217,6 +218,7 @@
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    UserManager.AddToRole(user.Id, "user");
 
                     return RedirectToAction("Index", "Home");
                 }

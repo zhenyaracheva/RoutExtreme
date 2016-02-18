@@ -29,6 +29,7 @@
             <th data-field="name">Created On</th>
             <th data-field="price">Start Point</th>
             <th data-field="price">Route</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -42,11 +43,14 @@
             var mapId = "map" + i;
 
         <tr>
-            <td width="20%">@trip.Creator</td>
-            <td width="25%">@trip.CreatedOn</td>
-            <td width="25%">@trip.StartPoint</td>
-            <td width="30%">
+            <td width="15%">@trip.Creator</td>
+            <td width="20%">@trip.CreatedOn</td>
+            <td width="20%">@trip.StartPoint</td>
+            <td width="35%">
                 <div id=@mapId class="allMapsList"></div>
+            </td>
+            <td width="10%">
+                <a href="@Url.Action("Details", "Trip", new { id = trip.Id })" class="btn waves-effect waves-red">Details</a>
             </td>
         </tr>
         }

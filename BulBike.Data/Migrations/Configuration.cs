@@ -1,5 +1,8 @@
 namespace BulBike.Data.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,18 +18,39 @@ namespace BulBike.Data.Migrations
 
         protected override void Seed(BulBike.Data.BulBikeDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            context.Configuration.LazyLoadingEnabled = true;
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<User>(new UserStore<User>(context));
+
+            userManager.PasswordValidator = new MinimumLengthValidator(5);
+
+            if (!roleManager.RoleExists("admin"))
+            {
+                roleManager.Create(new IdentityRole("admin"));
+            }
+
+            if (!roleManager.RoleExists("user"))
+            {
+                roleManager.Create(new IdentityRole("user"));
+            }
+
+            var user = new User
+            {
+                UserName = "admin",
+                Email = "admin@gmail.com",
+                FirstName = "Admin",
+                LastName = "Admin"
+            };
+
+            if (userManager.FindByName("admin") == null)
+            {
+                var result = userManager.Create(user, "admin");
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, "admin");
+                }
+            }
         }
     }
 }

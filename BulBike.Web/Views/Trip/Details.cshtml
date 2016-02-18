@@ -63,14 +63,6 @@
                 @Model.StartPoint
             </div>
         </div>
-        @*<div class="row">
-                <div class="col m6">
-                    <strong>Participiants: </strong>
-                </div>
-                <div class="col m6" id="users">
-                    @string.Join(", ", Model.Participants)
-                </div>
-            </div>*@
     </div>
     <div class="col m6">
         <div id="map"></div>
@@ -83,7 +75,7 @@
     @Html.ActionLink("Add Picrutes", "AddImages", "Trip", new { id = Model.Id }, new { @class = "btn col m12" })
 </div>
 
-<ul class="collapsible" data-collapsible="accordion">
+<ul class="collapsible popout" data-collapsible="accordion">
     <li>
         <div class="collapsible-header "><i class="material-icons">perm_media</i>Pictures</div>
         @if (Model.Images.Count > 0)
@@ -119,8 +111,8 @@
                 <ul>
                     @foreach (var user in Model.Participants)
                     {
-                        <li class="center">
-                            <a href="'@Url.Action("UserDetails", "Account")' + '/' + @user.Id">@user.Username</a>
+                        <li class="row center">
+                            <a href="@Url.Action("UserDetails", "Account", new { id = user.Id })" class="btn col m12">@user.Username</a>
                         </li>
                     }
                 </ul>
@@ -340,8 +332,10 @@
 
                     var test = "";
                     for (var i = 0, len = res.length; i < len; i++) {
+                      
                         var url = '@Url.Action("UserDetails", "Account")' + '/' + res[i].id;
-                        test += '<li  class="center"><a href="' + url + '">' + res[i].username + '</a></li>'
+                        test += '<li  class="row center"><a href="' + url + '" class="btn col m12">' + res[i].username + '</a></li>'
+
                     }
 
                     $('#users').empty();
@@ -364,9 +358,13 @@
                     console.log("Removed User from trip");
 
                     var test = "";
-                    for (var i = 0, len = res.length; i < len; i++) {
-                        var url = '@Url.Action("UserDetails", "Account")' + '/' + res[i].id;
-                        test += '<li class="center"><a href="' + url + '">' + res[i].username + '</a></li>'
+                    if (res.length > 0) {
+                        for (var i = 0, len = res.length; i < len; i++) {
+                            var url = '@Url.Action("UserDetails", "Account")' + '/' + res[i].id;
+                            test += '<li class="row center"><a href="' + url + '" class="btn col m12>' + res[i].username + '</a></li>'
+                        }
+                    } else {
+                        test = "<p> No Participants!</p>";
                     }
 
                     $('#users').empty();
