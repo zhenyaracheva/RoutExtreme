@@ -234,6 +234,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -449,6 +450,7 @@
     <Content Include="Content\Kendo\kendo.common.core.min.css.map" />
     <Content Include="Content\Kendo\kendo.common.min.css.map" />
     <Content Include="Content\Kendo\kendo.metro.min.css.map" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\Chat\chat.js" />
     <Content Include="Scripts\Gallery\jquery.elastislide.js" />
@@ -532,7 +534,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Aries\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\Grid\" />
     <Folder Include="Scripts\Grid\" />
     <Folder Include="Views\Base\" />
