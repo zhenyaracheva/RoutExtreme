@@ -4,6 +4,11 @@
 
     public class ChatMessage
     {
+        public ChatMessage()
+        {
+            this.CreatedOn = DateTime.UtcNow;
+        }
+
         public int Id { get; set; }
 
         public string AuthorId { get; set; }

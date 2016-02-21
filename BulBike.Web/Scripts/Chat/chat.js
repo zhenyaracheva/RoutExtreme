@@ -11,17 +11,6 @@
 
     function registerEvents(chathub) {
 
-        //$('#btnSendMsg').click(function () {
-
-        //    var msg = $("#txtMessage").val();
-        //    if (msg.length > 0) {
-
-        //        var username = $('#hdUsername').val();
-        //        chathub.server.sendMessageToAll(username, msg);
-        //        $("#txtMessage").val('');
-        //    }
-        //});
-
         $("#txtNickname").keypress(function (e) {
             if (e.which == 13) {
                 $("#btnStartChat").click();
@@ -39,8 +28,7 @@
         chathub.client.onConnected = function (allusers, messages) {
 
             var users = JSON.parse(allusers);
-            for (i = 0; i < users.length; i++) {
-                console.log(users[i])
+            for (i = 0, len = users.length; i < len; i++) {
                 addRoom(chathub, users[i].ConnectionId, users[i].Name);
             }
         }
@@ -71,9 +59,17 @@
 
             $('#' + ctrid).find('#divMessage').append('<div class="message"><span class="username">' + fromusername + '</span>: ' + message + '</div>');
 
-            // set scrollbar
             var height = $('#' + ctrid).find('#divMessage')[0].scrollHeight;
             $('#' + ctrid).find('#divMessage').scrollTop(height);
+        }
+
+        chathub.client.addLastMessages = function (messages) {
+            var all = JSON.parse(messages);
+
+            for (var i = 0, len = all.length; i < len; i++) {
+
+               
+            }
         }
     }
 
@@ -94,13 +90,13 @@
 
     }
 
-    function openPrivateChatWindow(chathub, id, username) {
+    function openPrivateChatWindow(chathub, id, room) {
 
         var ctrid = 'private_' + id;
 
         if ($('#' + ctrid).length > 0) return;
 
-        createPrivateChatWindow(chathub, id, ctrid, username);
+        createPrivateChatWindow(chathub, id, ctrid, room);
 
     }
 
@@ -124,6 +120,7 @@
                 '</div>';
 
         var $div = $(div);
+        chathub.server.getRoomMessages(room);
 
         // delete button image
         $div.find('#imgDelete').click(function () {
