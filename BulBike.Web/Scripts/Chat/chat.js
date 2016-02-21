@@ -1,230 +1,167 @@
-﻿//$(function () {
-//    // declare a proxy to reference the hub.
-    
-//    var chathub = $.connection.chathub;
-//    debugger
-//    registerclientmethods(chathub);
+﻿$(function () {
+    // declare a proxy to reference the hub.
 
-//    // start hub
-//    $.connection.hub.start().done(function () {
+    var chathub = $.connection.chatHub;
+    registerClientMethods(chathub);
 
-//        registerevents(chathub)
+    // start hub
+    $.connection.hub.start().done(function () {
+        registerEvents(chathub)
+    });
 
-//    });
+    function registerEvents(chathub) {
 
-//});
+        //$('#btnSendMsg').click(function () {
 
-//function registerevents(chathub) {
+        //    var msg = $("#txtMessage").val();
+        //    if (msg.length > 0) {
 
-//    var name = $("#hdusername").val();
-//    if (name.length > 0) {
-//        chathub.server.connect(name);
-//    }
+        //        var username = $('#hdUsername').val();
+        //        chathub.server.sendMessageToAll(username, msg);
+        //        $("#txtMessage").val('');
+        //    }
+        //});
 
-//    $('#btnsendmsg').click(function () {
+        $("#txtNickname").keypress(function (e) {
+            if (e.which == 13) {
+                $("#btnStartChat").click();
+            }
+        });
 
-//        var msg = $("#txtmessage").val();
-//        if (msg.length > 0) {
+        $("#txtMessage").keypress(function (e) {
+            if (e.which == 13) {
+                $('#btnSendMsg').click();
+            }
+        });
+    }
 
-//            var username = $('#hdusername').val();
-//            chathub.server.sendmessagetoall(username, msg);
-//            $("#txtmessage").val('');
-//        }
-//    });
+    function registerClientMethods(chathub) {
+        chathub.client.onConnected = function (allusers, messages) {
 
-//    $("#txtnickname").keypress(function (e) {
-//        if (e.which == 13) {
-//            $("#btnstartchat").click();
-//        }
-//    });
+            var users = JSON.parse(allusers);
+            for (i = 0; i < users.length; i++) {
+                console.log(users[i])
+                addRoom(chathub, users[i].ConnectionId, users[i].Name);
+            }
+        }
 
-//    $("#txtmessage").keypress(function (e) {
-//        if (e.which == 13) {
-//            $('#btnsendmsg').click();
-//        }
-//    });
-//}
+        chathub.client.onUserDisconnected = function (id, username) {
 
-//function registerclientmethods(chathub) {
+            $('#' + id).remove();
 
-//    // calls when user successfully logged in
-//    chathub.client.onconnected = function (id, username, allusers, messages) {
+            var ctrid = 'private_' + id;
+            $('#' + ctrid).remove();
 
-//        $('#hdid').val(id);
-//        $('#hdusername').val(username);
-//        $('#spanuser').html(username);
 
-//        // add all users
-//        for (i = 0; i < allusers.length; i++) {
+            var disc = $('<div class="disconnect">"' + username + '" logged off.</div>');
 
-//            adduser(chathub, allusers[i].connectionid, allusers[i].username);
-//        }
+            $(disc).hide();
+            $('#divusers2').prepend(disc);
+            $(disc).fadein(200).delay(2000).fadeout(200);
 
-//        // add existing messages
-//        for (i = 0; i < messages.length; i++) {
+        }
 
-//            addmessage(messages[i].username, messages[i].message);
-//        }
-//    }
+        chathub.client.sendPrivateMessage = function (windowid, fromusername, message) {
 
-//    // on new user connected
-//    chathub.client.onnewuserconnected = function (id, name) {
-//        adduser(chathub, id, name);
-//    }
+            var ctrid = 'private_' + windowid;
 
-//    // on user disconnected
-//    chathub.client.onuserdisconnected = function (id, username) {
+            if ($('#' + ctrid).length == 0) {
+                createPrivateChatWindow(chathub, windowid, ctrid, fromusername);
+            }
 
-//        $('#' + id).remove();
+            $('#' + ctrid).find('#divMessage').append('<div class="message"><span class="username">' + fromusername + '</span>: ' + message + '</div>');
 
-//        var ctrid = 'private_' + id;
-//        $('#' + ctrid).remove();
+            // set scrollbar
+            var height = $('#' + ctrid).find('#divMessage')[0].scrollHeight;
+            $('#' + ctrid).find('#divMessage').scrollTop(height);
+        }
+    }
 
+    function addRoom(chathub, id, name) {
 
-//        var disc = $('<div class="disconnect">"' + username + '" logged off.</div>');
+        var userid = $('#hdid').val();
+        var test = '<a id="' + id + '" class="user" >' + name + '<a><br/>';
+        var code = $(test)
+        $(code).dblclick(function () {
 
-//        $(disc).hide();
-//        $('#divusers2').prepend(disc);
-//        $(disc).fadein(200).delay(2000).fadeout(200);
+            var id = $(this).attr('id');
 
-//    }
+            if (userid != id)
+                openPrivateChatWindow(chathub, id, name);
+        });
 
-//    chathub.client.messagereceived = function (username, message) {
+        $("#divUsers2").append(code);
 
-//        addmessage(username, message);
-//    }
+    }
 
+    function openPrivateChatWindow(chathub, id, username) {
 
-//    chathub.client.sendprivatemessage = function (windowid, fromusername, message) {
+        var ctrid = 'private_' + id;
 
-//        var ctrid = 'private_' + windowid;
+        if ($('#' + ctrid).length > 0) return;
 
+        createPrivateChatWindow(chathub, id, ctrid, username);
 
-//        if ($('#' + ctrid).length == 0) {
+    }
 
-//            createprivatechatwindow(chathub, windowid, ctrid, fromusername);
+    function createPrivateChatWindow(chathub, userid, ctrid, room) {
 
-//        }
+        var div = '<div id="' + ctrid + '" class="ui-widget-content draggable" rel="0">' +
+                   '<div class="header">' +
+                      '<div  style="float:right;">' +
+                          '<img id="imgDelete"  style="cursor:pointer;" src="/images/delete.png"/>' +
+                       '</div>' +
 
-//        $('#' + ctrid).find('#divmessage').append('<div class="message"><span class="username">' + fromusername + '</span>: ' + message + '</div>');
+                       '<span class="selText" rel="0">' + room + '</span>' +
+                   '</div>' +
+                   '<div id="divMessage" class="messageArea">' +
 
-//        // set scrollbar
-//        var height = $('#' + ctrid).find('#divmessage')[0].scrollheight;
-//        $('#' + ctrid).find('#divmessage').scrolltop(height);
+                   '</div>' +
+                   '<div class="buttonBar">' +
+                      '<input id="txtPrivateMessage" class="msgText" type="text"   />' +
+                      '<input id="btnSendMessage" class="submitButton button" type="button" value="send"   />' +
+                   '</div>' +
+                '</div>';
 
-//    }
+        var $div = $(div);
 
-//}
+        // delete button image
+        $div.find('#imgDelete').click(function () {
+            $('#' + ctrid).remove();
+        });
 
-//function adduser(chathub, id, name) {
+        // send button event
+        $div.find("#btnSendMessage").click(function () {
 
-//    var userid = $('#hdid').val();
+            $textbox = $div.find("#txtPrivateMessage");
+            var msg = $textbox.val();
+            if (msg.length > 0) {
 
-//    var code = "";
+                chathub.server.sendMessage( msg, room);
+                $textbox.val('');
+            }
+        });
 
-//    if (userid == id) {
-//        //code = $('<div class="loginuser">' + name + "</div>");
-//    }
-//    else {
+        // text box event
+        $div.find("#txtPrivateMessage").keypress(function (e) {
+            if (e.which == 13) {
+                $div.find("#btnSendMessage").click();
+            }
+        });
 
-//        debugger
-//        code = $('<a id="' + id + '" class="user" >' + name + '<a><br/>');
+        addDivtoContainer($div);
 
-//        $(code).dblclick(function () {
+    }
 
-//            var id = $(this).attr('id');
+    function addDivtoContainer($div) {
+        $('#divContainer').prepend($div);
 
-//            if (userid != id)
-//                openprivatechatwindow(chathub, id, name);
+        $div.draggable({
 
-//        });
-//    }
+            handle: ".header",
+            stop: function () {
 
-//    $("#divusers2").append(code);
-
-//}
-
-//function addmessage(username, message) {
-//    $('#divchatwindow').append('<div class="message"><span class="username">' + username + '</span>: ' + message + '</div>');
-
-//    var height = $('#divchatwindow')[0].scrollheight;
-//    $('#divchatwindow').scrolltop(height);
-//}
-
-//function openprivatechatwindow(chathub, id, username) {
-
-//    var ctrid = 'private_' + id;
-
-//    if ($('#' + ctrid).length > 0) return;
-
-//    createprivatechatwindow(chathub, id, ctrid, username);
-
-//}
-
-//function createprivatechatwindow(chathub, userid, ctrid, username) {
-
-//    var div = '<div id="' + ctrid + '" class="ui-widget-content draggable" rel="0">' +
-//               '<div class="header">' +
-//                  '<div  style="float:right;">' +
-//                      '<img id="imgdelete"  style="cursor:pointer;" src="/images/delete.png"/>' +
-//                   '</div>' +
-
-//                   '<span class="seltext" rel="0">' + username + '</span>' +
-//               '</div>' +
-//               '<div id="divmessage" class="messagearea">' +
-
-//               '</div>' +
-//               '<div class="buttonbar">' +
-//                  '<input id="txtprivatemessage" class="msgtext" type="text"   />' +
-//                  '<input id="btnsendmessage" class="submitbutton button" type="button" value="send"   />' +
-//               '</div>' +
-//            '</div>';
-
-//    var $div = $(div);
-
-//    // delete button image
-//    $div.find('#imgdelete').click(function () {
-//        $('#' + ctrid).remove();
-//    });
-
-//    // send button event
-//    $div.find("#btnsendmessage").click(function () {
-
-//        $textbox = $div.find("#txtprivatemessage");
-//        var msg = $textbox.val();
-//        if (msg.length > 0) {
-
-//            chathub.server.sendprivatemessage(userid, msg);
-//            $textbox.val('');
-//        }
-//    });
-
-//    // text box event
-//    $div.find("#txtprivatemessage").keypress(function (e) {
-//        if (e.which == 13) {
-//            $div.find("#btnsendmessage").click();
-//        }
-//    });
-
-//    adddivtocontainer($div);
-
-//}
-
-//function adddivtocontainer($div) {
-//    $('#divcontainer').prepend($div);
-
-//    $div.draggable({
-
-//        handle: ".header",
-//        stop: function () {
-
-//        }
-//    });
-
-//    ////$div.resizable({
-//    ////    stop: function () {
-
-//    ////    }
-//    ////});
-
-//}
+            }
+        });
+    }
+});

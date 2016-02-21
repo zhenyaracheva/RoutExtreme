@@ -34,15 +34,16 @@ namespace BulBike.Web
                       "~/Scripts/Gallery/jquery.elastislide.js",
                       "~/Scripts/Gallery/jquerypp.custom.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/chat").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquerychat").Include(
                     "~/Scripts/ui/jquery.ui.core.js",
                     "~/Scripts/ui/jquery.ui.widget.js",
                     "~/Scripts/ui/jquery.ui.mouse.js",
                     "~/Scripts/ui/jquery.ui.draggable.js",
                     "~/Scripts/ui/jquery.ui.resizable.js",
-                    "~/Scripts/jquery.signalR-2.2.0.js",
-                    "~/signalr/hubs"));
+                    "~/Scripts/jquery.signalR-2.2.0.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/chatjs").Include(
+                   "~/Scripts/Chat/chat.js"));
 
             bundles.Add(new StyleBundle("~/Content/kendo-css").Include(
                      "~/Content/Kendo/kendo.common.min.css",

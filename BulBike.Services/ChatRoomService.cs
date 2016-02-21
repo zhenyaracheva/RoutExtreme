@@ -27,24 +27,24 @@
             return this.rooms.All();
         }
 
-        public ChatRoom GetById(int id)
-        {
-            return this.rooms.All()
-                              .Where(x => x.Id == id)
-                              .FirstOrDefault();
-        }
+        //public ChatRoom GetById(int id)
+        //{
+        //    return this.rooms.All()
+        //                      .Where(x => x.Id == id)
+        //                      .FirstOrDefault();
+        //}
 
-        public ChatRoom GetByConnectionId(string id)
-        {
-            return this.rooms.All()
-                              .Where(x => x.ConnectionId == id)
-                              .FirstOrDefault();
-        }
+        //public ChatRoom GetByConnectionId(string id)
+        //{
+        //    return this.rooms.All()
+        //                      .Where(x => x.ConnectionId == id)
+        //                      .FirstOrDefault();
+        //}
 
-        public IQueryable<ChatRoom> RoomsByUser(string userId)
+        public IQueryable<ChatRoom> RoomsByUsername(string username)
         {
             return this.rooms.All()
-                             .Where(x => x.Users.Any(u => u.Id == userId));
+                             .Where(x => x.Users.Any(u => u.UserName == username));
 
         }
     }

@@ -1,22 +1,25 @@
 ﻿namespace BulBike.Services
 {
-    using System.Linq;
-
-    using Contracts;
-    using Models;
-    using Data.Repositories;
     using System;
-    using System.Collections.Generic;
-    using System.IO;
+    using System.Linq;
+    using Contracts;
+    using Data;
+    using Data.Repositories;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
+
     public class UserService : IUserService
     {
         private IRepository<User> users;
+        private UserManager<User> userManager;
 
         public UserService(IRepository<User> users)
         {
             this.users = users;
+            this.userManager = new UserManager<User>(new UserStore<User>(new BulBikeDbContext()));
         }
-
+        
         public IQueryable<User> GetAll()
         {
             return this.users.All();
@@ -40,6 +43,12 @@
         {
             this.users.Update(user);
             this.users.SaveChanges();
+        }
+
+        public void Create(User user, string password)
+        {
+            this.userManager.Create(user, password);
+            this.userManager.AddToRole(user.Id, "user");
         }
     }
 }

@@ -5,29 +5,31 @@
 
     public class ChatRoom
     {
-        private ICollection<ChatMessage> messages;
         private ICollection<User> users;
+        private ICollection<ChatMessage> messages;
 
         public ChatRoom()
         {
+            this.users = new HashSet<User>();
             this.messages = new HashSet<ChatMessage>();
         }
-
-        [Key]
+        
         public int Id { get; set; }
-
+        
         public string ConnectionId { get; set; }
 
-        public virtual ICollection<ChatMessage> Messages
-        {
-            get { return this.messages; }
-            set { this.messages = value; }
-        }
+        public string Name { get; set; }
 
         public virtual ICollection<User> Users
         {
             get { return this.users; }
             set { this.users = value; }
+        }
+
+        public virtual ICollection<ChatMessage> Messages
+        {
+            get { return this.messages; }
+            set { this.messages = value; }
         }
     }
 }

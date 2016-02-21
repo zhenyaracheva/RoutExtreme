@@ -240,6 +240,7 @@
     <Compile Include="Areas\Admin\Models\ResponseUserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChatRoomController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -474,6 +475,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Kendo\kendo.all.min.js" />
     <Content Include="Scripts\Kendo\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\Maps\details-trip-map.js" />
     <Content Include="Scripts\Maps\initMapWithRoute.js" />
     <Content Include="Scripts\Maps\map.js" />
     <Content Include="Scripts\materialize\materialize.js" />
@@ -545,6 +547,7 @@
     <Folder Include="Content\Grid\" />
     <Folder Include="Scripts\Grid\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\ChatRoom\" />
     <Folder Include="Views\Kendo\" />
     <Folder Include="Views\Message\" />
     <Folder Include="Views\User\" />

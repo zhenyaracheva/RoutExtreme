@@ -3,19 +3,21 @@
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System.ComponentModel.DataAnnotations;
 
     public class User : IdentityUser
     {
         private ICollection<ChatRoom> chatRooms;
+        private ICollection<Connection> connections;
         private ICollection<Trip> trips;
 
         public User() : base()
         {
             this.chatRooms = new HashSet<ChatRoom>();
+            this.connections = new HashSet<Connection>();
             this.trips = new HashSet<Trip>();
         }
 
@@ -29,8 +31,8 @@
 
         public virtual Image ProfilePic { get; set; }
 
-        public string ConnectionId { get; set; }
-        
+        //public string ConnectionId { get; set; }
+
         public virtual ICollection<ChatRoom> ChatRooms
         {
             get { return this.chatRooms; }
@@ -41,6 +43,12 @@
         {
             get { return this.trips; }
             set { this.trips = value; }
+        }
+
+        public virtual ICollection<Connection> Connections
+        {
+            get { return this.connections; }
+            set { this.connections = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)

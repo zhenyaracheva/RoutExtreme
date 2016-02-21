@@ -6,6 +6,8 @@
 
     public interface IUserService
     {
+        void Create(User user, string password);
+
         IQueryable<User> GetAll();
 
         IQueryable<User> GetById(String id);

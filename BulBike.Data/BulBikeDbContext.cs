@@ -25,6 +25,10 @@
 
         public virtual IDbSet<ChatMessage> ChatMessages { get; set; }
 
+        public virtual IDbSet<ChatRoom> ChatRooms { get; set; }
+
+        public virtual IDbSet<Connection> Connections { get; set; }
+
         public static BulBikeDbContext Create()
         {
             return new BulBikeDbContext();

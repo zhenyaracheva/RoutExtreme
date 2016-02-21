@@ -1,20 +1,21 @@
 ﻿namespace BulBike.Web.Areas.Admin.Controllers
 {
     using System;
-    using System.Linq;
     using System.Web.Mvc;
+    using AutoMapper.QueryableExtensions;
+    using BulBike.Data;
+    using BulBike.Models;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
-    using BulBike.Models;
-    using BulBike.Data;
+    using Models;
     using Services.Contracts;
     using Web.Controllers;
-    using Models;
-    using AutoMapper.QueryableExtensions;
+
+    [Authorize(Roles ="admin")]
     public class UserController : BaseController
     {
         private BulBikeDbContext db = new BulBikeDbContext();
-        
+       
         public UserController(IUserService userService, IChatRoomService chatRoomService)
             : base(userService, chatRoomService)
         {
@@ -44,7 +45,6 @@
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    ConnectionId = user.ConnectionId,
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
                     PasswordHash = user.PasswordHash,
@@ -67,7 +67,7 @@
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Users_Update([DataSourceRequest]DataSourceRequest request, User user)
+        public ActionResult Users_Update([DataSourceRequest]DataSourceRequest request, CreateUserViewModel user)
         {
             // suppose not to work copy/paste from create!
             if (ModelState.IsValid)
@@ -76,23 +76,14 @@
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    ConnectionId = user.ConnectionId,
                     Email = user.Email,
-                    EmailConfirmed = user.EmailConfirmed,
-                    PasswordHash = user.PasswordHash,
-                    SecurityStamp = user.SecurityStamp,
-                    PhoneNumber = user.PhoneNumber,
-                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                    TwoFactorEnabled = user.TwoFactorEnabled,
-                    LockoutEndDateUtc = user.LockoutEndDateUtc,
-                    LockoutEnabled = user.LockoutEnabled,
-                    AccessFailedCount = user.AccessFailedCount,
-                    UserName = user.UserName
+                    UserName = user.Username,
+                     
                 };
 
                 db.Users.Add(entity);
                 db.SaveChanges();
-                user.Id = entity.Id;
+                //user.Id = entity.Id;
             }
 
             return Json(new[] { user }.ToDataSourceResult(request, ModelState));
@@ -108,7 +99,6 @@
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    ConnectionId = user.ConnectionId,
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
                     PasswordHash = user.PasswordHash,

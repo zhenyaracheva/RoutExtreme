@@ -7,12 +7,12 @@
     {
         IQueryable<ChatRoom> GetAll();
 
-        ChatRoom GetById(int id);
+        //ChatRoom GetById(int id);
 
         void Create(ChatRoom room);
 
-        ChatRoom GetByConnectionId(string id);
+        //ChatRoom GetByConnectionId(string id);
 
-        IQueryable<ChatRoom> RoomsByUser(string userId);
+        IQueryable<ChatRoom> RoomsByUsername(string username);
     }
 }

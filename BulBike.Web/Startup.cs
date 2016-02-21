@@ -10,8 +10,8 @@ namespace BulBike.Web
         public void Configuration(IAppBuilder app)
         {
             DatabaseConfig.Initialize();
-            app.MapSignalR();
             ConfigureAuth(app);
+            app.MapSignalR();
         }
     }
 }
