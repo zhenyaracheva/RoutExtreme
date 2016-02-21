@@ -107,7 +107,7 @@
     function createPrivateChatWindow(chathub, userid, ctrid, room) {
 
         var div = '<div id="' + ctrid + '" class="ui-widget-content draggable" rel="0">' +
-                   '<div class="header">' +
+                   '<div class="header"  id="room">' +
                       '<div  style="float:right;">' +
                           '<img id="imgDelete"  style="cursor:pointer;" src="/images/delete.png"/>' +
                        '</div>' +
@@ -135,9 +135,10 @@
 
             $textbox = $div.find("#txtPrivateMessage");
             var msg = $textbox.val();
+            var currentRoom = $('#room').text();
             if (msg.length > 0) {
 
-                chathub.server.sendMessage( msg, room);
+                chathub.server.sendMessage(msg, currentRoom);
                 $textbox.val('');
             }
         });
