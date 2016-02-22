@@ -6,14 +6,14 @@
     using Kendo.Mvc.UI;
     using Models.ChatRooms;
     using Services.Contracts;
-    using System.Data.Entity;
-    using System.Linq;
     using System.Web.Mvc;
     using Web.Controllers;
+    using System.Linq;
 
+    [Authorize(Roles = "admin")]
     public class ChatRoomController : BaseController
     {
-        public ChatRoomController( IUserService userService, IChatRoomService chatRoomService)
+        public ChatRoomController(IUserService userService, IChatRoomService chatRoomService)
             : base(userService, chatRoomService)
         {
         }
@@ -33,44 +33,19 @@
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, ChatRoom chatRoom)
+        public ActionResult Update([DataSourceRequest]DataSourceRequest request, InputChatRoomViewModel chatRoom)
         {
             if (!ModelState.IsValid)
             {
                 return this.View();
             }
 
-            var entity = new ChatRoom
-            {
-               
-            };
+            var room = this.ChatRoomService.GetAll()
+                           .Where(x => x.Id == chatRoom.Id)
+                           .FirstOrDefault();
 
-            //this.ChatRoomService.Add(entity);
-            
-
-            return Json(new[] { chatRoom }.ToDataSourceResult(request, ModelState));
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, ChatRoom chatRoom)
-        {
-            if (ModelState.IsValid)
-            {
-                var entity = new ChatRoom
-                {
-                    Id = chatRoom.Id,
-                    ConnectionId = chatRoom.ConnectionId,
-                    Name = chatRoom.Name,
-                    ModifiedOn = chatRoom.ModifiedOn,
-                    CreatedOn = chatRoom.CreatedOn,
-                    DeletedOn = chatRoom.DeletedOn,
-                    IsDeleted = chatRoom.IsDeleted
-                };
-
-                //db.ChatRooms.Attach(entity);
-                //db.Entry(entity).State = EntityState.Modified;
-                //db.SaveChanges();
-            }
+            room.Name = chatRoom.Name;
+            this.ChatRoomService.Update(room);
 
             return Json(new[] { chatRoom }.ToDataSourceResult(request, ModelState));
         }
@@ -78,24 +53,8 @@
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, ChatRoom chatRoom)
         {
-            if (ModelState.IsValid)
-            {
-                var entity = new ChatRoom
-                {
-                    Id = chatRoom.Id,
-                    ConnectionId = chatRoom.ConnectionId,
-                    Name = chatRoom.Name,
-                    ModifiedOn = chatRoom.ModifiedOn,
-                    CreatedOn = chatRoom.CreatedOn,
-                    DeletedOn = chatRoom.DeletedOn,
-                    IsDeleted = chatRoom.IsDeleted
-                };
-
-                //db.ChatRooms.Attach(entity);
-                //db.ChatRooms.Remove(entity);
-                //db.SaveChanges();
-            }
-
+            this.ChatRoomService.MarkAsDeleted(chatRoom);
+            
             return Json(new[] { chatRoom }.ToDataSourceResult(request, ModelState));
         }
     }

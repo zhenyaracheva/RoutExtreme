@@ -14,5 +14,9 @@
         //ChatRoom GetByConnectionId(string id);
 
         IQueryable<ChatRoom> RoomsByUsername(string username);
+
+        void Update(ChatRoom room);
+
+        void MarkAsDeleted(ChatRoom user);
     }
 }

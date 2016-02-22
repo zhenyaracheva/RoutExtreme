@@ -129,25 +129,16 @@ function initMap() {
         }
     };
 
-    map = new google.maps.Map(document.getElementById('map'),
-     mapOptions);
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
 
     google.maps.event.addListener(map, 'click', function (e) {
 
-        console.log(e);
-        //var res = e.split(" ");
-        //var lat = res[0];
-        //console.log(lat)
-        //var longT = res[1];
-        //console.log(longT)
-
-
         if (isStartPosition) {
-           displayLocation(e.latLng.lat(), e.latLng.lng());
-           
+            displayLocation(e.latLng.lat(), e.latLng.lng());
+
             isStartPosition = false;
         }
 
@@ -174,9 +165,6 @@ function initMap() {
         request.send();
     };
 
-
-
-
     function placeMarker(position, map) {
         var marker = new google.maps.Marker({
             position: position,
@@ -184,10 +172,6 @@ function initMap() {
             draggable: false,
             animation: google.maps.Animation.DROP
         });
-
-        //google.maps.event.addListener(marker, 'dragend', function () {
-        //    geocodePosition(marker.getPosition());
-        //});
 
         route.push(marker.position);
         console.log(route);
@@ -224,3 +208,10 @@ function initMap() {
          );
     }
 }
+
+
+
+
+setTimeout(initMap, 3000);
+
+//google.maps.event.addDomListener(window, "load", initMap);

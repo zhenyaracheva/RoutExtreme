@@ -138,7 +138,7 @@
             }
         }
 
-        public ActionResult Details(int id, int page=1)
+        public ActionResult Details(int id, int page = 1)
         {
             var trip = this.trips.GetById(id)
                                  .ProjectTo<TripResponseModel>()
@@ -147,15 +147,12 @@
             trip.Participants = trip.Participants
                                                 .Where(x => !x.IsDeleted)
                                                 .ToList();
-            var commentsPerPage = 10;
-            
+            var commentsPerPage = 5;
 
-            var comments = this.comments.GetAll()
-                                        .Where(x => x.TripId == id)
-                                        .ProjectTo<CommentViewModel>()
-                                        .ToList();
 
-            var allComments = comments.Count();
+
+
+            var allComments = trip.Comments.Count();
 
             var totalPages = (int)Math.Ceiling(allComments / ((decimal)commentsPerPage));
 
@@ -169,6 +166,14 @@
                 page = 1;
             }
 
+            var itemsToSkip = (page - 1) * commentsPerPage;
+            var comments = this.comments.GetAll()
+                                      .Where(x => x.TripId == id)
+                                      .OrderByDescending(x => x.CreatedOn)
+                                      .Skip(itemsToSkip)
+                                      .Take(commentsPerPage)
+                                      .ProjectTo<CommentViewModel>()
+                                      .ToList();
             var pagableComments = new PagableCommentsViewModel
             {
                 All = comments,
@@ -177,7 +182,6 @@
                 Trip = trip
             };
             
-            //trip.Test = Json(trip.Route, JsonRequestBehavior.AllowGet);
             return View(pagableComments);
         }
 
@@ -276,6 +280,33 @@
         public ActionResult UpcommingTrips()
         {
             return View();
+        }
+
+        public ActionResult AddComment(CommentInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View();
+            }
+            
+            var comment = new Comment
+            {
+                Content = model.Content,
+                TripId = model.TripId,
+                CreatorId = this.User.Identity.GetUserId()
+            };
+
+            var trip = this.trips.GetById(comment.TripId)
+                                  .FirstOrDefault();
+
+            if (trip == null)
+            {
+                throw new Exception("Not Existing Trip!");
+            }
+
+            trip.Comments.Add(comment);
+            this.trips.Update(trip);
+            return this.RedirectToAction("Details", "Trip", new { id = model.TripId });
         }
     }
 }

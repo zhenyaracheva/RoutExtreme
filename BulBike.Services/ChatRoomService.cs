@@ -4,7 +4,6 @@
     using System.Linq;
     using BulBike.Models;
     using BulBike.Data.Repositories;
-    using System;
 
     public class ChatRoomService : IChatRoomService
     {
@@ -27,25 +26,23 @@
             return this.rooms.All();
         }
 
-        //public ChatRoom GetById(int id)
-        //{
-        //    return this.rooms.All()
-        //                      .Where(x => x.Id == id)
-        //                      .FirstOrDefault();
-        //}
-
-        //public ChatRoom GetByConnectionId(string id)
-        //{
-        //    return this.rooms.All()
-        //                      .Where(x => x.ConnectionId == id)
-        //                      .FirstOrDefault();
-        //}
-
+        public void MarkAsDeleted(ChatRoom room)
+        {
+            this.rooms.MarkAsDeleted(room);
+            this.rooms.SaveChanges();
+        }
+        
         public IQueryable<ChatRoom> RoomsByUsername(string username)
         {
             return this.rooms.All()
                              .Where(x => x.Users.Any(u => u.UserName == username));
 
+        }
+
+        public void Update(ChatRoom room)
+        {
+            this.rooms.Update(room);
+            this.rooms.SaveChanges();
         }
     }
 }

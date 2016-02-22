@@ -48,6 +48,7 @@
         public void Create(Comment comment)
         {
             this.comments.Add(comment);
+            this.comments.SaveChanges();
         }
 
         public void MarkAsDeleted(Comment comment)

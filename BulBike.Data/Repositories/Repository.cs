@@ -25,7 +25,8 @@
 
         public virtual IQueryable<T> All()
         {
-            return this.DbSet.AsQueryable();
+            return this.DbSet.AsQueryable()
+                             .Where(x => !x.IsDeleted);
         }
 
         public virtual T GetById(object id)

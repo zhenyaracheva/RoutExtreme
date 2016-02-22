@@ -110,7 +110,7 @@
                 <ul>
                     @foreach (var user in Model.Trip.Participants)
                     {
-                        
+
                         <li class="row center">
                             <a href="@Url.Action("UserDetails", "Account", new { id = user.Id })" class="btn col m12">@user.Username</a>
                         </li>
@@ -130,15 +130,8 @@
         <div class="collapsible-body" id="comments">
             @if (Model.All.Count > 0)
             {
-                @Html.Partial("_Comments", Model.All)
-                @*<ul>
-                    @foreach (var comment in Model.All)
-                    {
-                        <li class="row center">
-                            @comment.Content
-                        </li>
-                    }
-                </ul>*@
+                @Html.Partial("_Comments", Model)
+
             }
             else
             {
@@ -147,7 +140,7 @@
                 </p>
             }
 
-             @Html.Partial("_CreateComment")
+            @Html.Partial("_CreateComment", new CommentInputModel { TripId = Model.Trip.Id })
         </div>
     </li>
 
@@ -208,7 +201,7 @@
 
                     var test = "";
                     for (var i = 0, len = res.length; i < len; i++) {
-                      
+
                         var url = '@Url.Action("UserDetails", "Account")' + '/' + res[i].id;
                         test += '<li  class="row center"><a href="' + url + '" class="btn col m12">' + res[i].username + '</a></li>'
                     }

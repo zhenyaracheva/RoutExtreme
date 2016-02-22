@@ -1,0 +1,28 @@
+﻿
+@(Html.Kendo().Grid<BulBike.Models.Image>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.Content);
+        columns.Bound(c => c.FileExtension);
+        columns.Bound(c => c.ModifiedOn);
+        columns.Bound(c => c.CreatedOn);
+        columns.Bound(c => c.DeletedOn);
+        columns.Bound(c => c.IsDeleted);
+        columns.Command(command => {command.Destroy(); }).Width(180);
+      })
+      .ColumnMenu()
+      .Editable(editable => editable.Mode(GridEditMode.InLine))
+      .Pageable()
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Images_Read", "Image"))
+          .Destroy(destroy => destroy.Action("Images_Destroy", "Image"))
+      )
+)

@@ -1,0 +1,27 @@
+﻿@model BulBike.Web.Areas.Admin.Models.Trips.TripViewModel
+
+<div class="map-container">
+    <div id="map"></div>
+</div>
+@Html.EditorFor(m => m.Description)
+@Html.EditorFor(m => m.StartDate)
+@Html.HiddenFor(m => m.StartPoint, new { id = "StartPoint" })
+<input id="routePoints" type="text"  hidden="hidden" name="RouteStr"/>
+
+@section scripts{
+
+    @Scripts.Render("~/Scripts/Maps/map.js");
+    @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
+    <script>
+        $('#datetimepicker').datetimepicker({
+            formatTime: 'H:i',
+            formatDate: 'd.m.Y',
+            defaultDate: '+03.01.1970',
+            defaultTime: '10:00',
+            step: 30,
+            timepickerScrollbar: false
+        });
+
+        //google.maps.event.addDomListener(window, "load", initMap);
+    </script>
+}

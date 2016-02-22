@@ -14,6 +14,7 @@
         [Key]
         public int Id { get; set; }
 
+        [UIHint("MultiLineText")]
         public string Content { get; set; }
 
         public int TripId { get; set; }

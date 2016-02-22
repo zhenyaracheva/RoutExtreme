@@ -7,13 +7,9 @@
           columns.Bound(c => c.Description);
           columns.Bound(c => c.Creator);
           columns.Bound(c => c.StartDate).Format("{0:yyyy-MM-dd HH:mm}");
-          columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
-      })
-      .ToolBar(toolbar => {
-          toolbar.Create();
+          columns.Command(command => { command.Destroy(); }).Width(180);
       })
       .ColumnMenu()
-      .Editable(editable => editable.Mode(GridEditMode.PopUp))
       .Pageable()
       .Selectable(selectable => {
           selectable.Mode(GridSelectionMode.Single);
@@ -28,8 +24,6 @@
           .Ajax()
           .Model(model => model.Id(p => p.Id))
           .Read(read => read.Action("Read", "Trips"))
-          .Create(create => create.Action("Create", "Trips"))
-          .Update(update => update.Action("Update", "Trips"))
           .Destroy(destroy => destroy.Action("Destroy", "Trips"))
       )
 )

@@ -7,11 +7,17 @@
     using System.Web.Mvc;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    using Web.Models;
 
     public class TripViewModel : IMapFrom<Trip>, IHaveCustomMappings
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
+
+        public string RouteStr { get; set; }
+
+        public ICollection<LocationViewModel> Route { get; set; }
 
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
