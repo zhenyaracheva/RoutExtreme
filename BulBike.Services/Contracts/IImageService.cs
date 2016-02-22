@@ -8,7 +8,9 @@
         IQueryable<Image> GetAll();
 
         Image GetById(int id);
-        
+
         void Create(Image image);
+
+        void MarkAsDeleted(Image image);
     }
 }

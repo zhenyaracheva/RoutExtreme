@@ -33,5 +33,11 @@
                               .Where(x => x.Id == id)
                               .FirstOrDefault();
         }
+
+        public void MarkAsDeleted(Image image)
+        {
+            this.images.MarkAsDeleted(image);
+            this.images.SaveChanges();
+        }
     }
 }

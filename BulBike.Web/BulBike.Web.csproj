@@ -236,12 +236,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ChatRoomController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ImagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\TripsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\ChatRooms\ChatRoomViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ChatRooms\InputChatRoomViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditUserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ImageViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Trips\TripViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -471,7 +472,7 @@
     <Content Include="Areas\Admin\Views\User\ManageUsers.cshtml" />
     <Content Include="Areas\Admin\Views\Trips\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ChatRoom\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Image\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Images\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\Chat\chat.js" />
     <Content Include="Scripts\Gallery\jquery.elastislide.js" />
