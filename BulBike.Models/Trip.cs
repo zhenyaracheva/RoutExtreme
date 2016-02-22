@@ -8,12 +8,14 @@
         private ICollection<Location> route;
         private ICollection<Image> images;
         private ICollection<User> participants;
+        private ICollection<Comment> comments;
 
         public Trip()
         {
             this.route = new HashSet<Location>();
             this.images = new HashSet<Image>();
             this.participants = new HashSet<User>();
+            this.comments = new HashSet<Comment>();
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
         }
@@ -54,6 +56,12 @@
         {
             get { return this.participants; }
             set { this.participants = value; }
+        }
+
+        public virtual ICollection<Comment> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; }
         }
     }
 }

@@ -14,12 +14,14 @@
         private ICollection<ChatRoom> chatRooms;
         private ICollection<Connection> connections;
         private ICollection<Trip> trips;
+        private ICollection<Comment> comments;
 
         public User() : base()
         {
             this.chatRooms = new HashSet<ChatRoom>();
             this.connections = new HashSet<Connection>();
             this.trips = new HashSet<Trip>();
+            this.comments = new HashSet<Comment>();
             this.IsDeleted = false;
             this.CreatedOn = DateTime.UtcNow;
         }
@@ -34,7 +36,13 @@
 
         public virtual Image ProfilePic { get; set; }
 
-        //public string ConnectionId { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         public virtual ICollection<ChatRoom> ChatRooms
         {
@@ -54,14 +62,12 @@
             set { this.connections = value; }
         }
 
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
+        public virtual ICollection<Comment> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; }
+        }
         
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

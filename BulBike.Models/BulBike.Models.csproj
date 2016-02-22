@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatRoom.cs" />
+    <Compile Include="Comment.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="IAuditInfo.cs" />
     <Compile Include="IDeletableEntity.cs" />
