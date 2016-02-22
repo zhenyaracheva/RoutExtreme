@@ -37,11 +37,37 @@
                     <li> @Html.ActionLink("Create Trip", "Create", new { area = "", controller = "Trip" })</li>
                 }
             </ul>
+            <ul id="adminMenu" class="dropdown-content">
+                <li>@Html.ActionLink("Users", "ManageUsers", new { area = "Admin", controller = "User" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Trips", "Index", new { area = "Admin", controller = "Trips" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Chat Rooms", "Index", new { area = "Admin", controller = "ChatRoom" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Images", "Index", new { area = "Admin", controller = "Images" })</li>
+                <li class="divider"></li>
+            </ul>
+            <ul id="adminMenuMobile" class="dropdown-content">
+                <li>@Html.ActionLink("Users", "ManageUsers", new { area = "Admin", controller = "User" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Trips", "Index", new { area = "Admin", controller = "Trips" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Chat Rooms", "Index", new { area = "Admin", controller = "ChatRoom" })</li>
+                <li class="divider"></li>
+                @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("admin"))
+                {
+                    <li>@Html.ActionLink("Images", "Index", new { area = "Admin", controller = "Images" })</li>
+                }
+            </ul>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="hide-on-med-and-down move">
                 <li>@Html.ActionLink("Home", "Index", new { area = "", controller = "Home" })</li>
                 <li><a class="dropdown-button" href="#!" data-activates="eventsMenu">Trips<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li>@Html.ActionLink("Contact", "Contact", new { area = "", controller = "Home" })</li>
+                @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("admin"))
+                {
+                    <li><a class="dropdown-button" href="#!" data-activates="adminMenu">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
+                }
             </ul>
             <ul class="hide-on-med-and-down right">
                 @Html.Partial("_LoginPartial")
@@ -50,6 +76,7 @@
                 <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" })</li>
                 <li><a class="dropdown-button" href="#!" data-activates="eventsMenuMobile">Trips<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" })</li>
+                <li><a class="dropdown-button" href="#!" data-activates="adminMenuMobile">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
                 @Html.Partial("_LoginPartial")
             </ul>
         </div>
@@ -82,7 +109,7 @@
         </div>
     </footer>
 
-    @Scripts.Render("~/bundles/materialize")   
+    @Scripts.Render("~/bundles/materialize")
     @Scripts.Render("~/bundles/jquerychat")
     <script src="/signalr/hubs"></script>
     @Scripts.Render("~/bundles/chatjs")
@@ -94,13 +121,13 @@
         })
     </script>
     @*<script>
-        $.get("/ChatRoom/GetUserRooms", function (res) {
+            $.get("/ChatRoom/GetUserRooms", function (res) {
 
-            console.log(res);
-            $usres = $('#divusers2');
+                console.log(res);
+                $usres = $('#divusers2');
 
-            var code = '<a id="' + id + '" class="user" >' + name + '<a><br/>';
-        });
-    </script>*@
+                var code = '<a id="' + id + '" class="user" >' + name + '<a><br/>';
+            });
+        </script>*@
 </body>
 </html>
