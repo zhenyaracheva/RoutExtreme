@@ -13,5 +13,7 @@
         IQueryable<Trip> GetAll();
 
         IQueryable<Trip> GetById(int id);
+
+        void MarkAsDeleted(Trip trip);
     }
 }

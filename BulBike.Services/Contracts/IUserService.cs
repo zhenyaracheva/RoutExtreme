@@ -15,5 +15,9 @@
         IQueryable<User> GetByUsername(string username);
 
         void UpdateUser(User updatedUser);
+
+        void Delete(string id);
+
+        void MarkAsDeleted(User user);
     }
 }

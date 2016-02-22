@@ -52,15 +52,18 @@
         chathub.client.sendPrivateMessage = function (windowid, fromusername, message) {
 
             var ctrid = 'private_' + windowid;
+            var $messages = $('#' + ctrid);
+            console.log($messages);
 
-            if ($('#' + ctrid).length == 0) {
+            if ($messages.length == 0) {
                 createPrivateChatWindow(chathub, windowid, ctrid, fromusername);
             }
 
-            $('#' + ctrid).find('#divMessage').append('<div class="message"><span class="username">' + fromusername + '</span>: ' + message + '</div>');
-
-            var height = $('#' + ctrid).find('#divMessage')[0].scrollHeight;
-            $('#' + ctrid).find('#divMessage').scrollTop(height);
+            $messages.find('#divMessage').append('<div class="message"><span class="username">' + fromusername + '</span>: ' + message + '</div>');
+            console.log($messages.find('#divMessage'));
+            console.log($messages.find('#divMessage')[0]);
+            var height = $messages.find('#divMessage')[0].scrollHeight;
+            $messages.find('#divMessage').scrollTop(height);
         }
 
         chathub.client.addLastMessages = function (messages) {

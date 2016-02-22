@@ -33,6 +33,12 @@
                              .Where(x => x.Id == id);
         }
 
+        public void MarkAsDeleted(Trip trip)
+        {
+            this.trips.MarkAsDeleted(trip);
+            this.trips.SaveChanges();
+        }
+
         public void Update(Trip trip)
         {
             this.trips.Update(trip);

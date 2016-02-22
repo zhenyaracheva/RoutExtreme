@@ -235,9 +235,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChatRoomController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TripsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
-    <Compile Include="Areas\Admin\Models\CreateUserViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ResponseUserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ChatRooms\ChatRoomViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ChatRooms\InputChatRoomViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\EditUserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Trips\InputTripViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Trips\TripViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatRoomController.cs" />
@@ -458,6 +464,8 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\User\ManageUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\Trips\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ChatRoom\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\Chat\chat.js" />
     <Content Include="Scripts\Gallery\jquery.elastislide.js" />
@@ -550,6 +558,7 @@
     <Folder Include="Views\ChatRoom\" />
     <Folder Include="Views\Kendo\" />
     <Folder Include="Views\Message\" />
+    <Folder Include="Views\Trips\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

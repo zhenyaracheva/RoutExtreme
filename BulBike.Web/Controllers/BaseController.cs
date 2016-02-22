@@ -20,6 +20,17 @@
             this.chatRoomsService = chatRoomService;
         }
 
+        public IChatRoomService ChatRoomService
+        {
+            get
+            {
+                return this.chatRoomsService;
+            }
+            private set
+            {
+                this.chatRoomsService = value;
+            }
+        }
 
         public IUserService UserService
         {

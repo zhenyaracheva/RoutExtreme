@@ -1,11 +1,12 @@
 ﻿namespace BulBike.Data.Repositories
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Linq;
 
     public class Repository<T> : IRepository<T>
-       where T : class
+       where T : class, IDeletableEntity, IAuditInfo
     {
         public Repository(IBulBikeDbContext context)
         {
@@ -47,6 +48,7 @@
 
         public virtual void Update(T entity)
         {
+            entity.ModifiedOn = DateTime.UtcNow;
             var entry = this.Context.Entry(entity);
             if (entry.State == EntityState.Detached)
             {
@@ -99,6 +101,15 @@
         public void Dispose()
         {
             this.Context.Dispose();
+        }
+
+        public void MarkAsDeleted(T entity)
+        {
+            entity.IsDeleted = true;
+            entity.DeletedOn = DateTime.UtcNow;
+
+            var entry = this.Context.Entry(entity);
+            entry.State = EntityState.Modified;
         }
     }
 

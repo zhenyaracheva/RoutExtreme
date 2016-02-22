@@ -19,7 +19,19 @@
             this.users = users;
             this.userManager = new UserManager<User>(new UserStore<User>(new BulBikeDbContext()));
         }
-        
+
+        public void Delete(string id)
+        {
+            var user = this.users.GetById(id);
+            if (user == null)
+            {
+                throw new Exception("No such user id");
+            }
+
+            this.users.Delete(user);
+            this.users.SaveChanges();
+        }
+
         public IQueryable<User> GetAll()
         {
             return this.users.All();
@@ -49,6 +61,12 @@
         {
             this.userManager.Create(user, password);
             this.userManager.AddToRole(user.Id, "user");
+        }
+
+        public void MarkAsDeleted(User user)
+        {
+            this.users.MarkAsDeleted(user);
+            this.users.SaveChanges();
         }
     }
 }
