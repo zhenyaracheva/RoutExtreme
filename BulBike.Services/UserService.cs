@@ -34,19 +34,19 @@
 
         public IQueryable<User> GetAll()
         {
-            return this.users.All();
+            return this.users.All()
+                             .Where(x=> !x.IsDeleted);
         }
 
         public IQueryable<User> GetById(String id)
         {
-            return this.users
-                        .All()
+            return this.GetAll()
                         .Where(u => u.Id == id);
         }
 
         public IQueryable<User> GetByUsername(string username)
         {
-            return this.users.All()
+            return this.GetAll()
                 .Where(x => x.UserName == username);
 
         }

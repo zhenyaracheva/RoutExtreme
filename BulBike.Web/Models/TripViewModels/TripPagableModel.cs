@@ -1,5 +1,6 @@
 ﻿namespace BulBike.Web.Models.TripViewModels
 {
+    using Comments;
     using System.Collections.Generic;
 
     public class TripPagableModel

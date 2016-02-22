@@ -12,15 +12,17 @@
     using Microsoft.AspNet.Identity;
     using Models.TripViewModels;
     using Services.Contracts;
-
+    using Models.Comments;
     public class TripController : BaseController
     {
         private ITripService trips;
+        private ICommentService comments;
 
-        public TripController(IUserService users, IChatRoomService chatRoom, ITripService trips)
+        public TripController(IUserService users, IChatRoomService chatRoom, ITripService trips, ICommentService comments)
             : base(users, chatRoom)
         {
             this.trips = trips;
+            this.comments = comments;
         }
 
         [HttpGet]
@@ -136,14 +138,47 @@
             }
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, int page=1)
         {
             var trip = this.trips.GetById(id)
                                  .ProjectTo<TripResponseModel>()
                                  .FirstOrDefault();
 
+            trip.Participants = trip.Participants
+                                                .Where(x => !x.IsDeleted)
+                                                .ToList();
+            var commentsPerPage = 10;
+            
+
+            var comments = this.comments.GetAll()
+                                        .Where(x => x.TripId == id)
+                                        .ProjectTo<CommentViewModel>()
+                                        .ToList();
+
+            var allComments = comments.Count();
+
+            var totalPages = (int)Math.Ceiling(allComments / ((decimal)commentsPerPage));
+
+            if (page - 1 >= totalPages)
+            {
+                page = totalPages;
+            }
+
+            if (page - 1 < 0)
+            {
+                page = 1;
+            }
+
+            var pagableComments = new PagableCommentsViewModel
+            {
+                All = comments,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                Trip = trip
+            };
+            
             //trip.Test = Json(trip.Route, JsonRequestBehavior.AllowGet);
-            return View(trip);
+            return View(pagableComments);
         }
 
         public ActionResult GetTripRoute(int id)
@@ -170,7 +205,7 @@
             {
                 page = totalPages;
             }
-            
+
             var itemsToSkip = (page - 1) * tripsPerPage;
 
             var trips = this.trips.GetAll()
@@ -179,6 +214,7 @@
                                   .Take(tripsPerPage)
                                   .ProjectTo<TripResponseModel>()
                                   .ToList();
+
             var tripModel = new TripPagableModel
             {
                 CurrentPage = page,

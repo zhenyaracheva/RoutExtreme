@@ -1,0 +1,8 @@
+﻿@model BulBike.Web.Models.Comments.CommentInputModel
+
+@using (Html.BeginForm("Create", "Trip", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+  
+}
+

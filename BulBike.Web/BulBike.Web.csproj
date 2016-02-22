@@ -247,6 +247,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatRoomController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -269,7 +270,11 @@
     <Compile Include="Models\AccountViewModels\SendCodeViewModel.cs" />
     <Compile Include="Models\AccountViewModels\UserResponseModel.cs" />
     <Compile Include="Models\AccountViewModels\VerifyCodeViewModel.cs" />
+    <Compile Include="Models\Comments\CommentInputModel.cs" />
+    <Compile Include="Models\Comments\CommentViewModel.cs" />
+    <Compile Include="Models\Comments\PagableCommentsViewModel.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
+    <Compile Include="Models\PagableViewModel.cs" />
     <Compile Include="Models\TripViewModels\TripAddImageViewModel.cs" />
     <Compile Include="Models\TripViewModels\TripPagableModel.cs" />
     <Compile Include="Models\TripViewModels\TripRequestModel.cs" />
@@ -547,6 +552,8 @@
     <Content Include="Views\Trip\All.cshtml" />
     <Content Include="Views\Trip\UpcommingTrips.cshtml" />
     <Content Include="Views\Trip\AddImages.cshtml" />
+    <Content Include="Views\Shared\_Comments.cshtml" />
+    <Content Include="Views\Shared\_CreateComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -556,6 +563,7 @@
     <Folder Include="Scripts\Grid\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\ChatRoom\" />
+    <Folder Include="Views\Comment\" />
     <Folder Include="Views\Kendo\" />
     <Folder Include="Views\Message\" />
     <Folder Include="Views\Trips\" />

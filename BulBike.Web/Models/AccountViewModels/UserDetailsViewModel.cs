@@ -16,6 +16,8 @@
 
         public int? ProfilePicId { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
         }

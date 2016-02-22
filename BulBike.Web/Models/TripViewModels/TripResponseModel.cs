@@ -6,7 +6,7 @@
     using BulBike.Web.Models.AccountViewModels;
     using BulBike.Models;
     using BulBike.Web.Infrastructure.Mapping;
-
+    using Comments;
     public class TripResponseModel : IMapFrom<Trip>, IHaveCustomMappings
     {
         public int Id { get; set; }
