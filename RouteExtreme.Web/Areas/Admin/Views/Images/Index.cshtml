@@ -1,0 +1,30 @@
+﻿<div class="row center">
+    <h3>Pictures</h3>
+</div>
+
+@(Html.Kendo().Grid<RouteExtreme.Web.Areas.Admin.Models.ImageViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(e => e.Id).ClientTemplate(
+              "<img src='" + Url.Action("GetImage", "Image", new { area = string.Empty, id = "#= Id #" }) + "' alt='Some Image' />"
+              );
+          columns.Command(command => { command.Destroy(); }).Width(180);
+      })
+
+      .ColumnMenu()
+      .Editable(editable => editable.Mode(GridEditMode.InLine))
+      .Pageable()
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable(x=>x.Height(350))
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Images_Read", "Images"))
+          .Destroy(destroy => destroy.Action("Images_Destroy", "Images"))
+      )
+)

@@ -1,0 +1,72 @@
+﻿@using RouteExtreme.Web.Models.Comments
+
+@model PagableCommentsViewModel
+<ul>
+    @foreach (var comment in Model.All)
+    {
+        <li class="row">
+            <div class="col m2">
+                <strong>@comment.Creator</strong>
+            </div>
+            <div class="col m10">
+                <div class="row">
+                    <div class="col m12">
+                        <span>@comment.Content</span>
+                    </div>
+                    <div class="col m12">
+                        <span class="right"> @comment.CreatedOn.ToString("hh:mm - dd MMMM yyyy")</span>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </li>
+    }
+</ul>
+
+<div class="container">
+    <div class="row">
+        <div class="col m12 offset-m3">
+            <ul class="pagination">
+                @{
+                    var prevButtonClass = "waves-effect";
+                    var prevPage = Model.CurrentPage - 1;
+                }
+
+                @if (Model.CurrentPage == 1)
+                {
+                    prevButtonClass = "hide";
+                    prevPage = 1;
+                }
+
+                <li class=@prevButtonClass><a href="/Trip/Details/@Model.Trip.Id?page=@prevPage"><i class="material-icons">chevron_left</i></a></li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    var className = "waves-effect";
+
+                    if (Model.CurrentPage == i)
+                    {
+                        className = "active";
+                    }
+
+                    <li class=@className><a href="/Trip/Details/@Model.Trip.Id?page=@i">@i</a></li>
+                }
+
+                @{
+                    var nextPageButton = "waves-effect";
+                    var nextPage = Model.CurrentPage + 1;
+                }
+
+
+                @if (Model.CurrentPage == Model.TotalPages)
+                {
+                    nextPageButton = "hide";
+                    nextPage = Model.CurrentPage;
+
+                }
+
+                <li class=@nextPageButton><a href="/Trip/Details/@Model.Trip.Id?page=@nextPage"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

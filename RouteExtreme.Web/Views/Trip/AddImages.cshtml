@@ -1,0 +1,27 @@
+﻿@model RouteExtreme.Web.Models.TripViewModels.TripAddImageViewModel
+<h1>Add Images :)</h1>
+
+@using (Html.BeginForm("AddImages", "Trip", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @*<form id="upload">*@
+    <div class="hide">
+        @Html.HiddenFor(m => m.TripID, new { id = "tripId" })
+    </div>
+    <input type="file" name="Images" id="file" multiple accepts="image/*" />
+    <ul class="gallery-image-list" id="uploads">
+        <!-- The file uploads will be shown here -->
+    </ul>
+    @*</form>*@
+    <button>Upload</button>
+    <div id="listTable"></div>
+}
+
+@section Scripts {
+    <script>
+        var url = document.URL;
+        var id = url.substring(url.lastIndexOf('/') + 1);
+        console.log(url);
+        console.log(id);
+        $('#tripId').val(id);
+    </script>
+}
