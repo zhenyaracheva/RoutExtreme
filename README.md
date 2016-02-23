@@ -3,29 +3,29 @@
 Create you adventure and let people join you!
 
 Diagrame
-![Diagrame.png](C:\Users\Zhenya\Desktop\DocPics\Diagrame.png)
+![Diagrame.png](http://puu.sh/nj2ZN/114aa4f991.png)
 
 ## Application pages:
 
 ~/Account/Login
 
-![Login.png](C:\Users\Zhenya\Desktop\DocPics\Login.png)
+![Login.png](http://puu.sh/nj2Px/ca88128a89.png)
 
 ~/Account/Register
 
-![register.png](C:\Users\Zhenya\Desktop\DocPics\register.png)
+![register.png](http://puu.sh/nj2RR/205a3e9d3f.png)
 
 ~/Trip/Create
 
-![ListTrips.png](C:\Users\Zhenya\Desktop\DocPics\ListTrips.png)
+![ListTrips.png](http://puu.sh/nj2Nd/7e76d6578c.png)
 
 ~/Trip/All
 
-![Listedpng.png](C:\Users\Zhenya\Desktop\DocPics\Listedpng.png)
+![Listedpng.png](http://puu.sh/nj2Lj/d2c617176c.png)
 
 ~/Trip/Details/:id
 
-![details.png](C:\Users\Zhenya\Desktop\DocPics\details.png)
+![details.png](http://puu.sh/nj2Fv/b422688e35.png)
 
 Team Repo:
 
