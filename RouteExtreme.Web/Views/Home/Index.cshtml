@@ -1,13 +1,16 @@
-﻿@{
+﻿@model  IList<RouteExtreme.Web.Models.TripViewModels.TripResponseModel>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="map-container">
     <div id="map"></div>
+
 </div>
 
 @section scripts{
-    @Scripts.Render("~/Scripts/Maps/map.js");
+    @Scripts.Render("~/Scripts/Maps/homePageMaps.js");
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
 }
 

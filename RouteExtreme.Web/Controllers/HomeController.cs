@@ -3,17 +3,36 @@
     using RouteExtreme.Services;
     using Services.Contracts;
     using System.Web.Mvc;
+    using System.Linq;
 
+    using AutoMapper.QueryableExtensions;
+    using System;
+    using Models.TripViewModels;
     public class HomeController : BaseController
     {
-        public HomeController(IUserService userService, IChatRoomService chatRoom)
+        private ITripService trips;
+
+        public HomeController(IUserService userService, IChatRoomService chatRoom, ITripService trips)
             : base(userService, chatRoom)
         {
+            this.trips = trips;
         }
 
         public ActionResult Index()
         {
-            return View();
+            return this.View();
+        }
+
+        public ActionResult GetTrips()
+        {
+            var upcommin = this.trips.GetAll()
+                                     .Where(x => !x.IsDeleted && x.StartDate > DateTime.UtcNow)
+                                     .ProjectTo<TripResponseModel>()
+                                     .ToList();
+
+
+
+            return this.Json(upcommin, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Chat()

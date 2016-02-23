@@ -249,6 +249,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatRoomController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -491,6 +492,7 @@
     <Content Include="Scripts\Kendo\kendo.all.min.js" />
     <Content Include="Scripts\Kendo\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\Maps\details-trip-map.js" />
+    <Content Include="Scripts\Maps\homePageMaps.js" />
     <Content Include="Scripts\Maps\initMapWithRoute.js" />
     <Content Include="Scripts\Maps\map.js" />
     <Content Include="Scripts\materialize\materialize.js" />
@@ -558,6 +560,7 @@
     <Content Include="Views\Shared\_CreateComment.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TripViewModel.cshtml" />
     <Content Include="Views\Test.cshtml" />
+    <Content Include="Views\Shared\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -568,6 +571,7 @@
     <Folder Include="Views\Base\" />
     <Folder Include="Views\ChatRoom\" />
     <Folder Include="Views\Comment\" />
+    <Folder Include="Views\Error\" />
     <Folder Include="Views\Image\" />
     <Folder Include="Views\Kendo\" />
     <Folder Include="Views\Message\" />

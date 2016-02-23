@@ -87,6 +87,12 @@
             var trip = this.trips.GetById(id)
                 .FirstOrDefault();
 
+            if (trip == null)
+            {
+                return this.RedirectToAction("NotFound", "Error");
+            }
+
+
             if (trip != null)
             {
                 var user = this.UserService.GetById(this.User.Identity.GetUserId())
@@ -118,6 +124,12 @@
             var trip = this.trips.GetById(id)
                 .FirstOrDefault();
 
+            if (trip == null)
+            {
+                return this.RedirectToAction("NotFound", "Error");
+            }
+
+
             if (trip != null)
             {
                 var user = this.UserService.GetById(this.User.Identity.GetUserId())
@@ -147,6 +159,11 @@
             var trip = this.trips.GetById(id)
                                  .ProjectTo<TripResponseModel>()
                                  .FirstOrDefault();
+            if (trip == null)
+            {
+                return this.RedirectToAction("NotFound", "Error");
+            }
+
 
             trip.Participants = trip.Participants
                                                 .Where(x => !x.IsDeleted)
