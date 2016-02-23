@@ -9,6 +9,7 @@
     using System.Web.Mvc;
     using Web.Controllers;
     using System.Linq;
+    using Infrastructure.Mapping;
 
     [Authorize(Roles = "admin")]
     public class ChatRoomController : BaseController
@@ -26,7 +27,7 @@
         public ActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
             DataSourceResult result = this.ChatRoomService.GetAll()
-                                                    .ProjectTo<ChatRoomViewModel>()
+                                                    .To<ChatRoomViewModel>()
                                                     .ToDataSourceResult(request);
 
             return Json(result);

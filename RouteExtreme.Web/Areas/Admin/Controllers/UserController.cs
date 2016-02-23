@@ -2,13 +2,13 @@
 {
     using System.Linq;
     using System.Web.Mvc;
-    using AutoMapper.QueryableExtensions;
     using RouteExtreme.Models;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using Models;
     using Services.Contracts;
     using Web.Controllers;
+    using Infrastructure.Mapping;
 
     [Authorize(Roles = "admin")]
     public class UserController : BaseController
@@ -27,7 +27,7 @@
         {
             DataSourceResult result = this.UserService.GetAll()
                                                      .Where(x => !x.IsDeleted)
-                                                     .ProjectTo<UserViewModel>()
+                                                     .To<UserViewModel>()
                                                      .ToDataSourceResult(request);
 
             return Json(result);

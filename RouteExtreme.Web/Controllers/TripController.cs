@@ -13,7 +13,7 @@
     using Models.TripViewModels;
     using Services.Contracts;
     using Models.Comments;
-
+    using Infrastructure.Mapping;
     public class TripController : BaseController
     {
         private ITripService trips;
@@ -157,7 +157,7 @@
         public ActionResult Details(int id, int page = 1)
         {
             var trip = this.trips.GetById(id)
-                                 .ProjectTo<TripResponseModel>()
+                                 .To<TripResponseModel>()
                                  .FirstOrDefault();
             if (trip == null)
             {
@@ -193,7 +193,7 @@
                                       .OrderByDescending(x => x.CreatedOn)
                                       .Skip(itemsToSkip)
                                       .Take(commentsPerPage)
-                                      .ProjectTo<CommentViewModel>()
+                                      .To<CommentViewModel>()
                                       .ToList();
             var pagableComments = new PagableCommentsViewModel
             {
@@ -209,7 +209,7 @@
         public ActionResult GetTripRoute(int id)
         {
             var trip = this.trips.GetById(id)
-                                 .ProjectTo<TripResponseModel>()
+                                 .To<TripResponseModel>()
                                  .FirstOrDefault();
 
             return Json(trip.Route, JsonRequestBehavior.AllowGet);
@@ -318,7 +318,7 @@
             var all = sortedTrips
                                 .Skip(itemsToSkip)
                                 .Take(tripsPerPage)
-                                .ProjectTo<TripResponseModel>()
+                                .To<TripResponseModel>()
                                 .ToList();
 
             var tripModel = new TripPagableModel

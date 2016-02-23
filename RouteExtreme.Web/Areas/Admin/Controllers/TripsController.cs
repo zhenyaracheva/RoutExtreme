@@ -9,7 +9,7 @@
     using Models.Trips;
     using Services.Contracts;
     using Web.Controllers;
-
+    using Infrastructure.Mapping;
     [Authorize(Roles = "admin")]
     public class TripsController : BaseController
     {
@@ -30,7 +30,7 @@
         {
             DataSourceResult result = this.tripService.GetAll()
                                                      .Where(x => !x.IsDeleted)
-                                                     .ProjectTo<TripViewModel>()
+                                                     .To<TripViewModel>()
                                                      .ToDataSourceResult(request);
 
             return Json(result);

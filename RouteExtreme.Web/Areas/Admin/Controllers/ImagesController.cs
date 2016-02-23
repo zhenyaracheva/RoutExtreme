@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-using RouteExtreme.Models;
-using RouteExtreme.Web.Controllers;
-using RouteExtreme.Services.Contracts;
-using RouteExtreme.Data;
-using AutoMapper.QueryableExtensions;
-using RouteExtreme.Web.Areas.Admin.Models;
-
-namespace RouteExtreme.Web.Areas.Admin.Controllers
+﻿namespace RouteExtreme.Web.Areas.Admin.Controllers
 {
+    using System.Web.Mvc;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
+    using RouteExtreme.Models;
+    using RouteExtreme.Web.Controllers;
+    using RouteExtreme.Services.Contracts;
+    using RouteExtreme.Data;
+    using AutoMapper.QueryableExtensions;
+    using RouteExtreme.Web.Areas.Admin.Models;
+    using Infrastructure.Mapping;
     [Authorize(Roles = "admin")]
     public class ImagesController : BaseController
     {
@@ -37,7 +30,7 @@ namespace RouteExtreme.Web.Areas.Admin.Controllers
         public ActionResult Images_Read([DataSourceRequest]DataSourceRequest request)
         {
             DataSourceResult result = this.imageService.GetAll()
-                                                    .ProjectTo<ImageViewModel>()
+                                                    .To<ImageViewModel>()
                                                     .ToDataSourceResult(request);
             
             return Json(result);

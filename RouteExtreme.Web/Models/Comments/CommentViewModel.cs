@@ -13,7 +13,7 @@
         
         public DateTime CreatedOn { get; set; }
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Comment, CommentViewModel>("CommentDisplay")
                 .ForMember(m => m.Creator, opt => opt.MapFrom(t => t.Creator.UserName))

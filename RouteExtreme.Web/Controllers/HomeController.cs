@@ -1,13 +1,12 @@
 ﻿namespace RouteExtreme.Web.Controllers
 {
-    using RouteExtreme.Services;
     using Services.Contracts;
     using System.Web.Mvc;
     using System.Linq;
-
-    using AutoMapper.QueryableExtensions;
+    
     using System;
     using Models.TripViewModels;
+    using Infrastructure.Mapping;
     public class HomeController : BaseController
     {
         private ITripService trips;
@@ -27,7 +26,7 @@
         {
             var upcommin = this.trips.GetAll()
                                      .Where(x => !x.IsDeleted && x.StartDate > DateTime.UtcNow)
-                                     .ProjectTo<TripResponseModel>()
+                                     .To<TripResponseModel>()
                                      .ToList();
 
 
@@ -53,12 +52,5 @@
 
             return View();
         }
-
-        //public int? GetUserPictureId(string id)
-        //{
-        //    var user = this.userService.GetById(id).ProfilePicId;
-
-        //    return user;
-        //}
     }
 }

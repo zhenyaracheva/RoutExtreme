@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Microsoft.AspNet.Identity;
 
     public class BaseController : Controller
     {

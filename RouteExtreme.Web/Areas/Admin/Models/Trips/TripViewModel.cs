@@ -30,7 +30,7 @@
         [ScaffoldColumn(false)]
         public  string Creator { get; set; }
         
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Trip, TripViewModel>("TripDisplay")
                .ForMember(m => m.Creator, opt => opt.MapFrom(t => t.Creator.UserName))
