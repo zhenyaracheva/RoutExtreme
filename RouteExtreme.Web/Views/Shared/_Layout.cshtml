@@ -27,9 +27,7 @@
                     <li> @Html.ActionLink("Create Trip", "Create", new { area = "", controller = "Trip" })</li>
                 }
             </ul>
-            <ul id="eventsMenuMobile" class="dropdown-content">
-                <li>@Html.ActionLink("Upcomming", "UpcommingTrips", new { area = "", controller = "Trip" })</li>
-                <li class="divider"></li>
+            <ul id="eventsMenuMobile" class="dropdown-content">              
                 <li>@Html.ActionLink("All Trips", "All", new { area = "", controller = "Trip" })</li>
                 <li class="divider"></li>
                 @if (this.User.Identity.IsAuthenticated)

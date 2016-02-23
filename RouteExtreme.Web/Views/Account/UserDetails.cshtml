@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row center">
         <br />
-        @if (Model != null)
+        @if (this.User.Identity.IsAuthenticated)
         {
             <div class="myBox container">
                 <div class="col-md-3 col-md-offset-1">
