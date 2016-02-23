@@ -1,12 +1,8 @@
-﻿using RouteExtreme.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RouteExtreme.Services.Contracts
+﻿namespace RouteExtreme.Services.Contracts
 {
+    using System.Linq;
+    using RouteExtreme.Models;
+
     public interface IChatMessageService
     {
         IQueryable<ChatMessage> GetAll();

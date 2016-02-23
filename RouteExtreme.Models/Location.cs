@@ -1,7 +1,6 @@
 ﻿namespace RouteExtreme.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Location : IDeletableEntity, IAuditInfo
@@ -26,6 +25,5 @@
         public DateTime CreatedOn { get; set; }
 
         public DateTime? DeletedOn { get; set; }
-
     }
 }

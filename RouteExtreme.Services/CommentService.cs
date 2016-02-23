@@ -2,10 +2,11 @@
 {
     using System;
     using System.Linq;
-    using RouteExtreme.Services.Contracts;
+
     using Data.Repositories;
     using Models;
-    
+    using RouteExtreme.Services.Contracts;
+
     public class CommentService : ICommentService
     {
         private IRepository<Comment> comments;

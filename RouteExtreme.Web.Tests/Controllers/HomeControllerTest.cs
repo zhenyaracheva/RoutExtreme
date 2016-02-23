@@ -1,54 +1,78 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Web.Mvc;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using RouteExtreme.Web;
-//using RouteExtreme.Web.Controllers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RouteExtreme.Web;
+using RouteExtreme.Web.Controllers;
+using RouteExtreme.Services.Contracts;
+using Moq;
+using TestStack.FluentMVCTesting;
+using RouteExtreme.Models;
 
-//namespace RouteExtreme.Web.Tests.Controllers
-//{
-//    [TestClass]
-//    public class HomeControllerTest
-//    {
-//        [TestMethod]
-//        public void Index()
-//        {
-//            // Arrange
-//            HomeController controller = new HomeController();
+namespace RouteExtreme.Web.Tests.Controllers
+{
+    [TestClass]
+    public class HomeControllerTest
+    {
+        [TestMethod]
+        public void Index()
+        {
+            var userServerce = new Mock<IUserService>();
+            var chatService = new Mock<IChatRoomService>();
+            var tripServerce = new Mock<ITripService>();
+            var commentService = new Mock<ICommentService>();
 
-//            // Act
-//            ViewResult result = controller.Index() as ViewResult;
+            var controller = new HomeController(userServerce.Object, chatService.Object, tripServerce.Object);
 
-//            // Assert
-//            Assert.IsNotNull(result);
-//        }
+            controller.WithCallTo(x => x.Index())
+                .ShouldRenderView("Index");
+        }
+        
+        [TestMethod]
+        public void Contact()
+        {
+            var userServerce = new Mock<IUserService>();
+            var chatService = new Mock<IChatRoomService>();
+            var tripServerce = new Mock<ITripService>();
+            var commentService = new Mock<ICommentService>();
 
-//        [TestMethod]
-//        public void About()
-//        {
-//            // Arrange
-//            HomeController controller = new HomeController();
+            var controller = new HomeController(userServerce.Object, chatService.Object, tripServerce.Object);
 
-//            // Act
-//            ViewResult result = controller.About() as ViewResult;
+            controller.WithCallTo(x => x.Contact())
+                .ShouldRenderView("Contact");
+        }
 
-//            // Assert
-//            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-//        }
+        [TestMethod]
+        public void Chat()
+        {
+            var userServerce = new Mock<IUserService>();
+            var chatService = new Mock<IChatRoomService>();
+            var tripServerce = new Mock<ITripService>();
+            var commentService = new Mock<ICommentService>();
 
-//        [TestMethod]
-//        public void Contact()
-//        {
-//            // Arrange
-//            HomeController controller = new HomeController();
+            var controller = new HomeController(userServerce.Object, chatService.Object, tripServerce.Object);
 
-//            // Act
-//            ViewResult result = controller.Contact() as ViewResult;
+            controller.WithCallTo(x => x.Chat())
+                .ShouldRenderView("Chat");
+        }
 
-//            // Assert
-//            Assert.IsNotNull(result);
-//        }
-//    }
-//}
+        [TestMethod]
+        public void GetTrips()
+        {
+            var userServerce = new Mock<IUserService>();
+            var chatService = new Mock<IChatRoomService>();
+            var tripServerce = new Mock<ITripService>();
+            var commentService = new Mock<ICommentService>();
+
+            tripServerce.Setup(x => x.GetAll())
+               .Returns(new List<Trip>().AsQueryable());
+
+            var controller = new HomeController(userServerce.Object, chatService.Object, tripServerce.Object);
+
+            controller.WithCallTo(x => x.GetTrips())
+                .ShouldReturnJson();
+        }
+    }
+}

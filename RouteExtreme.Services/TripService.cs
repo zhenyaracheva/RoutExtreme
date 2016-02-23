@@ -1,16 +1,14 @@
 ﻿namespace RouteExtreme.Services
 {
-    using System;
+    using System.Linq;
+    using Data.Repositories;
     using Models;
     using RouteExtreme.Services.Contracts;
-    using Data.Repositories;
-    using System.Linq;
 
     public class TripService : ITripService
     {
         private IRepository<Trip> trips;
-
-
+        
         public TripService(IRepository<Trip> trips)
         {
             this.trips = trips;

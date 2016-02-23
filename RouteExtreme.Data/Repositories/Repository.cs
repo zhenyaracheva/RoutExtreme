@@ -1,9 +1,10 @@
 ﻿namespace RouteExtreme.Data.Repositories
 {
-    using Models;
     using System;
     using System.Data.Entity;
     using System.Linq;
+
+    using Models;
 
     public class Repository<T> : IRepository<T>
        where T : class, IDeletableEntity, IAuditInfo
@@ -113,5 +114,4 @@
             entry.State = EntityState.Modified;
         }
     }
-
 }

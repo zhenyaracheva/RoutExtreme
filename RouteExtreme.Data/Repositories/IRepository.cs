@@ -1,9 +1,10 @@
 ﻿namespace RouteExtreme.Data.Repositories
 {
-    using Models;
     using System;
     using System.Linq;
 
+    using Models;
+    
     public interface IRepository<T> : IDisposable
         where T : class, IDeletableEntity, IAuditInfo
     {

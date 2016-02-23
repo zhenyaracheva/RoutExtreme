@@ -1,8 +1,8 @@
-﻿using System.Web;
-using System.Web.Optimization;
-
-namespace RouteExtreme.Web
+﻿namespace RouteExtreme.Web
 {
+    using System.Web;
+    using System.Web.Optimization;
+
     public class BundleConfig
     {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
@@ -27,8 +27,7 @@ namespace RouteExtreme.Web
             bundles.Add(new ScriptBundle("~/bundles/kendojs").Include(
                      "~/Scripts/Kendo/kendo.all.min.js",
                      "~/Scripts/Kendo/kendo.aspnetmvc.min.js"));
-
-
+            
             bundles.Add(new ScriptBundle("~/bundles/galleryScripts").Include(
                       "~/Scripts/Gallery/jquery.demo.js",
                       "~/Scripts/Gallery/jquery.elastislide.js",

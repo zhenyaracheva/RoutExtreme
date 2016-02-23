@@ -1,12 +1,8 @@
 ﻿namespace RouteExtreme.Services.Contracts
 {
-    using RouteExtreme.Models;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    
+    using RouteExtreme.Models;
+
     public interface ICommentService
     {
         void Create(Comment comment);

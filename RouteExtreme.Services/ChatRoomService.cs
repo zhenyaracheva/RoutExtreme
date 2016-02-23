@@ -1,14 +1,13 @@
 ﻿namespace RouteExtreme.Services
 {
-    using RouteExtreme.Services.Contracts;
     using System.Linq;
-    using RouteExtreme.Models;
     using RouteExtreme.Data.Repositories;
+    using RouteExtreme.Models;
+    using RouteExtreme.Services.Contracts;
 
     public class ChatRoomService : IChatRoomService
     {
         private IRepository<ChatRoom> rooms;
-
 
         public ChatRoomService(IRepository<ChatRoom> rooms)
         {
@@ -31,12 +30,11 @@
             this.rooms.MarkAsDeleted(room);
             this.rooms.SaveChanges();
         }
-        
+
         public IQueryable<ChatRoom> RoomsByUsername(string username)
         {
             return this.rooms.All()
                              .Where(x => x.Users.Any(u => u.UserName == username));
-
         }
 
         public void Update(ChatRoom room)

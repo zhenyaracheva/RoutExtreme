@@ -14,6 +14,7 @@
     using Services.Contracts;
     using Models.Comments;
     using Infrastructure.Mapping;
+
     public class TripController : BaseController
     {
         private ITripService trips;

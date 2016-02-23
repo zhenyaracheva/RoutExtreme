@@ -7,6 +7,7 @@
 
     using AutoMapper;
     using Infrastructure.Mapping;
+
     public class AutoMapperConfig
     {
         public static MapperConfiguration Configuration { get; private set; }

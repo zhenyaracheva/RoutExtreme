@@ -35,10 +35,10 @@
         public IQueryable<User> GetAll()
         {
             return this.users.All()
-                             .Where(x=> !x.IsDeleted);
+                             .Where(x => !x.IsDeleted);
         }
 
-        public IQueryable<User> GetById(String id)
+        public IQueryable<User> GetById(string id)
         {
             return this.GetAll()
                         .Where(u => u.Id == id);
@@ -48,7 +48,6 @@
         {
             return this.GetAll()
                 .Where(x => x.UserName == username);
-
         }
 
         public void UpdateUser(User user)

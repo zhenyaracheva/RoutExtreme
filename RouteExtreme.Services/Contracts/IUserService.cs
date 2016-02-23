@@ -1,16 +1,15 @@
 ﻿namespace RouteExtreme.Services.Contracts
 {
-    using Models;
-    using System;
     using System.Linq;
-
+    using Models;
+    
     public interface IUserService
     {
         void Create(User user, string password);
 
         IQueryable<User> GetAll();
 
-        IQueryable<User> GetById(String id);
+        IQueryable<User> GetById(string id);
 
         IQueryable<User> GetByUsername(string username);
 

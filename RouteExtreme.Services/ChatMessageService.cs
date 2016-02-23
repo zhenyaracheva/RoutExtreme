@@ -1,15 +1,13 @@
 ﻿namespace RouteExtreme.Services
 {
-    using System;
     using System.Linq;
+    using Data.Repositories;
     using Models;
     using RouteExtreme.Services.Contracts;
-    using Data.Repositories;
 
     public class ChatMessageService : IChatMessageService
     {
         private IRepository<ChatMessage> messages;
-
 
         public ChatMessageService(IRepository<ChatMessage> messages)
         {

@@ -1,16 +1,14 @@
 ﻿namespace RouteExtreme.Services
 {
-    using System;
     using System.Linq;
-    using Models;
-    using Data.Repositories;
     using Contracts;
+    using Data.Repositories;
+    using Models;
 
     public class ImageService : IImageService
     {
         private IRepository<Image> images;
-
-
+        
         public ImageService(IRepository<Image> images)
         {
             this.images = images;

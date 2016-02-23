@@ -1,8 +1,8 @@
 ﻿namespace RouteExtreme.Services.Contracts
 {
-    using Models;
     using System.Linq;
-
+    using Models;
+    
     public interface IImageService
     {
         IQueryable<Image> GetAll();

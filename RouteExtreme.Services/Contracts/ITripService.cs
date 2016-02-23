@@ -1,8 +1,7 @@
 ﻿namespace RouteExtreme.Services.Contracts
 {
-    using Models;
-    using System;
     using System.Linq;
+    using Models;
 
     public interface ITripService
     {

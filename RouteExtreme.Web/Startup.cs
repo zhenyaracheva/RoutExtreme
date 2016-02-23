@@ -1,6 +1,7 @@
 ﻿using RouteExtreme.Web.App_Start;
 using Microsoft.Owin;
 using Owin;
+using System.Reflection;
 
 [assembly: OwinStartupAttribute(typeof(RouteExtreme.Web.Startup))]
 namespace RouteExtreme.Web
@@ -11,6 +12,8 @@ namespace RouteExtreme.Web
         {
             DatabaseConfig.Initialize();
             ConfigureAuth(app);
+            var autoMapperConfig = new AutoMapperConfig();
+            autoMapperConfig.Execute(Assembly.GetExecutingAssembly());
             app.MapSignalR();
         }
     }

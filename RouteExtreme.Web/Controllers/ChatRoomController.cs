@@ -19,8 +19,7 @@
         {
             var result = this.chatRooms.RoomsByUsername(this.User.Identity.Name)
                                        .ToList();
-
-
+            
             return this.Json(result, JsonRequestBehavior.AllowGet);
         }
     }

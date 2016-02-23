@@ -1,20 +1,21 @@
 ﻿namespace RouteExtreme.Web.Controllers
 {
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
 
+    using Infrastructure.Mapping;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
 
-    using RouteExtreme.Web.Models.AccountViewModels;
     using RouteExtreme.Models;
-    using System.IO;
-    using Services;
+    using RouteExtreme.Web.Models.AccountViewModels;
+
     using Services.Contracts;
-    using AutoMapper.QueryableExtensions;
 
     [Authorize]
     public class AccountController : BaseController
@@ -30,23 +31,14 @@
             this.userService = userService;
             this.chatRooms = chatRooms;
         }
-        //public AccountController()
-        //{
-        //}
-
+       
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, IChatRoomService chatRooms)
-            :this(userService, chatRooms)
+            : this(userService, chatRooms)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            this.UserManager = userManager;
+            this.SignInManager = signInManager;
         }
         
-        //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        //{
-        //    UserManager = userManager;
-        //    SignInManager = signInManager;
-        //}
-
         public ApplicationSignInManager SignInManager
         {
             get
@@ -73,23 +65,14 @@
 
         public ActionResult UserDetails(string id)
         {
-            //var username = this.User.Identity.GetUserName();
-            //var userToSee = this.userService.GetByUsername(username).FirstOrDefault();
-            //if (userToSee.UserName == "admin")
-            //{
-            //    return this.View();
-            //}
-
             var result = this.userService
                 .GetById(id)
-                .ProjectTo<UserDetailsViewModel>()
+                .To<UserDetailsViewModel>()
                 .FirstOrDefault();
 
             return this.View(result);
         }
 
-        //
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -97,8 +80,7 @@
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        /// POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -206,9 +188,9 @@
                 }
 
                 var user = new User { UserName = model.Username, Email = model.Email, ProfilePic = image, FirstName = model.FirstName, LastName = model.LastName };
-                
+
                 var result = await UserManager.CreateAsync(user, model.Password);
-               
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

@@ -48,11 +48,16 @@
             var user = this.userService.GetById(id)
                            .FirstOrDefault();
 
-            if(user.ProfilePic.IsDeleted)
+            if (user.ProfilePic == null)
             {
                 return null;
             }
-            
+
+            if (user.ProfilePic.IsDeleted)
+            {
+                return null;
+            }
+
             return user.ProfilePicId;
         }
 
