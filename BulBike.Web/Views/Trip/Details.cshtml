@@ -69,14 +69,15 @@
         <div id="map"></div>
     </div>
 </div>
+<hr />
 
-<div class="row">
-    @Html.ActionLink("Add Picrutes", "AddImages", "Trip", new { id = Model.Trip.Id }, new { @class = "btn col m12" })
-</div>
 
 <ul class="collapsible popout" data-collapsible="accordion">
     <li>
-        <div class="collapsible-header "><i class="material-icons">perm_media</i>Pictures</div>
+        <div class="collapsible-header "><i class="material-icons">perm_media</i>Pictures</div>   
+        <div class="row collapsible-body">
+            @Html.ActionLink("Add Picrutes", "AddImages", "Trip", new { id = Model.Trip.Id }, new { @class = "btn col m12" })
+        </div>     
         @if (Model.Trip.Images.Count > 0)
         {
             <div class="gallery collapsible-body">
@@ -96,6 +97,7 @@
         else
         {
             <div class="collapsible-body"><p>No Photos yet</p></div>
+
         }
     </li>
     <li>
@@ -131,7 +133,6 @@
             @if (Model.All.Count > 0)
             {
                 @Html.Partial("_Comments", Model)
-
             }
             else
             {
@@ -139,18 +140,19 @@
                     No Comments!
                 </p>
             }
-
-            @Html.Partial("_CreateComment", new CommentInputModel { TripId = Model.Trip.Id })
+            <div id="comments">
+                @Html.Partial("_CreateComment", new CommentInputModel { TripId = Model.Trip.Id })
+            </div>
         </div>
     </li>
 
 </ul>
-<script>
-    var chathub = $.connection.chatHub;
-    //AddToRoom
-
-</script>
 @section scripts{
+    <script>
+
+    </script>
+
+
     <script src="/Scripts/Maps/details-trip-map.js"></script>
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
     @Scripts.Render("~/bundles/galleryScripts")
@@ -185,10 +187,9 @@
         }
     </script>
     <script>
-        var chathub = $.connection.chatHub;
-        //AddToRoom
         var url = document.URL;
         var id = url.substring(url.lastIndexOf('/') + 1);
+        var chathub = $.connection.chatHub;
 
         function joinUser() {
             $.ajax({
@@ -206,6 +207,9 @@
                         test += '<li  class="row center"><a href="' + url + '" class="btn col m12">' + res[i].username + '</a></li>'
                     }
 
+                    //TODO Show chatRoom in chat window
+                   
+                   addRoom(chathub, id, name);
                     $('#users').empty();
                     $('#users').append(test);
                     $('#join').hide();

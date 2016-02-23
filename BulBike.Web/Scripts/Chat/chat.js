@@ -76,6 +76,7 @@
         }
     }
 
+
     function addRoom(chathub, id, name) {
 
         var userid = $('#hdid').val();

@@ -47,10 +47,14 @@
         public int? GetUserPictureId(string id)
         {
             var user = this.userService.GetById(id)
-                           .FirstOrDefault()
-                           .ProfilePicId;
+                           .FirstOrDefault();
 
-            return user;
+            if(user.ProfilePic.IsDeleted)
+            {
+                return null;
+            }
+            
+            return user.ProfilePicId;
         }
 
         public ICollection<ChatRoom> GetRooms()

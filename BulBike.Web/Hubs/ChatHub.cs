@@ -7,7 +7,7 @@
     using Data;
     using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
-
+    using System.Collections.Generic;
     [Authorize]
     public class ChatHub : Hub
     {
@@ -119,7 +119,7 @@
                 Clients.Group(room).SendPrivateMessage(currentRoom.ConnectionId, Context.User.Identity.Name, message);
             }
         }
-
+        
         public void GetRoomMessages(string roomName)
         {
             using (var db = new BulBikeDbContext())
