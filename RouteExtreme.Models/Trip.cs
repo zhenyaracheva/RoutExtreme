@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     public class Trip : IDeletableEntity, IAuditInfo
     {
         private ICollection<Location> route;
@@ -39,6 +39,10 @@
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string ChatRoomName { get; set; }
 
         public virtual ICollection<Location> Route
         {

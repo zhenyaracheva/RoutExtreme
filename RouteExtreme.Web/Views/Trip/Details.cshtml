@@ -148,10 +148,6 @@
 
 </ul>
 @section scripts{
-    <script>
-
-    </script>
-
 
     <script src="/Scripts/Maps/details-trip-map.js"></script>
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
@@ -196,10 +192,7 @@
                 type: "POST",
                 url: '@Url.Action("JoinUser", "Trip")' + '/' + id,
                 contentType: "application/json; charset=utf-8",
-                success: function (res) {
-                    console.log(res);
-                    console.log("Joined User");
-
+                success: function (res) {                   
                     var test = "";
                     for (var i = 0, len = res.length; i < len; i++) {
 
@@ -211,8 +204,8 @@
                     $('#users').append(test);
                     $('#join').hide();
                     $('#joinOut').show();
-
-                    chathub.server.addToRoom(id);
+                    var chatRoom = '@Model.Trip.ChatRoomName'
+                    chathub.server.addToRoom(chatRoom);
 
                 },
                 error: function (res) { console.log(res); }
@@ -242,7 +235,8 @@
 
                     $('#joinOut').hide();
                     $('#join').show();
-                    chathub.server.removeFromRoom(id);
+                    var chatRoom = '@Model.Trip.ChatRoomName'
+                    chathub.server.removeFromRoom(chatRoom);
                 },
                 error: function (res) { console.log(res); }
             });

@@ -22,6 +22,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult Create(CommentInputModel model)
         {

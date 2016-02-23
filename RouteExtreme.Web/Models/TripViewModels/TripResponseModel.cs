@@ -22,6 +22,8 @@
 
         public string StartPoint { get; set; }
 
+        public string ChatRoomName { get; set; }
+
         public ICollection<LocationViewModel> Route { get; set; }
 
         public ICollection<ImageViewModel> Images { get; set; }

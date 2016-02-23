@@ -7,6 +7,7 @@
     using System;
     using Models.TripViewModels;
     using Infrastructure.Mapping;
+
     public class HomeController : BaseController
     {
         private ITripService trips;
@@ -22,15 +23,14 @@
             return this.View();
         }
 
+        [OutputCache(Duration = 1800)]
         public ActionResult GetTrips()
         {
             var upcommin = this.trips.GetAll()
                                      .Where(x => !x.IsDeleted && x.StartDate > DateTime.UtcNow)
                                      .To<TripResponseModel>()
                                      .ToList();
-
-
-
+            
             return this.Json(upcommin, JsonRequestBehavior.AllowGet);
         }
 

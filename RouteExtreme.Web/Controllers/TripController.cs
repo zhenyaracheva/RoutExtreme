@@ -57,7 +57,7 @@
                     Description = trip.Description,
                     StartDate = trip.StartDate,
                     StartPoint = trip.StartPoint,
-
+                    ChatRoomName = trip.ChatRoomName
                 };
 
                 this.trips.Add(currentTrip);
@@ -340,6 +340,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddImages(TripAddImageViewModel tripImages)
         {
             var test = Request.Files.Count;
