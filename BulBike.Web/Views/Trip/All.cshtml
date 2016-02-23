@@ -1,5 +1,7 @@
 ﻿@model BulBike.Web.Models.TripViewModels.TripPagableModel
-
+@{
+    this.ViewBag.CreatedOn = this.ViewBag.CreatedOn == "asc" ? "asc" : "desc";
+}
 <div class="container">
     <div>
         <div class="row">
@@ -8,14 +10,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col m4 center">
-                Filter by date
+            <div class="col m9">
+                <input type="text" id="searchTxt" placeholder="Search" class="input-field" />
             </div>
-            <div class="col m4 center">
-                Sort by creator
-            </div>
-            <div class="col m4 center">
-                Filter by page
+            <div>
+                <button class="btn" id="search">Search</button>
             </div>
         </div>
     </div>
@@ -25,10 +24,16 @@
 <table class="centered striped">
     <thead>
         <tr>
-            <th data-field="id">Creator</th>
-            <th data-field="name">Created On</th>
-            <th data-field="price">Start Point</th>
-            <th data-field="price">Route</th>
+            <th>
+                <a href="/Trip/All/1?orderBy=creator">Creator</a>
+            </th>
+            <th>
+                <a href="/Trip/All/1?orderBy=createdOn">Created On</a>
+            </th>
+            <th>
+                <a href="/Trip/All/1?orderBy=startPoint">Start Point</a>
+            </th>
+            <th>Route</th>
             <th></th>
         </tr>
     </thead>
@@ -71,8 +76,10 @@
                     prevButtonClass = "hide";
                     prevPage = 1;
                 }
-
-                <li class=@prevButtonClass><a href="/Trip/All/@prevPage"><i class="material-icons">chevron_left</i></a></li>
+                @{
+                    var test = Request.Params["id"];
+                }
+                <li class=@prevButtonClass><a href="@string.Format("/Trip/All/{0}?orderBy={1}&search={2}",prevPage,Request.Params["orderBy"],Request.Params["search"])"><i class="material-icons">chevron_left</i></a></li>
 
                 @for (int i = 1; i <= Model.TotalPages; i++)
                 {
@@ -83,7 +90,7 @@
                         className = "active";
                     }
 
-                    <li class=@className><a href="/Trip/All/@i">@i</a></li>
+                    <li class=@className><a href="@string.Format("/Trip/All/{0}?orderBy={1}&search={2}",i,Request.Params["orderBy"],Request.Params["search"])">@i</a></li>
                 }
 
                 @{
@@ -99,7 +106,7 @@
 
                 }
 
-                <li class=@nextPageButton><a href="/Trip/All/@nextPage"><i class="material-icons">chevron_right</i></a></li>
+                <li class=@nextPageButton><a href="@string.Format("/Trip/All/{0}?orderBy={1}&search={2}",nextPage,Request.Params["orderBy"],Request.Params["search"])"><i class="material-icons">chevron_right</i></a></li>
             </ul>
         </div>
     </div>
@@ -261,4 +268,12 @@
         }
     </script>
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
+    <script>
+        $( "#search" ).click(function() {
+            //var url = document.URL;
+            //var id = url.substring(url.lastIndexOf('/') + 1);
+            var search = $('#searchTxt').val();
+            document.location.href = '/Trip/All/1?search='+ search;
+        });
+    </script>
 }

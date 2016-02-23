@@ -13,6 +13,7 @@
     using Models.TripViewModels;
     using Services.Contracts;
     using Models.Comments;
+
     public class TripController : BaseController
     {
         private ITripService trips;
@@ -23,6 +24,9 @@
         {
             this.trips = trips;
             this.comments = comments;
+            this.ViewBag.Creator = "asc";
+
+
         }
 
         [HttpGet]
@@ -181,7 +185,7 @@
                 TotalPages = totalPages,
                 Trip = trip
             };
-            
+
             return View(pagableComments);
         }
 
@@ -194,11 +198,13 @@
             return Json(trip.Route, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult All(int id = 1, int tripsPerPage = 5)
+        public ActionResult All(string orderBy, string search, int id = 1)
         {
             var page = id;
             var allTrips = this.trips.GetAll().Count();
+            var tripsPerPage = 5;
 
+            this.ViewBag.StartPoint = this.ViewBag.StartPoint == "asc" ? "desc" : "asc";
 
             var totalPages = (int)Math.Ceiling(allTrips / ((decimal)tripsPerPage));
             if (page - 1 < 0)
@@ -212,12 +218,121 @@
 
             var itemsToSkip = (page - 1) * tripsPerPage;
 
-            var trips = this.trips.GetAll()
-                                  .OrderBy(x => x.CreatedOn)
-                                  .Skip(itemsToSkip)
-                                  .Take(tripsPerPage)
-                                  .ProjectTo<TripResponseModel>()
-                                  .ToList();
+            IList<TripResponseModel> trips = new List<TripResponseModel>();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                allTrips = this.trips.GetAll()
+                                     .Where(x => x.Creator.UserName.Contains(search) || x.StartPoint.Contains(search)).Count();
+                totalPages = (int)Math.Ceiling(allTrips / ((decimal)tripsPerPage));
+                search = search.ToLower();
+                trips = this.trips.GetAll()
+                                  .Where(x => x.Creator.UserName.ToLower().Contains(search) ||
+                                            x.StartPoint.ToLower().Contains(search))
+                                   .OrderBy(o => o.StartDate)
+                                   .Skip(itemsToSkip)
+                                   .Take(tripsPerPage)
+                                   .ProjectTo<TripResponseModel>()
+                                   .ToList();
+            }
+            else if (!string.IsNullOrEmpty(orderBy))
+            {
+                if (orderBy == "creator")
+                {
+                    var creator = this.Session["creator"] as string;
+                    if (creator == null)
+                    {
+                        creator = "asc";
+                    }
+
+                    if (creator == "asc")
+                    {
+                        trips = this.trips.GetAll()
+                                .OrderBy(x => x.Creator.UserName)
+                                .ThenBy(x => x.CreatedOn)
+                                .Skip(itemsToSkip)
+                                .Take(tripsPerPage)
+                                .ProjectTo<TripResponseModel>()
+                                .ToList();
+                    }
+                    else
+                    {
+                        trips = this.trips.GetAll()
+                                .OrderByDescending(x => x.Creator.UserName)
+                                .ThenBy(x => x.CreatedOn)
+                                .Skip(itemsToSkip)
+                                .Take(tripsPerPage)
+                                .ProjectTo<TripResponseModel>()
+                                .ToList();
+                    }
+
+                    if (page == 1)
+                    {
+                        this.Session["creator"] = creator == "asc" ? "desc" : "asc";
+                    }
+
+                }
+                else if (orderBy == "createdOn")
+                {
+                    var createdOn = this.Session["createdOn"] as string;
+                    if (createdOn == null)
+                    {
+                        createdOn = "des";
+                    }
+
+                    if (createdOn == "asc")
+                    {
+                        trips = this.trips.GetAll()
+                                .OrderBy(x => x.CreatedOn)
+                                .ThenBy(x => x.Creator.UserName)
+                                .Skip(itemsToSkip)
+                                .Take(tripsPerPage)
+                                .ProjectTo<TripResponseModel>()
+                                .ToList();
+                    }
+                    else
+                    {
+                        trips = this.trips.GetAll()
+                                .OrderByDescending(x => x.CreatedOn)
+                                .ThenBy(x => x.Creator.UserName)
+                                .Skip(itemsToSkip)
+                                .Take(tripsPerPage)
+                                .ProjectTo<TripResponseModel>()
+                                .ToList();
+                    }
+
+                    this.Session["createdOn"] = createdOn == "asc" ? "desc" : "asc";
+                }
+                else if (orderBy == "startPoint")
+                {
+                    var creator = this.Session["startPoint"] as string;
+                    if (creator == null)
+                    {
+                        creator = "asc";
+                    }
+
+                    trips = this.OrderByStartPoint(creator, itemsToSkip, tripsPerPage);
+
+                    this.Session["startPoint"] = creator == "asc" ? "desc" : "asc";
+                }
+                else if (orderBy == "startPointp")
+                {
+                    var creator = this.Session["startPoint"] as string;
+                    creator = creator == "asc" ? "desc" : "asc";
+                    trips = this.OrderByStartPoint(creator, itemsToSkip, tripsPerPage);
+                }
+
+            }
+            else
+            {
+                trips = this.trips.GetAll()
+                                         .OrderBy(x => x.CreatedOn)
+                                         .Skip(itemsToSkip)
+                                         .Take(tripsPerPage)
+                                         .ProjectTo<TripResponseModel>()
+                                         .ToList();
+            }
+
 
             var tripModel = new TripPagableModel
             {
@@ -288,7 +403,7 @@
             {
                 return this.View();
             }
-            
+
             var comment = new Comment
             {
                 Content = model.Content,
@@ -307,6 +422,30 @@
             trip.Comments.Add(comment);
             this.trips.Update(trip);
             return this.RedirectToAction("Details", "Trip", new { id = model.TripId });
+        }
+
+        private IList<TripResponseModel> OrderByStartPoint(string way, int itemsToSkip, int tripsPerPage)
+        {
+            if (way == "asc")
+            {
+                return this.trips.GetAll()
+                        .OrderBy(x => x.StartPoint)
+                        .ThenBy(x => x.CreatedOn)
+                        .Skip(itemsToSkip)
+                        .Take(tripsPerPage)
+                        .ProjectTo<TripResponseModel>()
+                        .ToList();
+            }
+            else
+            {
+                return this.trips.GetAll()
+                        .OrderByDescending(x => x.StartPoint)
+                        .ThenBy(x => x.CreatedOn)
+                        .Skip(itemsToSkip)
+                        .Take(tripsPerPage)
+                        .ProjectTo<TripResponseModel>()
+                        .ToList();
+            }
         }
     }
 }

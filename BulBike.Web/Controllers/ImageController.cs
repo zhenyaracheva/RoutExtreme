@@ -16,7 +16,13 @@
 
         public ActionResult GetImage(int id)
         {
-            var imageData = this.images.GetById(id).Content;
+            var image = this.images.GetById(id);
+            if (image == null)
+            {
+                return null;
+            }
+
+            var imageData = image.Content;
             return File(imageData, "image/jpg");
         }
     }
