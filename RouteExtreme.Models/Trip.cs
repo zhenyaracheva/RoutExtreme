@@ -10,6 +10,7 @@
         private ICollection<Image> images;
         private ICollection<User> participants;
         private ICollection<Comment> comments;
+        private ICollection<Vote> votes;
 
         public Trip()
         {
@@ -19,6 +20,7 @@
             this.comments = new HashSet<Comment>();
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
+            this.votes = new HashSet<Vote>();
         }
 
         [Key]
@@ -72,6 +74,12 @@
         {
             get { return this.comments; }
             set { this.comments = value; }
+        }
+
+        public virtual ICollection<Vote> Votes
+        {
+            get { return this.votes; }
+            set { this.votes = value; }
         }
     }
 }

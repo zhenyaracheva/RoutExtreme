@@ -27,6 +27,8 @@
 
         public virtual IDbSet<Connection> Connections { get; set; }
 
+        public virtual IDbSet<Vote> Votes { get; set; }
+        
         public static RouteExtremeDbContext Create()
         {
             return new RouteExtremeDbContext();

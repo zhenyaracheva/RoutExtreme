@@ -8,6 +8,8 @@
     using RouteExtreme.Web.Infrastructure.Mapping;
     using Comments;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
     public class TripResponseModel : IMapFrom<Trip>, IHaveCustomMappings
     {
         public int Id { get; set; }
@@ -29,7 +31,7 @@
         [Required]
         [StringLength(20)]
         public string ChatRoomName { get; set; }
-
+        
         public ICollection<LocationViewModel> Route { get; set; }
 
         public ICollection<ImageViewModel> Images { get; set; }
@@ -37,7 +39,9 @@
         public ICollection<UserResponseModel> Participants { get; set; }
 
         public ICollection<CommentViewModel> Comments { get; set; }
-        
+
+        public ICollection<VoteViewModel> Votes { get; set; }
+
         public void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Trip, TripResponseModel>("TripDisplay")

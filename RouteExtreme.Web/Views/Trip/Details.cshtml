@@ -4,7 +4,21 @@
 
 
 <div class="row">
-    <div class="col m10">
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <div class="col m2 center">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="row" id="up" data-action="up"><i class="material-icons">thumb_up</i></div>
+            }
+            <div class="row center" id="action" data-action="votesCount">@Model.Trip.Votes.Sum(x => x.Type)</div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="row" id="down" data-action="down"><i class="material-icons">thumb_down</i></div>
+            }
+        </div>
+    }
+    <div class="col m8">
         <h1 class="center">Trip Details</h1>
     </div>
     @if (this.User.Identity.IsAuthenticated && Model.Trip.StartDate > DateTime.UtcNow)
@@ -74,10 +88,10 @@
 
 <ul class="collapsible popout" data-collapsible="accordion">
     <li>
-        <div class="collapsible-header "><i class="material-icons">perm_media</i>Pictures</div>   
+        <div class="collapsible-header "><i class="material-icons">perm_media</i>Pictures</div>
         <div class="row collapsible-body">
             @Html.ActionLink("Add Picrutes", "AddImages", "Trip", new { id = Model.Trip.Id }, new { @class = "btn col m12" })
-        </div>     
+        </div>
         @if (Model.Trip.Images.Count > 0)
         {
             <div class="gallery collapsible-body">
@@ -148,7 +162,6 @@
 
 </ul>
 @section scripts{
-
     <script src="/Scripts/Maps/details-trip-map.js"></script>
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyA0EBUP2Baj7_5yrdf3hoQ4xXf86EaoPIU&callback=initMap")
     @Scripts.Render("~/bundles/galleryScripts")
@@ -192,7 +205,7 @@
                 type: "POST",
                 url: '@Url.Action("JoinUser", "Trip")' + '/' + id,
                 contentType: "application/json; charset=utf-8",
-                success: function (res) {                   
+                success: function (res) {
                     var test = "";
                     for (var i = 0, len = res.length; i < len; i++) {
 
@@ -240,6 +253,26 @@
                 },
                 error: function (res) { console.log(res); }
             });
+        }
+    </script>
+    <script>
+        $("#up").click(function () {
+            var id = '@Model.Trip.Id'
+            voteClick(id, 1);
+        });
+        $("#down").click(function () {
+            var id = '@Model.Trip.Id'
+            voteClick(id, -1);
+        });
+
+        function voteClick(id, voteType) {
+
+            $.post("/Vote/Vote", { id: id, voteType: voteType },
+                function (data) {
+                    var newVotesCount = data.Count;
+                    console.log(newVotesCount)
+                    $("#action").html(newVotesCount)
+                });
         }
     </script>
 }

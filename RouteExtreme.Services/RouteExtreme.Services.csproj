@@ -70,12 +70,14 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ChatRoomService.cs" />
+    <Compile Include="Contracts\IVoteService.cs" />
     <Compile Include="ImageService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TripService.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="VoteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RouteExtreme.Data\RouteExtreme.Data.csproj">
