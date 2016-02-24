@@ -3,13 +3,14 @@
 
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", new { area = ""}, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
         var test = ((BaseController)this.ViewContext.Controller).GetUserPictureId(this.User.Identity.GetUserId());
 
         <li>
-            @Html.ActionLink(string.Format("Hello, {0}!", User.Identity.GetUserName()), "UserDetails", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink(string.Format("Hello, {0}!", User.Identity.GetUserName()), "UserDetails", new { area = "", controller = "Account", id = this.User.Identity.GetUserId() })
+            @*@Html.ActionLink(, "", "Account", new { id =  })*@
         </li>
         <li>
             @if (test > 0)
@@ -18,12 +19,12 @@
             }
             else
             {
-                <img src="https://lh4.googleusercontent.com/-mgfTo5JzHi4/U-RT9DzzD9I/AAAAAAAAAWE/cHmSDDtjCvE/default_profile_image.png" class="centered-profile-image"/>
+                <img src="https://lh4.googleusercontent.com/-mgfTo5JzHi4/U-RT9DzzD9I/AAAAAAAAAWE/cHmSDDtjCvE/default_profile_image.png" class="centered-profile-image" />
             }
         </li>
-            <li>
-                <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
-            </li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+        </li>
     }
 }
 else

@@ -42,6 +42,12 @@
         [Authorize]
         public ActionResult Create(TripRequestModel trip)
         {
+            if(!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+
             Trip currentTrip = null;
 
             if (trip != null && ModelState.IsValid)
@@ -77,6 +83,7 @@
 
                 this.trips.Update(currentTrip);
             };
+
 
             return this.RedirectToAction("Details", new { id = currentTrip.Id });
         }

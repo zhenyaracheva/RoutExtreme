@@ -59,7 +59,6 @@
             <ul class="hide-on-med-and-down move">
                 <li>@Html.ActionLink("Home", "Index", new { area = "", controller = "Home" })</li>
                 <li><a class="dropdown-button" href="#!" data-activates="eventsMenu">Trips<i class="material-icons right">arrow_drop_down</i></a></li>
-                <li>@Html.ActionLink("Contact", "Contact", new { area = "", controller = "Home" })</li>
                 @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("admin"))
                 {
                     <li><a class="dropdown-button" href="#!" data-activates="adminMenu">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
