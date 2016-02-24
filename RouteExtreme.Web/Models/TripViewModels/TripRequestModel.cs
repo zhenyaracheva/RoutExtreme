@@ -9,6 +9,7 @@
         [Required]
         public string Route { get; set; }
 
+        [Required]
         [UIHint("MultiLineText")]
         [StringLength(20000)]
         public string Description { get; set; }
