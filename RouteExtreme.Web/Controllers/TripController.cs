@@ -346,7 +346,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult AddImages(TripAddImageViewModel tripImages)
         {
             var test = Request.Files.Count;
