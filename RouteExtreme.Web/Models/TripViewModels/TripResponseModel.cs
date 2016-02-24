@@ -7,7 +7,7 @@
     using RouteExtreme.Models;
     using RouteExtreme.Web.Infrastructure.Mapping;
     using Comments;
-
+    using System.ComponentModel.DataAnnotations;
     public class TripResponseModel : IMapFrom<Trip>, IHaveCustomMappings
     {
         public int Id { get; set; }
@@ -16,12 +16,18 @@
 
         public DateTime CreatedOn { get; set; }
 
+        [Required]
+        [StringLength(100000)]
         public string Description { get; set; }
 
         public string Creator { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string StartPoint { get; set; }
 
+        [Required]
+        [StringLength(20)]
         public string ChatRoomName { get; set; }
 
         public ICollection<LocationViewModel> Route { get; set; }

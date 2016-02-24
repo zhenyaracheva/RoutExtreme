@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     public class Trip : IDeletableEntity, IAuditInfo
     {
         private ICollection<Location> route;
@@ -20,14 +21,19 @@
             this.IsDeleted = false;
         }
 
+        [Key]
         public int Id { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
+        [Required]
+        [StringLength(100000)]
         public string Description { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string StartPoint { get; set; }
 
         public string CreatorId { get; set; }

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     public class ChatRoom : IDeletableEntity, IAuditInfo
     {
         private ICollection<User> users;
@@ -17,10 +17,15 @@
             this.CreatedOn = DateTime.UtcNow;
         }
         
+        [Key]
         public int Id { get; set; }
-        
+
+        [Required]
         public string ConnectionId { get; set; }
 
+        [Index(IsUnique =true)]
+        [Required]
+        [StringLength(50)]
         public string Name { get; set; }
 
         public DateTime? ModifiedOn { get; set; }

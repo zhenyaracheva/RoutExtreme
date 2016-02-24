@@ -46,8 +46,7 @@
             {
                 return this.View();
             }
-
-
+            
             Trip currentTrip = null;
 
             if (trip != null && ModelState.IsValid)

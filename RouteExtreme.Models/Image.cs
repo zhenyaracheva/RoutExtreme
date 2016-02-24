@@ -16,6 +16,8 @@
 
         public byte[] Content { get; set; }
 
+        [Required]
+        [StringLength(10)]
         public string FileExtension { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
