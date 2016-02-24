@@ -31,20 +31,6 @@ namespace RouteExtreme.Web.Tests.Controllers
         }
         
         [TestMethod]
-        public void Contact()
-        {
-            var userServerce = new Mock<IUserService>();
-            var chatService = new Mock<IChatRoomService>();
-            var tripServerce = new Mock<ITripService>();
-            var commentService = new Mock<ICommentService>();
-
-            var controller = new HomeController(userServerce.Object, chatService.Object, tripServerce.Object);
-
-            controller.WithCallTo(x => x.Contact())
-                .ShouldRenderView("Contact");
-        }
-
-        [TestMethod]
         public void Chat()
         {
             var userServerce = new Mock<IUserService>();
