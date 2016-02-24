@@ -23,7 +23,7 @@
             return this.View();
         }
 
-        [OutputCache(Duration = 1800)]
+       // [OutputCache(Duration = 1800)]
         public ActionResult GetTrips()
         {
             var upcommin = this.trips.GetAll()

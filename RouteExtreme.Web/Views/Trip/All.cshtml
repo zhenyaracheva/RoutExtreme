@@ -236,12 +236,13 @@
             var id = url.substring(url.lastIndexOf('/') + 1);
             var trips;
 
-            var test = @Html.Raw(Json.Encode(Model.AllTrips));
+            var test = @Html.Raw(Json.Encode(Model.AllTrips))
             console.log(test)
 
             for (var i = 0,len = test.length; i < len; i++) {
 
                 var trips = test[i].Route;
+
 
                 var id = 'map' + (i);
                 console.log(id);
