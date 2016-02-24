@@ -17,9 +17,7 @@
             <a href="#!">
                 @Html.ActionLink("Extreme", "Index", "Home", new { area = "" }, new { @class = "brand-logo" })
             </a>
-            <ul id="eventsMenu" class="dropdown-content">
-                <li>@Html.ActionLink("Upcomming", "UpcommingTrips", new { area = "", controller = "Trip" })</li>
-                <li class="divider"></li>
+            <ul id="eventsMenu" class="dropdown-content">               
                 <li>@Html.ActionLink("All Trips", "All", new { area = "", controller = "Trip" })</li>
                 <li class="divider"></li>
                 @if (this.User.Identity.IsAuthenticated)
